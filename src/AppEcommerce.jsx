@@ -1,8 +1,7 @@
 
 
 import { BrowserRouter as Router } from "react-router-dom";
-import ListProducts from "./components/ListProducts/ListProducts";
-
+import Dashboard from "./components/Dashboard/Dashboard";
 
 
 const AppEcommerce = () => {
@@ -11,7 +10,7 @@ const AppEcommerce = () => {
   return (
     <Router>
 
-      <ListProducts />
+      <Dashboard />
      
     </Router>
   );
