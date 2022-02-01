@@ -1,6 +1,8 @@
 
+
 import { BrowserRouter as Router } from "react-router-dom";
-import { Navigator } from "./Navigator";
+import ListProducts from "./components/ListProducts/ListProducts";
+
 
 
 const AppEcommerce = () => {
@@ -9,7 +11,7 @@ const AppEcommerce = () => {
   return (
     <Router>
 
-      <Navigator />
+      <ListProducts />
      
     </Router>
   );
