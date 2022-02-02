@@ -3,7 +3,7 @@ import { Container,  Row } from 'react-bootstrap';
 import Form from '../../components/FormCheckout/Form';
 import OrderSummary from '../../components/OrderSummary/OrderSummary';
 
-const Checkout = () => {
+function Checkout() {
     return (
         <Container>
             <div className='py-5 text-center'>
@@ -15,7 +15,7 @@ const Checkout = () => {
                 <OrderSummary />
             </Row>
         </Container>
-    )
+    );
 }
 
 export default Checkout;

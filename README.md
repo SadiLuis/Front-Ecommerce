@@ -1,6 +1,6 @@
 ## Dependencia de Archivos
-Leer con cuidado el nombre de cada Archivo.tsx pues cuando los cree lo hice con Typescript.
-Borrar su dependencia de Archivos.tsx y crear una nueva dependencia de Archivos.jsx para que los archivos sean leidos con javascript.
+Leer con cuidado el nombre de cada Archivo.jsx pues cuando los cree lo hice con Typescript.
+Borrar su dependencia de Archivos.jsx y crear una nueva dependencia de Archivos.jsx para que los archivos sean leidos con javascript.
 
 ## Configuración
 
