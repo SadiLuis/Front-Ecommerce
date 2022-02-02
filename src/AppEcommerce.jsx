@@ -1,8 +1,8 @@
-
-import { BrowserRouter, Routes, Route}  from "react-router-dom";
-import NavBar from "./components/NavBar/NavBar";
-// import { Navigator } from "./Navigator";
-
+//import { Navbar } from "react-bootstrap";
+import { BrowserRouter, Routes, Route} from "react-router-dom";
+import Home from "./pages/Home/Home.jsx";
+import NavBar from "./components/NavBar/NavBar.jsx";
+import LandingPage from "./components/LandingPage.jsx";
 
 
 function AppEcommerce() {
@@ -14,17 +14,14 @@ function AppEcommerce() {
     <NavBar />
       
       <Routes>
-        <Route exact path= '/' element={<LandingPage/>}/> 
+        <Route  path= '/' element={<LandingPage/>}/> 
         <Route  path = '/home' element={<Home/>}/>
-        {/* <Route  path = '/card' element={<Card/>}/> */}
-        <Route  path = '/createvideogame' element={<CreateGame/>}/>
-        <Route  path = '/videogame/:id' element={<Detail/>}/>
-        <Route  path = '/about' element={<About/>}/>
-        
-      </Routes>
+        </Routes>
     </div>
     </BrowserRouter>
   );
 }
 
 export default AppEcommerce;
+
+

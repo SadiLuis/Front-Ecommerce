@@ -1,8 +1,8 @@
 
 import React from 'react'
-import { useContext } from 'react';
-import { Badge, Container, Nav, Navbar } from 'react-bootstrap';
-import { NavLink, Link } from 'react-router-dom';
+// import { useContext } from 'react';
+// import { Badge, Container, Nav, Navbar } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
 import { BsCart3 } from "react-icons/bs";
 
@@ -30,4 +30,4 @@ export default function NavBar(){
 }
 
 
-export default NavBar;
+
