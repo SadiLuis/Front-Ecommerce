@@ -14,8 +14,11 @@ function AppEcommerce() {
     <NavBar />
       
       <Routes>
-        <Route  path= '/' element={<LandingPage/>}/> 
+        <Route  path= '/' exact element={<LandingPage/>}/> 
         <Route  path = '/home' element={<Home/>}/>
+        {/* <Route  path = '/cart' element={<Cart/>}/>
+        <Route  path = '/registration' element={<Registration/>}/>
+        <Route  path = '/login' element={<Login/>}/> */}
         </Routes>
     </div>
     </BrowserRouter>

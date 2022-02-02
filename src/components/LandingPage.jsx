@@ -7,7 +7,7 @@ function LandingPage() {
      <h1>Welcome!</h1>
             <div className="image-landingpage"></div>
             <Link to='/home'>
-                <button className="botonIngresar">Let's go</button>
+                <button className="btn btn-primary">Let's go </button>
             </Link> 
   </div>
   )
