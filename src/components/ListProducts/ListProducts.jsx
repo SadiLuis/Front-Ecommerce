@@ -1,5 +1,4 @@
-
-import React , {useEffect , useState} from 'react';
+import React , {useEffect } from 'react';
 import {getAllProducts} from '../../actions/index';
 import { useDispatch ,useSelector } from 'react-redux';
 import Product from '../ListProducts/Product/Product';
