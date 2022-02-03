@@ -1,17 +1,22 @@
 
-import { BrowserRouter as Router } from "react-router-dom";
-import { Navigator } from "./Navigator";
-
+import { Routes, Route } from 'react-router-dom';
+import Login from './components/Login/Login';
+import Navigation from './components/Navigation/Navigation';
+import CreateUser from './components/CreateUser/CreateUser';
 
 const AppEcommerce = () => {
 
  
   return (
-    <Router>
+    <div>
+      <Routes>
 
-      <Navigator />
+      <Route exact path="/" element={<Navigation/>} />
+      <Route exact path="/login" element={<Login/>} />
+      <Route exact path="/register" element={<CreateUser/>} />
      
-    </Router>
+      </Routes>
+    </div>
   );
 }
 
