@@ -1,7 +1,8 @@
 
+import React from 'react';
 
-
-const Item = () => {
+function Item() {
+  return <div></div>;
 
 }
 
