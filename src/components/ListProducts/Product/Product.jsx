@@ -1,3 +1,4 @@
+
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -11,6 +12,7 @@ function Product({title,price,description,image,category}) {
     <span>categoria:{category}</span>
   </div>
   )
+
 }
 
 export default Product;

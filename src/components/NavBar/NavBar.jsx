@@ -1,3 +1,4 @@
+
 import { useContext } from 'react';
 import { Badge, Container, Nav, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -8,6 +9,7 @@ function NavBar() {
 }
 
 export default NavBar;
+
 
 
 
