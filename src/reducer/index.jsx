@@ -1,7 +1,9 @@
 import { GET_PRODUCTS} from '../actions/types';
+import { SEARCH_BY_NAME } from '../actions/types';
 
 const initialState ={
-    allProducts: []
+    allProducts: [],
+    productname:[]
 }
 
 export default function rootReducer(state= initialState , action){
@@ -10,6 +12,11 @@ export default function rootReducer(state= initialState , action){
             ...state,
             allProducts: action.payload
         }
+        case SEARCH_BY_NAME:
+            return {
+                ...state,
+                products:action.payload
+            }
         default: return state;
     }
 }

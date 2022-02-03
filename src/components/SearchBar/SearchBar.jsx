@@ -1,7 +1,8 @@
 import React from 'react';
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-//import { getNameGames } from "../actions
+import { searchByName } from '../../actions';
+import styles from "./SearchBar.css"
 
 
 function SearchBar() {
@@ -17,7 +18,7 @@ function SearchBar() {
     if(!name){
       alert("type the item you are looking for")
     }
-    dispatch(getNames(name))
+    dispatch(searchByName(name))
     setName("")
   }
   return (
