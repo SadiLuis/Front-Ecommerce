@@ -6,11 +6,11 @@ import store from './store';
 import {Provider} from 'react-redux';
 
 ReactDOM.render(
-
+  <BrowserRouter>
   <Provider store={store}>
   <AppEcommerce />
-  </Provider >,
-
-  document.getElementById('root')
+  </Provider >
+  </BrowserRouter>,
+   document.getElementById('root')
 );
 

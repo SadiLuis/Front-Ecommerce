@@ -12,22 +12,22 @@ function Item({id ,title , price , image}) {
      dispatch(deleteItem(id))
   }
   return (
-  <Container className='px-4'>
+  <Container className='py-10'>
    <Button className='btn-close float-end' aria-label='Close' onClick={()=> handleDelete(id)}></Button>
-   <Row className='justify-content-md-center' >
-    <Col className='md-3'>
+   <Row  >
+    <Col className='py-3 ' >
       <img src={image} alt={`imagen de ${title}`} height='200px' width='180px'/>
     </Col>
-   <Col className='md-4'>
+   <Col className='md-3'>
       <Link to={`/home/${id}`}>
       <h3>{title}</h3>
       </Link>
     </Col>
-    <Col className='md-4'>
-       <h2>$ {price}</h2>
+    <Col className='md-3'>
+       <h3>$ {price}</h3>
     </Col>
-    <Col className='md-4'>
-       <h2></h2>
+    <Col className='md-3'>
+       <h3>hola</h3>
     </Col>
    </Row>
   </Container >

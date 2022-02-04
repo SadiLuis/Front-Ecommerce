@@ -5,7 +5,7 @@ import './styles.css';
 
 const Home = () => {
     return (
-        <Container className='mt-3 home'>
+        <Container className='mt-3 '>
             <ListProducts />
         </Container>
     )
