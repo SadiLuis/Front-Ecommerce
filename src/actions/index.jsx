@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_PRODUCTS } from "./types";
+
 import { SEARCH_BY_NAME } from "./types";
 
 
