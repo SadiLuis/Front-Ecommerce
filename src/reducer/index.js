@@ -1,7 +1,8 @@
-import { GET_PRODUCTS} from '../actions/types';
+import { GET_PRODUCTS, GET_PRODUCT_BY_ID, DELETE_PRODUCT, EDIT_PRODUCT} from '../actions/types';
 
 const initialState ={
-    allProducts: []
+    allProducts: [],
+    singleProduct: {}
 }
 
 export default function rootReducer(state= initialState , action){
@@ -10,6 +11,25 @@ export default function rootReducer(state= initialState , action){
             ...state,
             allProducts: action.payload
         }
+        case GET_PRODUCT_BY_ID:
+            return {
+                ...state,
+                singleProduct: action.payload
+            }
+        case DELETE_PRODUCT:
+            let deletedProduct = state.products.filter(el => el._id !== action.payload._id)
+            return {
+                                    ...state,
+                    allProducts: [...deletedProduct]
+                };
+       case EDIT_PRODUCT:
+            let index = state.allProducts.findIndex(product => product.id === action.payload.id);
+            state.allProducts[index] = action.payload;
+            return {
+                    ...state,
+                    allProducts: [...state.products]
+                };          
+
         default: return state;
     }
 }
