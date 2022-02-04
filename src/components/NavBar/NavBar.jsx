@@ -16,6 +16,7 @@ import styles from "./NavBar.css"
 export default function NavBar(){
   const dispatch=useDispatch();
   const [name, setName]=useState("");
+  
   function handleInputChange(e){
     e.preventDefault();
     setName(e.target.value)
@@ -23,7 +24,7 @@ export default function NavBar(){
   function handleSubmit(e){
     e.preventDefault();
     if(!name){
-      alert("type the product you are looking for")
+      alert("Type the product you are looking for")
     }
     dispatch(searchByName(name))
     setName("")
