@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
 import { searchByName } from '../../actions';
-import { BsCart3 } from "react-icons/bs";
+import CartBtn from '../ShoppingCart/CartBtn'
 import styles from "./NavBar.css"
 
 
@@ -40,7 +40,7 @@ export default function NavBar(){
             <li className='list-item'>
     <NavLink  to="/home" >Home </NavLink>
     <NavLink  to="/login" >Log in </NavLink>
-    <NavLink  to="/cart" >Cart<BsCart3></BsCart3> </NavLink>
+    <NavLink  to="/cart" > <CartBtn /> </NavLink>
     </li>
     </ul>
     </div>

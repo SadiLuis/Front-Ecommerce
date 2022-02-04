@@ -19,9 +19,7 @@ function ListProducts () {
  console.log(productsApi)
   return(
   <Container>
-    <div>
-     <CartBtn />
-    </div>
+   
      <Row>
     {
      productsApi?.map(p => (
