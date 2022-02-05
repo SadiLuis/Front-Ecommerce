@@ -1,5 +1,7 @@
-import {LOCALHOST, GET_PRODUCTS, GET_PRODUCT_BY_ID } from "./types";
+
+import {LOCALHOST, GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME, ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT } from "./types";
 import axios from 'axios';
+
 
 export const getAllProducts = () => dispatch =>{
 
@@ -8,6 +10,7 @@ export const getAllProducts = () => dispatch =>{
             .then(data => dispatch({type:GET_PRODUCTS , payload: data}))
             .catch(()=> console.log('NO llega la informacion'))
 }
+
 
 export function getProductById(id) {
     return async function(dispatch) {
@@ -20,6 +23,28 @@ export function getProductById(id) {
         }catch(err) {
             console.log(err)
         }
+    }
+}
+
+export const getOneProduct = (id) => dispatch =>{
+
+    return fetch(LOCALHOST + 'products/' + id)
+            .then(res=> res.json())
+            .then(data => dispatch({type:DETAIL_PRODUCT , payload:data}))
+            .catch(e => console.log(e))
+}
+
+export const addItem = (product) =>{
+    return{
+        type:ADD_ITEM,
+        payload: product
+    }
+}
+
+export const deleteItem = (id)=>{
+    return{
+        type:DELETE_ITEM,
+        payload: id
     }
 }
 
@@ -62,6 +87,21 @@ export function deleteProduct(id) {
             }
         }catch(err){
             console.log(err)
+        }
+    }
+}
+
+export function searchByName(name){
+    return async function(dispatch){
+        try {
+            var json= await axios.get(LOCALHOST + 'products?title=' + name) //OJO: VER BIEN LA ruta por query del back
+            return dispatch({
+                type: SEARCH_BY_NAME,
+                payload:json.data
+
+            })
+        } catch (err) {
+            alert("Product not found")
         }
     }
 }

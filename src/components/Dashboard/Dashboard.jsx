@@ -8,6 +8,7 @@ import ReactModal from 'react-modal';
 import FormEditProduct from './FormEditProduct/FormEditProduct';
 import FormCreateProduct from './FormCreateProduct/FormCreateProduct'
 
+
 export default function Dashboard(){
     const dispatch = useDispatch()
     const products = useSelector(state => state.allProducts)
@@ -55,6 +56,7 @@ export default function Dashboard(){
    },[dispatch])
 
 
+
    const columns = [
     {
         name: "Actions",
@@ -88,6 +90,7 @@ export default function Dashboard(){
         ,
 
         {
+
             name: "Title",
             selector: "title",
             sortable: true
@@ -125,14 +128,18 @@ export default function Dashboard(){
         }
         ,
 
-        // {
-        //     name: "Status",
-        //     selector: "status",
-        //     sortable: true
-        // },
-                
-   ]
-   
+
+        {
+            name: "Status",
+            selector: "status",
+            sortable: true
+        }
+        ,
+        
+        
+]
+
+  
    if (products.length > 0) {
             return (
                   
