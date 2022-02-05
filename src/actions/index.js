@@ -1,6 +1,9 @@
-
-import {LOCALHOST, GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME, ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT } from "./types";
 import axios from 'axios';
+import {GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME, ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT } from "./types";
+
+let LOCALHOST = "http://localhost:3001/"
+
+
 
 
 export const getAllProducts = () => dispatch =>{
