@@ -2,3 +2,29 @@
     display: flex;
     flex-wrap: wrap;
 }
+.paginationBttns{
+    width: 80%;
+    height: 40px;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+
+}
+.paginationBttns a {
+    padding: 10px;
+    margin: 8px;
+    border-radius: 5px;
+    border: 1 px solid rgb(31, 31, 31);
+    color:rgb(31, 31, 31);
+    cursor:pointer
+
+}
+.paginationBttns a:hover{
+    color: white;
+    background-color:rgb(31, 31, 31) ;
+
+}
+.paginationActive a{
+    color: white;
+    background-color:rgb(31, 31, 31) ;
+}

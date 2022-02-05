@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
 import { searchByName } from '../../actions';
+
 import { BsCart3 } from "react-icons/bs";
 import styles from "./NavBar.css"
 
