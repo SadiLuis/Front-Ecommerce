@@ -1,9 +1,13 @@
 
-
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import Dashboard from "./components/Dashboard/Dashboard";
+import Home from "./components/Home/Home"
+import DetailProduct from './components/details/DetailProduct'
+import Cart from './components/Cart/Cart'
 import Login from './components/Login/Login';
-import Navigation from './components/Navigation/Navigation';
+import LandingPage from './components/LandingPage/LandingPage'
 import CreateUser from './components/CreateUser/CreateUser';
+import NavBar from './components/NavBar/NavBar'
 
 
 const AppEcommerce = () => {
@@ -11,15 +15,19 @@ const AppEcommerce = () => {
  
   return (
     <div>
+      <BrowserRouter>
+      <NavBar />
       <Routes>
-
-
-      <Route exact path="/" element={<Navigation/>} />
-      <Route exact path="/login" element={<Login/>} />
-      <Route exact path="/register" element={<CreateUser/>} />
-
-     
+      <Route  path= '/' exact element={<LandingPage/>}/> 
+      <Route  path="/login" element={<Login/>} />
+      <Route  path="/register" element={<CreateUser/>} />
+      <Route  path='/home' element={< Home/>}/>
+      <Route  path ='/cart' element={<Cart />} />
+      <Route  path='/home/:id' element={< DetailProduct />} />
+      <Route exact path="/dashboard" element={<Dashboard/>} />
+          
       </Routes>
+      </BrowserRouter>
     </div>
   );
 }
