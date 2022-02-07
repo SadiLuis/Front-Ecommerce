@@ -7,12 +7,14 @@ import { Button, Card , ListGroup, ListGroupItem} from 'react-bootstrap';
 function Product({title,price,description,image,category}) {
   const dispatch = useDispatch();
   const [cartBtn , setCartbtn] = useState('Agregar al carrito')
-  const items= useSelector(state => state.allProducts)
-
+  const items= useSelector(state => state.filtered)
+  const cart = useSelector(state => state.cart)
+  
   const handleCart = (e)=>{
     e.preventDefault()
     console.log(e)
     let oneProduct = items?.filter(p => p.title === e.target.name)
+    
     if(cartBtn === 'Agregar al carrito'){
       
       dispatch(addItem(oneProduct[0]))
@@ -21,6 +23,7 @@ function Product({title,price,description,image,category}) {
        dispatch(deleteItem(oneProduct[0].id))
       setCartbtn('Agregar al carrito')
     }
+    
   }
   return (
     <Card style={{ width: '18rem' }}>

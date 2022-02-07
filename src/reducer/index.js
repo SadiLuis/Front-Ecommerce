@@ -5,7 +5,8 @@ const initialState ={
     filtered:[],
     productName:[],
     details:{},
-    cart:[]
+    cart:[],
+    precioTotal:0
 }
 
 export default function rootReducer(state= initialState , action){
@@ -19,9 +20,20 @@ export default function rootReducer(state= initialState , action){
             ...state,
             details: action.payload
         }
-        case ADD_ITEM: return{
+        case ADD_ITEM: 
+        let itemCart = state.cart.find(item => item.id === action.payload.id)
+        return itemCart 
+          ? {
             ...state,
-             cart: [...state.cart,action.payload]
+             cart: state.cart.map(item => 
+                item.id === action.payload.id
+                ?{...item, quantity: item.quantity + 1 , cantidad: item.cantidad - 100}
+                : item )
+          }
+           
+          : {
+            ...state,
+             cart: [...state.cart,{...action.payload ,quantity:1}] 
 
         }
         case DELETE_ITEM: return{
@@ -35,6 +47,44 @@ export default function rootReducer(state= initialState , action){
                 productName:action.payload,
                 filtered: action.payload
             }
+        case 'PRECIO_TOTAL_SUM': 
+         const totalsum = state.precioTotal + action.payload
+         const fixed1 = Math.round((totalsum + Number.EPSILON) * 100) / 100;
+             return{
+                ...state,
+                 precioTotal: fixed1
+          }
+          case 'PRECIO_TOTAL_RES':
+            const totalres = state.precioTotal - action.payload
+            const fixed2 = Math.round((totalres + Number.EPSILON) * 100) / 100;
+              return{
+                  ...state,
+                  precioTotal: fixed2
+              }
+          case 'RESET_TOTAL': return{
+              ...state,
+              precioTotal: state.precioTotal 
+          }
+          case 'ADD_QUANTITY': 
+            
+           return{
+            ...state,
+             cart: state.cart.map(item => 
+                item.id === action.payload.id
+                ? {...item, quantity: action.payload.addQuantity + 1 , cantidad: item.cantidad - 1 }
+                : item )
+          }   
+          case 'REST_QUANTITY': 
+            
+           return{
+            ...state,
+             cart: state.cart.map(item => 
+                item.id === action.payload.id
+                ? {...item, quantity: action.payload.addQuantity - 1 , cantidad: item.cantidad + 1 }
+                : item )
+          }       
+         
+
         default: return state;
     }
 }

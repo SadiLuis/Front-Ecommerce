@@ -32,9 +32,9 @@ export default function NavBar(){
   }
     return (
         
-        <nav class="navbar navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand">Henry Ecommerce</a>
+        <nav className="navbar navbar-dark bg-dark">
+  <div className="container-fluid">
+    <a className="navbar-brand">Henry Ecommerce</a>
     <div className='navlink'>
         <ul className='list'>
             <li className='list-item'>
@@ -44,9 +44,9 @@ export default function NavBar(){
     </li>
     </ul>
     </div>
-    <form class="d-flex"> 
-       <input class="form-control me-2" type="search"   onChange={handleInputChange} placeholder="Search" aria-label="Search"/>
-      <button class="btn btn-outline-success" type="submit" onClick={handleSubmit}
+    <form className="d-flex"> 
+       <input className="form-control me-2" type="search" vale={name}  onChange={handleInputChange} placeholder="Search" aria-label="Search"/>
+      <button className="btn btn-outline-success" type="submit" onClick={handleSubmit}
       
       >Search</button> 
      </form>

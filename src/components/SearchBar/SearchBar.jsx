@@ -6,7 +6,7 @@ import styles from "./SearchBar.css"
 
 
 function SearchBar() {
-  const dispatch=useDispatch();
+  /* const dispatch=useDispatch();
   const [name, setName]=useState("");
 
   function handleInputChange(e){
@@ -25,12 +25,18 @@ function SearchBar() {
   <div>
     <input
     type="text"
+    value={name}
     onChange={handleInputChange}>
     </input>
     <button type="submit"
     onClick={handleSubmit}></button>
   </div>
-  );
+  ); */
+  return(
+    <div>
+      <p>hola</p>
+    </div>
+  )
 }
 
 export default SearchBar;

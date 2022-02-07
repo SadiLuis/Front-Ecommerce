@@ -10,6 +10,7 @@ function DetailProduct() {
    const dispatch = useDispatch();
    const [cartBtn , setCartbtn] = useState('Agregar al carrito')
    const detailProduct = useSelector(state => state.details);
+   const item = useSelector(state => state.cart)
    const {id} = useParams()
 
    useEffect(()=>{
@@ -18,15 +19,11 @@ function DetailProduct() {
   },[dispatch , id])
 
    console.log(detailProduct)
-  let rate;
-  let count;
-  
-  if(Object.keys(detailProduct).length){
-    rate = detailProduct.rating.rate;
-    count= detailProduct.rating.count
-  }
+ 
 
   const handleCart = (detailProduct)=>{
+    const itemProdcut= item.filter(i => i.id === detailProduct.id)
+   
     if(cartBtn === 'Agregar al carrito'){
       dispatch(addItem(detailProduct))
       setCartbtn('Eliminar del carrito')
@@ -34,6 +31,7 @@ function DetailProduct() {
        dispatch(deleteItem(detailProduct.id))
       setCartbtn('Agregar al carrito')
     }
+    
   }
 
   return( 
@@ -55,8 +53,8 @@ function DetailProduct() {
     </Card.Body>
     <ListGroup className="list-group-flush">
     <ListGroupItem>Categoria: {detailProduct.category}</ListGroupItem>
-    <ListGroupItem>Rate: {rate}</ListGroupItem>
-    <ListGroupItem>Count: {count}</ListGroupItem>
+    <ListGroupItem>Rate: {detailProduct.rate}</ListGroupItem>
+    <ListGroupItem>Count: {detailProduct.count}</ListGroupItem>
    
   </ListGroup>
   <Button variant="primary">Comprar</Button>
