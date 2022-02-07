@@ -1,29 +1,29 @@
 import React, {useState} from 'react';
 import Swal from 'sweetalert2';
 import LoginForm from './LoginForm';
+import { useDispatch } from 'react-redux';
+import {postLogin} from '../../actions/index';
+import { Link } from 'react-router-dom';
 
 
 
 
 const Login = () => {
-    const userAdmin = {
-        username: 'SadiLuis',
-        password: 'admin123',
-        email: 'admin@example.com'
-    }
+    const dispatch = useDispatch()
 
-    const [user, setUser] = useState({username:'', password:'', email:''});
+    const [user, setUser] = useState({ password:'', email:''});
 
     const [error, setError] = useState("");
 
     const appLogin = details => {
         console.log(details);
-        if (details.username === userAdmin.username && details.password === userAdmin.password && details.email === userAdmin.email) {
+        // eslint-disable-next-line no-self-compare
+        if ( postLogin.password === postLogin.password && postLogin.email === postLogin.email) {
             console.log("Login Successful");
             setUser({
-                username: details.username,
-                password: details.password,
-                email: details.email
+                user: postLogin.user,
+                password: postLogin.password,
+                email: postLogin.email
             })
 
         } else {
@@ -33,16 +33,12 @@ const Login = () => {
                 icon: 'error',
                 text: 'Login Failed please Login or Register',
             })
-
-
         }
-
-
     }
 
     const Logout = () => {
         setUser({
-            username: '',
+           
             password: '',
             email: ''
             });
@@ -52,8 +48,9 @@ const Login = () => {
 			<div >
 				{(user.email != "") ? (
                     <div className="Welcome" >
-                        <h2> Welcome, <span>{user.username}</span> </h2>
-                    <button onClick={Logout} >Logout</button>   
+                        <h2> Welcome, Admin <span>{postLogin.user}</span> </h2>
+                    <button onClick={Logout} className="btn btn-secondary"  >Logout</button> 
+                    <Link to="/dashboard" className="btn btn-primary">Dashboard</Link>  
                     </div> 
                 ): (
                     <LoginForm appLogin={appLogin} error={error} />
