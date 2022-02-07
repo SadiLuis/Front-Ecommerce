@@ -112,7 +112,7 @@ export default function FormEditProduct(props){
     
     
 
-    if (product.length > 0 && input.length > 0) 
+    if (product) 
     {
         return (
         <div>
@@ -130,7 +130,7 @@ export default function FormEditProduct(props){
                         type='text'
                         name='title'
                         onChange={e => handleInputChange(e)}
-                        value={product[0].title}
+                        value={product.title}
                         //placeholder={input.title}
                         //required
                     />
@@ -145,7 +145,7 @@ export default function FormEditProduct(props){
                         type='number'
                         name='price'
                         onChange={e => handleInputChange(e)}
-                        value={product[0].price}
+                        value={product.price}
                         placeholder='Price of Product'
                         //required
                     />
@@ -175,7 +175,7 @@ export default function FormEditProduct(props){
                     <textarea
                     name='description'
                     onChange={e => handleInputChange(e)}
-                    value={product[0].description}
+                    value={product.description}
                     placeholder='Description of Product'
                     //required
                     />
@@ -200,7 +200,7 @@ export default function FormEditProduct(props){
                     <label htmlFor="">Image:</label>
                     <input 
                         type="text"
-                        value = {product[0].image}
+                        value = {product.image}
                         name = "image" 
                         onChange={(e) => handleInputChange(e) }
                     />
@@ -213,10 +213,10 @@ export default function FormEditProduct(props){
                 <div>
                     <label >Stock</label>
                     <input
-                        type='number'
+                        type='text'
                         name='cantidad'
                         onChange={e => handleInputChange(e)}
-                        value={product[0].cantidad}
+                        value={product.cantidad}
                         //placeholder='Stock of Product'
                         //required
                     />

@@ -1,5 +1,8 @@
-import React, { useState } from 'react'
-//import { useDispatch } from 'react-redux';
+
+import { useContext } from 'react';
+import { Badge, Container, Nav, Navbar } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import React from 'react';
 
 // import { useContext } from 'react';
 // import { Badge, Container, Nav, Navbar } from 'react-bootstrap';
@@ -51,6 +54,7 @@ export default function NavBar(){
        
     )
 }
+
 
 
 

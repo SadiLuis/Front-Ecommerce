@@ -10,6 +10,7 @@ function DetailProduct() {
    const dispatch = useDispatch();
    const [cartBtn , setCartbtn] = useState('Agregar al carrito')
    const detailProduct = useSelector(state => state.details);
+   const item = useSelector(state => state.cart)
    const {id} = useParams()
 
    useEffect(()=>{
@@ -17,50 +18,43 @@ function DetailProduct() {
    
   },[dispatch , id])
 
-//    console.log(detailProduct)
-//   let rate;
-//   let count;
-  
-//   if(Object.keys(detailProduct).length){
-//     rate = detailProduct.rating.rate;
-//     count= detailProduct.rating.count
-//   }
-
+   console.log(detailProduct)
+ 
 
   const handleCart = (detailProduct)=>{
+    const itemProdcut= item.filter(i => i.id === detailProduct.id)
+   
     if(cartBtn === 'Agregar al carrito'){
-      dispatch(addItem(detailProduct[0]))
+      dispatch(addItem(detailProduct))
       setCartbtn('Eliminar del carrito')
     }else{
-       dispatch(deleteItem(detailProduct[0].id))
+       dispatch(deleteItem(detailProduct.id))
       setCartbtn('Agregar al carrito')
     }
+    
   }
-  
-  if (detailProduct.length > 0) {
 
-  
   return( 
     <div>
   <Card className="text-center" style={{ width: '50rem' }}>
-    <Card.Img variant="top" src={detailProduct[0].image} />
+    <Card.Img variant="top" src={detailProduct.image} />
     <Card.Body>
-    <Card.Title>{detailProduct[0].title}</Card.Title>
-    <Card.Title> Precio : $ {detailProduct[0].price}</Card.Title>
+    <Card.Title>{detailProduct.title}</Card.Title>
+    <Card.Title> Precio : $ {detailProduct.price}</Card.Title>
     </Card.Body>
   </Card>
   <br />
   <Card className="text-center" style={{ width: '50rem' }}>
     <Card.Body>
       <Card.Text>
-       {detailProduct[0].description}
+       {detailProduct.description}
       </Card.Text>
      
     </Card.Body>
     <ListGroup className="list-group-flush">
-    <ListGroupItem>Categoria: {detailProduct[0].categoriaId}</ListGroupItem>
-    <ListGroupItem>Rate: {detailProduct[0].rate}</ListGroupItem>
-    <ListGroupItem>Count: {detailProduct[0].count}</ListGroupItem>
+    <ListGroupItem>Categoria: {detailProduct.category}</ListGroupItem>
+    <ListGroupItem>Rate: {detailProduct.rate}</ListGroupItem>
+    <ListGroupItem>Count: {detailProduct.count}</ListGroupItem>
    
   </ListGroup>
   <Button variant="primary">Comprar</Button>
@@ -70,11 +64,6 @@ function DetailProduct() {
   </Card>
   </div>
   )
-    }else {
-        return (
-            <h1>Loading Details...</h1>  
-        )
-    }
 }
 
 export default DetailProduct;

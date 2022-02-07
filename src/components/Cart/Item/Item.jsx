@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {useDispatch} from 'react-redux';
 import {deleteItem} from '../../../actions/index';
@@ -26,7 +27,7 @@ function Item({id ,title , price , image}) {
        <h3>$ {price}</h3>
     </Col>
     <Col className='md-3'>
-       <h3>hola</h3>
+       <h3>Hola Franco</h3>
     </Col>
    </Row>
   </Container >

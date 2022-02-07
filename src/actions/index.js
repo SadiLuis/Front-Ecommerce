@@ -108,3 +108,31 @@ export function searchByName(name){
         }
     }
 }
+
+export function postLogin({email, contraseña}){
+    return async function(dispatch){
+        try {
+            var json= await axios.post(LOCALHOST + 'login', {email, contraseña})
+            return dispatch({
+                type: "LOGIN",
+                payload:json.data
+            })
+        } catch (err) {
+            alert("Login failed")
+        }
+    }
+}
+
+export function postRegister({email, contraseña, nombre, usuario, direccion, pais, provincia, telefono}){
+    return async function(dispatch){
+        try {
+            var json= await axios.post(LOCALHOST + 'register', {email, contraseña, nombre, usuario, direccion, pais, provincia, telefono})
+            return dispatch({
+                type: "REGISTER",
+                payload:json.data
+            })
+        } catch (err) {
+            alert("Register failed")
+        }
+    }
+}
