@@ -11,7 +11,7 @@ function Cart() {
   const total = useSelector(state => state.precioTotal)
   console.log(items)
 
-  
+    
   
    const emptyCart = ()=>{
     return(

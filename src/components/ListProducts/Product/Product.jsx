@@ -1,6 +1,6 @@
 import React ,{useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import { addItem ,deleteItem } from '../../../actions';
+import { addItem ,deleteItem ,totalItemSum , totalItemRes} from '../../../actions';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Card , ListGroup, ListGroupItem} from 'react-bootstrap';
 
@@ -14,12 +14,13 @@ function Product({title,price,description,image,category}) {
     e.preventDefault()
     console.log(e)
     let oneProduct = items?.filter(p => p.title === e.target.name)
-    
+    let itemCart = cart.filter(i => i.id === oneProduct[0].id)
     if(cartBtn === 'Agregar al carrito'){
-      
+      dispatch(totalItemSum(oneProduct[0].price))
       dispatch(addItem(oneProduct[0]))
       setCartbtn('Eliminar del carrito')
     }else{
+      dispatch(totalItemRes(oneProduct[0].price * itemCart[0].quantity))
        dispatch(deleteItem(oneProduct[0].id))
       setCartbtn('Agregar al carrito')
     }

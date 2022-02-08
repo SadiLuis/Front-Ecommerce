@@ -8,38 +8,41 @@ import {Container , Button ,Row , Col} from 'react-bootstrap';
 function Item({id ,title , price , image, stock , quantity}) {
   const dispatch = useDispatch()
   const [input , setInput] = useState(quantity)
-  const [precio , setPrecio] = useState(price*quantity)
+  //const [precio , setPrecio] = useState(price*quantity)
   const sumaTotal = useSelector(state => state.precioTotal)
-
-  useEffect(()=>{
-     dispatch(totalItemSum(price*quantity))
-    
-   
-  },[dispatch])
-
+   let priceTotal = price * quantity
+  
+ 
    const payload ={
      addQuantity: parseInt(input),
      id : id
+     
    }
 
   const handleChange = (e)=>{
-     setInput(e.target.value)
-     console.log(e.target.value)
     
-  }
+     setInput(e.target.value)
+    
+    }
 
   const handleButtonMas =(e)=>{
     e.preventDefault()
+    if(input  <= stock ){
     setInput(prev => prev + 1)
-    setPrecio(prev => prev + price)
+    
        dispatch(addQuantity(payload ))
         dispatch(totalItemSum(price ))
+    }else{
+      alert('Se supero el limite de stock , el limite es: '+ stock)
+      setInput(prev => prev - 1)
+      dispatch(totalItemRes(price ))
+    }
   }
   const handleButtonMenos =(e)=>{
     e.preventDefault()
     if(input > 1){
     setInput(prev => prev  - 1)
-    setPrecio(prev => prev - price)
+   
      dispatch(restQuantity(payload ))
      dispatch(totalItemRes(price ))
     }
@@ -47,12 +50,12 @@ function Item({id ,title , price , image, stock , quantity}) {
 
   const handleDelete = (id,e)=>{
     e.preventDefault()
-   dispatch(totalItemRes(precio))
+   dispatch(totalItemRes(priceTotal))
      dispatch(deleteItem(id))
   }
- console.log(input , quantity)
+ //console.log(input , quantity)
  
- const fixedPrice =  Math.round((precio + Number.EPSILON) * 100) / 100;
+ const fixedPrice =  Math.round((priceTotal + Number.EPSILON) * 100) / 100;
  
 
   return (

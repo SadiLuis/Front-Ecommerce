@@ -27,7 +27,7 @@ export default function rootReducer(state= initialState , action){
             ...state,
              cart: state.cart.map(item => 
                 item.id === action.payload.id
-                ?{...item, quantity: item.quantity + 1 , cantidad: item.cantidad - 100}
+                ?{...item, quantity: item.quantity + 1 }
                 : item )
           }
            
@@ -71,7 +71,7 @@ export default function rootReducer(state= initialState , action){
             ...state,
              cart: state.cart.map(item => 
                 item.id === action.payload.id
-                ? {...item, quantity: action.payload.addQuantity + 1 , cantidad: item.cantidad - 1 }
+                ? {...item, quantity: action.payload.addQuantity + 1}
                 : item )
           }   
           case 'REST_QUANTITY': 
@@ -80,7 +80,7 @@ export default function rootReducer(state= initialState , action){
             ...state,
              cart: state.cart.map(item => 
                 item.id === action.payload.id
-                ? {...item, quantity: action.payload.addQuantity - 1 , cantidad: item.cantidad + 1 }
+                ? {...item, quantity: action.payload.addQuantity - 1  }
                 : item )
           }       
          
