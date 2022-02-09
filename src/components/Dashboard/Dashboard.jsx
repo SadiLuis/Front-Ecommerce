@@ -75,7 +75,6 @@ export default function Dashboard(){
                 title="Delete"
                 onClick={() => {
                 handleDeleteProduct(row.id);
-                
             }}
             >
             Delete

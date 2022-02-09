@@ -1,12 +1,13 @@
-import { GET_PRODUCTS, GET_PRODUCT_BY_ID, DELETE_PRODUCT, EDIT_PRODUCT, DETAIL_PRODUCT , ADD_ITEM , DELETE_ITEM , SEARCH_BY_NAME} from '../actions/types';
+import { GET_PRODUCTS, GET_PRODUCT_BY_ID, DELETE_PRODUCT, EDIT_PRODUCT, DETAIL_PRODUCT , ADD_ITEM , DELETE_ITEM , SEARCH_BY_NAME, GET_CATEGORIES} from '../actions/types';
 
 const initialState ={
     allProducts: [],
-    singleProduct: {},
+    singleProduct: [],
     filtered:[],
     productName:[],
     details:{},
-    cart:[]
+    cart:[],
+    categories: []
 }
 
 export default function rootReducer(state= initialState , action){
@@ -23,18 +24,17 @@ export default function rootReducer(state= initialState , action){
                 details: action.payload
             }
         case DELETE_PRODUCT:
-            let deletedProduct = state.products.filter(el => el._id !== action.payload._id)
             return {
-                                    ...state,
-                    allProducts: [...deletedProduct]
-                };
-       case EDIT_PRODUCT:
-            let index = state.allProducts.findIndex(product => product.id === action.payload.id);
-            state.allProducts[index] = action.payload;
-            return {
-                    ...state,
-                    allProducts: [...state.products]
-                };
+                ...state,
+                allProducts: action.payload
+            }
+    //    case EDIT_PRODUCT:
+    //         let index = state.allProducts.findIndex(product => product.id === action.payload.id);
+    //         state.allProducts[index] = action.payload;
+    //         return {
+    //                 ...state,
+    //                 allProducts: [...state.products]
+    //             };
                 case DETAIL_PRODUCT: return {
                     ...state,
                     details: action.payload
@@ -54,7 +54,13 @@ export default function rootReducer(state= initialState , action){
                         ...state,
                         productName: action.payload,
                         filtered:  action.payload
-                    }                  
+                    }
+                case GET_CATEGORIES: {
+                    return {
+                        ...state,
+                        categories: action.payload
+                    }
+                }                      
 
         default: return state;
     }

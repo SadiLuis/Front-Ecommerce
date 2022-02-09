@@ -1,8 +1,7 @@
 import React, { useState, useEffect,  } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { getProductById, editProduct } from '../../../actions';
+import { getProductById, editProduct, getCategories } from '../../../actions';
 import { validationFunction } from './ValidationFunction';
-import { category } from './Categorias';
 
 
 export default function FormEditProduct(props){
@@ -12,63 +11,49 @@ export default function FormEditProduct(props){
     
     const dispatch = useDispatch()
     const product = useSelector((state) => state.singleProduct)
-
-    
-
-    const [errors, setErrors] = useState({})        
-
-    
-    useEffect(() => {
-        dispatch(getProductById(id))
+    const [errors, setErrors] = useState({})
+    const category = useSelector( (state) => state.categories)
+     
+    const [input, setInput] = useState({
         
+        id: '',
+        title: '',
+        price: '',
+        description: '',
+        categoriaId: '',
+        caterogy: '',
+        image: '',
+        cantidad: ''
+    
+})
+
+
+    useEffect(() => {
+        dispatch(getProductById(id));
+        dispatch(getCategories())
     }, [id])
 
     useEffect(() => {
-        setInput(product)
-     }, [product])
-
-    const [input, setInput] = React.useState({
-        
-            title: '',
-            price: '',
-            description: '',
+        setInput({
+            id: product.id || '',
+            title: product.title || '',
+            price: product.price || '',
+            description: product.description || '',
             categoriaId: '',
-            image: '',
-            rate: '',
-            count: '',
-            cantidad: ''
-        
-    })
-
+            caterogy: product.category || '',
+            image: product.image || '',
+            cantidad: product.cantidad || ''
+        })
+     }, [product])
     
-
-
-    // console.log("producto", product)
-    // console.log(input[0].title)
-
-    // useEffect(() => {
-    //     setInput(product[0])
-    // }, [product])
-
-    // useEffect(() => {
-    //     setInput({
-    //         title: product[0].title,
-    //         price: product[0].price,
-    //         description: product[0].description,
-    //         categoriaId: product[0].categoriaId,
-    //         image: product[0].image,
-    //         rate: product[0].rate,
-    //         count: product[0].count,
-    //         cantidad: 100
-    //     })
-    // }, [product])
-
+    
 
     function handleInputChange(e){
         
         setInput({
             ...input,
-            [e.target.name] : e.target.value
+            [e.target.name] : e.target.value,
+            categoriaId: (category.filter(c => c.nombre === product.category)).map(c => c.id)[0]
         })
         setErrors(validationFunction({
             ...input,
@@ -90,15 +75,14 @@ export default function FormEditProduct(props){
     }
 
     const handleSubmit = (e) => {
-        dispatch(editProduct(input[0]))
+        dispatch(editProduct(input))
         setInput({
+            id: '',
             title: '',
             price: '',
             description: '',
             categoriaId: '',
             image: '',
-            rate: '',
-            count: '',
             cantidad: ''
              })
         //alert("Product was succesfully created")   
@@ -110,12 +94,21 @@ export default function FormEditProduct(props){
     }    
     
     
+    //let auxCategoryId = category.filter(c => c.nombre === product.caterogy)
+    
     
 
-    if (product.length > 0 && input.length > 0) 
+    console.log("input", input)
+    //console.log(auxCategoryId)
+    
+    
+    //if (product.length > 0 && input.length > 0)
+    if (product && category.length > 0 )
     {
         return (
+            
         <div>
+            
             <form 
              onSubmit={e => {
                 handleSubmit(e)
@@ -130,9 +123,7 @@ export default function FormEditProduct(props){
                         type='text'
                         name='title'
                         onChange={e => handleInputChange(e)}
-                        value={product[0].title}
-                        //placeholder={input.title}
-                        //required
+                        value={input.title}
                     />
                     {errors.title && (
                         <p>{errors.title}</p>
@@ -145,22 +136,21 @@ export default function FormEditProduct(props){
                         type='number'
                         name='price'
                         onChange={e => handleInputChange(e)}
-                        value={product[0].price}
-                        placeholder='Price of Product'
-                        //required
+                        value={input.price}
+                        
                     />
                     {errors.price && (
-                        <p>{errors.price}</p>
+                        <p>{input.price}</p>
                     )}
                 </div>
 
-                {/* <div>        
+                <div>        
                 <select onChange={(e) => handleSelectCategory(e) } name="" id="">
-                        <option defaultValue="default" value="">Select Category</option>
+                        <option defaultValue={(category.filter(c => c.nombre === product.category)).map(c => c.id)} value={(category.filter(c => c.nombre === product.category)).map(c => c.id)}>{product.category}</option>
                     {
                         category.map( (c => 
                             
-                            <option key={c.id} value={c.categoriaId}>{c.name}</option>
+                            <option key={c.id} value={c.id}>{c.nombre}</option>
                             
                         ))
                 }    
@@ -168,16 +158,14 @@ export default function FormEditProduct(props){
                 {errors.categoriaId && (
                         <p>{errors.categoriaId}</p>
                     )}
-                </div> */}
+                </div>
 
                 <div>
                     <label>Description</label>
                     <textarea
                     name='description'
                     onChange={e => handleInputChange(e)}
-                    value={product[0].description}
-                    placeholder='Description of Product'
-                    //required
+                    value={input.description}
                     />
                     {errors.description && (
                         <p>{errors.description}</p>
@@ -200,7 +188,7 @@ export default function FormEditProduct(props){
                     <label htmlFor="">Image:</label>
                     <input 
                         type="text"
-                        value = {product[0].image}
+                        value = {input.image}
                         name = "image" 
                         onChange={(e) => handleInputChange(e) }
                     />
@@ -216,9 +204,8 @@ export default function FormEditProduct(props){
                         type='number'
                         name='cantidad'
                         onChange={e => handleInputChange(e)}
-                        value={product[0].cantidad}
-                        //placeholder='Stock of Product'
-                        //required
+                        value={input.cantidad}
+                        
                     />
                     {errors.cantidad && (
                         <p>{errors.cantidad}</p>

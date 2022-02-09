@@ -1,28 +1,53 @@
 export const category = [
     {
         categoriaId: 1,
-        name : 'Smart TV'
+        name : 'Teclados'
     },
 
     {
         categoriaId: 2,
-        name : 'Camera'
+        name : 'Mouses'
     },
 
     
     {
         categoriaId: 3,
-        name : 'Electronics'
+        name : 'Auriculares'
     },
 
     {
         categoriaId: 4,
-        name : 'Smart Phone'
+        name : 'Repuestos'
     },
 
     
     {
         categoriaId: 5,
-        name : 'Smart Watch'
-    }
+        name : 'Camera'
+    },
+
+    {
+        categoriaId: 6,
+        name : 'Smart TV'
+    },
+
+    {
+        categoriaId: 7,
+        name : 'Electronics'
+    },
+
+    {
+        categoriaId: 8,
+        name : 'SmartPhones'
+    },
+
+    {
+        categoriaId: 9,
+        name : 'SmartWatch'
+    },
+
+    {
+        categoriaId: 10,
+        name : 'Smart TV'
+    },
 ]

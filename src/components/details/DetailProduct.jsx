@@ -17,6 +17,7 @@ function DetailProduct() {
    
   },[dispatch , id])
 
+  console.log("detail", detailProduct)
 //    console.log(detailProduct)
 //   let rate;
 //   let count;
@@ -36,31 +37,32 @@ function DetailProduct() {
       setCartbtn('Agregar al carrito')
     }
   }
+ 
   
-  if (detailProduct.length > 0) {
+  if (detailProduct ) {
 
   
   return( 
     <div>
   <Card className="text-center" style={{ width: '50rem' }}>
-    <Card.Img variant="top" src={detailProduct[0].image} />
+    <Card.Img variant="top" src={detailProduct.image} />
     <Card.Body>
-    <Card.Title>{detailProduct[0].title}</Card.Title>
-    <Card.Title> Precio : $ {detailProduct[0].price}</Card.Title>
+    <Card.Title>{detailProduct.title}</Card.Title>
+    <Card.Title> Precio : $ {detailProduct.price}</Card.Title>
     </Card.Body>
   </Card>
   <br />
   <Card className="text-center" style={{ width: '50rem' }}>
     <Card.Body>
       <Card.Text>
-       {detailProduct[0].description}
+       {detailProduct.description}
       </Card.Text>
      
     </Card.Body>
     <ListGroup className="list-group-flush">
-    <ListGroupItem>Categoria: {detailProduct[0].categoriaId}</ListGroupItem>
-    <ListGroupItem>Rate: {detailProduct[0].rate}</ListGroupItem>
-    <ListGroupItem>Count: {detailProduct[0].count}</ListGroupItem>
+    <ListGroupItem>Categoria: {detailProduct.categoriaId}</ListGroupItem>
+    <ListGroupItem>Rate: {detailProduct.rate}</ListGroupItem>
+    <ListGroupItem>Count: {detailProduct.count}</ListGroupItem>
    
   </ListGroup>
   <Button variant="primary">Comprar</Button>
