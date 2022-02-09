@@ -1,4 +1,6 @@
-import { GET_PRODUCTS, GET_PRODUCT_BY_ID, DELETE_PRODUCT, EDIT_PRODUCT, DETAIL_PRODUCT , ADD_ITEM , DELETE_ITEM , SEARCH_BY_NAME} from '../actions/types';
+import { GET_PRODUCTS, GET_PRODUCT_BY_ID, 
+    DELETE_PRODUCT, EDIT_PRODUCT, DETAIL_PRODUCT , 
+    ADD_ITEM , DELETE_ITEM , SEARCH_BY_NAME ,FILTER_BY_CATEGORY ,GET_CATEGORIES} from '../actions/types';
 
 const initialState ={
     allProducts: [],
@@ -99,7 +101,46 @@ export default function rootReducer(state= initialState , action){
                            item.id === action.payload.id
                            ? {...item, quantity: action.payload.addQuantity - 1  }
                            : item )
-                     }       
+                     } 
+                     case GET_CATEGORIES:
+                        return {
+                            ...state,
+                            categories:action.payload
+                        }
+                    case FILTER_BY_CATEGORY:
+                        let categoriesProducts = action.payload === "all" ? state.allProducts : state.allProducts.filter((elem)=>elem.category.includes(action.payload))  
+                         return {
+                             ...state,
+                             filtered:categoriesProducts
+                         } 
+    
+                         case 'ORDER_BY_PRICE':
+                            let sortedPrice=action.payload==="asc"?
+                            [...state.filtered].sort(function(a,b){
+                                return (a.price - b.price);
+                            }) :
+                            [...state.filtered].sort(function(a,b){
+                                return (b.price - a.price)
+                            })
+                           
+                            return {
+                                ...state,
+                                filtered:sortedPrice
+                            } 
+    
+                            case 'ORDER_BY_RATE':
+                            let sortedRate=action.payload==="asc"?
+                            [...state.filtered].sort(function(a,b){
+                                return (a.rate - b.rate);
+                            }) :
+                            [...state.filtered].sort(function(a,b){
+                                return (b.rate - a.rate)
+                            })
+                           
+                            return {
+                                ...state,
+                                filtered:sortedRate
+                            }       
                                      
 
         default: return state;

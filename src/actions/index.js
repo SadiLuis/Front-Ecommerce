@@ -1,5 +1,6 @@
 import axios from 'axios';
-import {GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME, ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT } from "./types";
+import {GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME,
+     ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT , FILTER_BY_CATEGORY,GET_CATEGORIES } from "./types";
 
 let LOCALHOST = "http://localhost:3001/"
 
@@ -163,3 +164,37 @@ export const restQuantity = (payload) =>{
         payload
     }
 }
+
+export function getCategories(){
+    return async function(dispatch){
+        try {
+            const responseCategories=await axios.get(LOCALHOST + 'categories')
+            return dispatch({
+                type: GET_CATEGORIES,
+                payload: responseCategories.data
+            })
+        } catch(err){
+            console.log(err)
+        }
+    }
+}
+
+export function filterByCategory(payload){
+    return {
+        type: FILTER_BY_CATEGORY,
+        payload
+        
+    } 
+}
+    export function orderByPrice(payload){
+        return {
+            type: "ORDER_BY_PRICE",
+            payload
+        }
+    }
+    export function orderByRate(payload){
+        return {
+            type: "ORDER_BY_RATE",
+            payload
+        }
+    }

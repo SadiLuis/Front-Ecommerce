@@ -36,8 +36,8 @@ function Product({title,price,description,image,category,rate}) {
     </Card.Text>
     <ListGroup className="list-group-flush">
     <ListGroupItem>$ {price}</ListGroupItem>
-    <ListGroupItem>{category}</ListGroupItem>
-    <ListGroupItem>{rate}</ListGroupItem>
+    <ListGroupItem>Category: {category}</ListGroupItem>
+    <ListGroupItem> Rate: {rate}</ListGroupItem>
   </ListGroup>
   <Button variant="primary" name={title} onClick={(e)=> handleCart(e)}>{cartBtn}</Button>
   </Card.Body>

@@ -7,3 +7,5 @@ export const ADD_ITEM = 'ADD_ITEM'
 export const DELETE_ITEM = 'DELETE_ITEM'
 export const DETAIL_PRODUCT = 'DETAIL_PRODUCT'
 export const LOCALHOST = "http://localhost:3001/"
+export const FILTER_BY_CATEGORY = 'FILTER_BY_CATEGORY'
+export const GET_CATEGORIES = 'GET_CATEGORIES';

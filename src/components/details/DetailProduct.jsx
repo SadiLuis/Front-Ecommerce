@@ -59,7 +59,7 @@ function DetailProduct() {
     <ListGroupItem>Stock: {detailProduct.cantidad}</ListGroupItem>
    
   </ListGroup>
-  <Link to={`home/buy/${detailProduct.id}`}>
+  <Link to={`/home/buy`}>
   <Button variant="primary">Comprar</Button>
   </Link>
   <br />

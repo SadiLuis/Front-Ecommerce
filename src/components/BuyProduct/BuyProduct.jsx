@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {useParams} from 'react-router-dom';
+
 import {useSelector} from 'react-redux';
 import { loadStripe } from "@stripe/stripe-js";
 import {
@@ -18,7 +18,7 @@ const stripePromise = loadStripe("pk_test_51KQbAWIarjJt2FCS6eI6jVEzZ1DxAJRwWufxm
 
 const CheckoutForm = () => {
     const detailProduct = useSelector(state => state.details);
-    const {id} = useParams();
+    
   const stripe = useStripe();
   const elements = useElements();
 
@@ -66,7 +66,7 @@ const CheckoutForm = () => {
         className="img-fluid"
       />
 
-      <h3 className="text-center my-2">Price: {detailProduct.price}</h3>
+      <h3 className="text-center my-2">Precio: $ {detailProduct.price}</h3>
       
       {/* User Card Input */}
       <div className="form-group">
