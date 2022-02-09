@@ -1,7 +1,7 @@
 import React ,{useEffect ,useState} from 'react';
 import {useDispatch , useSelector} from 'react-redux';
 import { useParams} from 'react-router-dom';
-import {getOneProduct,addItem ,deleteItem} from '../../actions/index';
+import {getOneProduct,addItem ,deleteItem ,totalItemSum,totalItemRes } from '../../actions/index';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Card , ListGroup , ListGroupItem ,Button} from 'react-bootstrap'
@@ -22,12 +22,14 @@ function DetailProduct() {
  
 
   const handleCart = (detailProduct)=>{
-    const itemProdcut= item.filter(i => i.id === detailProduct.id)
-   
+    const itemProduct= item.filter(i => i.id === detailProduct.id)
+   console.log(itemProduct)
     if(cartBtn === 'Agregar al carrito'){
+      dispatch(totalItemSum(detailProduct.price))
       dispatch(addItem(detailProduct))
       setCartbtn('Eliminar del carrito')
     }else{
+      dispatch(totalItemRes(detailProduct.price * itemProduct[0].quantity ))
        dispatch(deleteItem(detailProduct.id))
       setCartbtn('Agregar al carrito')
     }
@@ -54,7 +56,7 @@ function DetailProduct() {
     <ListGroup className="list-group-flush">
     <ListGroupItem>Categoria: {detailProduct.category}</ListGroupItem>
     <ListGroupItem>Rate: {detailProduct.rate}</ListGroupItem>
-    <ListGroupItem>Count: {detailProduct.count}</ListGroupItem>
+    <ListGroupItem>Stock: {detailProduct.cantidad}</ListGroupItem>
    
   </ListGroup>
   <Button variant="primary">Comprar</Button>

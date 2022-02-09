@@ -136,3 +136,30 @@ export function postRegister({email, contraseña, nombre, usuario, direccion, pa
         }
     }
 }
+
+export const totalItemSum = (total)=>{
+    return {
+        type:'PRECIO_TOTAL_SUM',
+        payload: total
+    }
+}
+export const totalItemRes = (total)=>{
+    return {
+        type:'PRECIO_TOTAL_RES',
+        payload: total
+    }
+}
+
+export const addQuantity = (payload) =>{
+    return{
+        type:'ADD_QUANTITY',
+        payload
+    }
+}
+
+export const restQuantity = (payload) =>{
+    return{
+        type:'REST_QUANTITY',
+        payload
+    }
+}
