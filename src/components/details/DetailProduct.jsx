@@ -1,6 +1,6 @@
 import React ,{useEffect ,useState} from 'react';
 import {useDispatch , useSelector} from 'react-redux';
-import { useParams} from 'react-router-dom';
+import { Link ,useParams} from 'react-router-dom';
 import {getOneProduct,addItem ,deleteItem ,totalItemSum,totalItemRes } from '../../actions/index';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -59,7 +59,9 @@ function DetailProduct() {
     <ListGroupItem>Stock: {detailProduct.cantidad}</ListGroupItem>
    
   </ListGroup>
+  <Link to={`home/buy/${detailProduct.id}`}>
   <Button variant="primary">Comprar</Button>
+  </Link>
   <br />
   <Button variant="primary" onClick={()=> handleCart(detailProduct)}>{cartBtn}</Button>
   <br />

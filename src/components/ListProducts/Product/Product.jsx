@@ -4,7 +4,7 @@ import { addItem ,deleteItem ,totalItemSum , totalItemRes} from '../../../action
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Card , ListGroup, ListGroupItem} from 'react-bootstrap';
 
-function Product({title,price,description,image,category}) {
+function Product({title,price,description,image,category,rate}) {
   const dispatch = useDispatch();
   const [cartBtn , setCartbtn] = useState('Agregar al carrito')
   const items= useSelector(state => state.filtered)
@@ -37,7 +37,7 @@ function Product({title,price,description,image,category}) {
     <ListGroup className="list-group-flush">
     <ListGroupItem>$ {price}</ListGroupItem>
     <ListGroupItem>{category}</ListGroupItem>
-     
+    <ListGroupItem>{rate}</ListGroupItem>
   </ListGroup>
   <Button variant="primary" name={title} onClick={(e)=> handleCart(e)}>{cartBtn}</Button>
   </Card.Body>

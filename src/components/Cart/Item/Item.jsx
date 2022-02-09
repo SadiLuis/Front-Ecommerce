@@ -22,8 +22,7 @@ function Item({id ,title , price , image, stock , quantity}) {
   const handleChange = (e)=>{
     console.log(e)
      setInput(e.target.value)
-     dispatch(addQuantity(payload ))
-        dispatch(totalItemSum(price ))
+     
       
     }
 

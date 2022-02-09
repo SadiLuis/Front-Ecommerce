@@ -27,7 +27,7 @@ function ListProducts () {
        <Col sm={4} >
         <Link to={`/home/${p.id}`}>
      <Product key={p.id} title={p.title} price={p.price} 
-      image={p.image} category={p.category} />
+      image={p.image} category={p.category} rate={p.rate} />
        </Link>
      </Col>
     ))}
