@@ -1,14 +1,16 @@
+
 import { GET_PRODUCTS, GET_PRODUCT_BY_ID, 
     DELETE_PRODUCT, EDIT_PRODUCT, DETAIL_PRODUCT , 
     ADD_ITEM , DELETE_ITEM , SEARCH_BY_NAME ,FILTER_BY_CATEGORY ,GET_CATEGORIES} from '../actions/types';
 
 const initialState ={
     allProducts: [],
-    singleProduct: {},
+    singleProduct: [],
     filtered:[],
     productName:[],
     details:{},
     cart:[],
+    categories: [],
     precioTotal:0
 }
 
@@ -26,18 +28,17 @@ export default function rootReducer(state= initialState , action){
                 details: action.payload
             }
         case DELETE_PRODUCT:
-            let deletedProduct = state.products.filter(el => el._id !== action.payload._id)
             return {
-                                    ...state,
-                    allProducts: [...deletedProduct]
-                };
-       case EDIT_PRODUCT:
-            let index = state.allProducts.findIndex(product => product.id === action.payload.id);
-            state.allProducts[index] = action.payload;
-            return {
-                    ...state,
-                    allProducts: [...state.products]
-                };
+                ...state,
+                allProducts: action.payload
+            }
+    //    case EDIT_PRODUCT:
+    //         let index = state.allProducts.findIndex(product => product.id === action.payload.id);
+    //         state.allProducts[index] = action.payload;
+    //         return {
+    //                 ...state,
+    //                 allProducts: [...state.products]
+    //             };
                 case DETAIL_PRODUCT: return {
                     ...state,
                     details: action.payload
@@ -69,6 +70,7 @@ export default function rootReducer(state= initialState , action){
                         productName: action.payload,
                         filtered:  action.payload
                     }
+
                 case 'PRECIO_TOTAL_SUM': 
                     const totalsum = state.precioTotal + action.payload
                     const fixed1 = Math.round((totalsum + Number.EPSILON) * 100) / 100;
@@ -141,7 +143,7 @@ export default function rootReducer(state= initialState , action){
                                 ...state,
                                 filtered:sortedRate
                             }       
-                                     
+                                   
 
         default: return state;
     }

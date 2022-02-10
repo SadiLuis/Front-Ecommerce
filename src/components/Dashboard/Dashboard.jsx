@@ -4,6 +4,8 @@ import { useDispatch ,useSelector } from 'react-redux';
 
 import DataTable from 'react-data-table-component'
 import ReactModal from 'react-modal';
+import { MdDeleteForever } from 'react-icons/md';
+import { FaRegEdit } from 'react-icons/fa'
 
 import FormEditProduct from './FormEditProduct/FormEditProduct';
 import FormCreateProduct from './FormCreateProduct/FormCreateProduct'
@@ -59,7 +61,7 @@ export default function Dashboard(){
 
    const columns = [
     {
-        name: "Actions",
+        
         cell: row => (
         <div>
             <button type="button" 
@@ -68,26 +70,26 @@ export default function Dashboard(){
                 handleOpenPopUpEdit()
                 setIdToEdit(row.id)
                 //console.log(row.id)    
-                }}>Edit</button>
+                }}><FaRegEdit /></button>
 
-                <br />
+                
                 <button type="button" 
                 title="Delete"
                 onClick={() => {
                 handleDeleteProduct(row.id);
-                
             }}
             >
-            Delete
+            <MdDeleteForever />
             </button>
         </div>    
     )},
-        {
-            name: "Image",
-            selector: "image",
-            sortable: false
-        }
-        ,
+    
+        // {
+        //     name: "Image",
+        //     selector: "image",
+        //     sortable: false
+        // }
+        // ,
 
         {
 
@@ -103,40 +105,30 @@ export default function Dashboard(){
         }
         ,
         
-
         {
             name: "Stock",
             selector: "cantidad",
             sortable: true
         }
         ,
-
         {
             name: "Sales",
             selector: "ventas",
             sortable: true
         }
-        
-        
-
-        
+        ,
+        {
+            name: "Rate",
+            selector: "rate",
+            sortable: true
+        }
         ,
         {
             name: "Category",
-            selector: "categoriaId",
+            selector: "category",
             sortable: true
         }
-        ,
-
-
-        {
-            name: "Status",
-            selector: "status",
-            sortable: true
-        }
-        ,
-        
-        
+        , 
 ]
 
   
@@ -152,6 +144,11 @@ export default function Dashboard(){
                             columns={columns}
                             data={products}
                             title="My products"
+                            striped
+                            highlightOnHover
+                            paginationPerPage={5}
+                            paginationRowsPerPageOptions={[5, 10, 15]}
+                            pagination
                         />
 
                     <ReactModal isOpen={openPopUpCreate}>

@@ -2,6 +2,7 @@ import axios from 'axios';
 import {GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME,
      ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT , FILTER_BY_CATEGORY,GET_CATEGORIES } from "./types";
 
+
 let LOCALHOST = "http://localhost:3001/"
 
 
@@ -15,6 +16,14 @@ export const getAllProducts = () => dispatch =>{
             .catch(()=> console.log('NO llega la informacion'))
 }
 
+
+export const getCategories = () => dispatch =>{
+
+    return fetch(LOCALHOST + 'categories')
+            .then(res => res.json())
+            .then(data => dispatch({type: GET_CATEGORIES , payload: data}))
+            .catch(()=> console.log('NO llega la informacion'))
+}
 
 export function getProductById(id) {
     return async function(dispatch) {
@@ -55,7 +64,7 @@ export const deleteItem = (id)=>{
 export function createProduct(product){
     return async function (dispatch) {
         try {
-            var response = await axios.post(LOCALHOST + 'products/create', product)
+            var response = await axios.post(LOCALHOST + 'products', product)
             return response
         }catch(err){
             console.log(err)
@@ -69,7 +78,7 @@ export function deleteProduct(id) {
         const deleteProd = await axios.delete(LOCALHOST + "products/ " + id);
         return dispatch({
           type: "DELETE_PRODUCT",
-          payload: deleteProd.data.remove,
+          payload: deleteProd.data,
         }
         )
       }
@@ -84,7 +93,7 @@ export function deleteProduct(id) {
       const {id} = product
     return async function (dispatch) {
         try {
-            var response = await axios.post(LOCALHOST + 'products/' + id, product)
+            var response = await axios.put(LOCALHOST + 'products/' + id, product)
             return {
                 type: "EDIT_PRODUCT",
                 payload: response.data

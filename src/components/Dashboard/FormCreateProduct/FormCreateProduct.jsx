@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
-
-import { category } from './Categorias';
 import { validationFunction } from './ValidationFunction';
-import { createProduct } from '../../../actions';
+import { createProduct, getCategories } from '../../../actions';
 
 
 export default function FormCreateProduct({handleClosePopUp}){
@@ -13,6 +11,13 @@ export default function FormCreateProduct({handleClosePopUp}){
     const dispatch = useDispatch()
     const [errors, setErrors] = useState({})
     
+    
+     const category = useSelector( (state) => state.categories)
+     //console.log(caterory)
+    
+     useEffect(() => {
+        dispatch(getCategories());
+      }, [dispatch]);
 
     
 
@@ -24,8 +29,6 @@ export default function FormCreateProduct({handleClosePopUp}){
         description: '',
         categoriaId: '',
         image: '',
-        rate: '',
-        count: '',
         cantidad: ''
         
     })
@@ -69,8 +72,6 @@ export default function FormCreateProduct({handleClosePopUp}){
             description: '',
             categoriaId: '',
             image: '',
-            rate: '',
-            count: '',
             cantidad: ''
              })
         //alert("Product was succesfully created")   
@@ -81,10 +82,13 @@ export default function FormCreateProduct({handleClosePopUp}){
         alert("Product was created. You will be redirected to your products after 3 seconds");      
     }
 
+
+    if (category.length > 0){
+
+    
     return (
     <div>    
         
-
         <form onSubmit={e => {
             handleSubmit(e)
           }}
@@ -120,14 +124,14 @@ export default function FormCreateProduct({handleClosePopUp}){
                         <p>{errors.price}</p>
                     )}
                 </div>
-
-                <div>        
+ 
+                 <div>        
                 <select onChange={(e) => handleSelectCategory(e) } name="" id="">
                         <option defaultValue="default" value="">Select Category</option>
                     {
                         category.map( (c => 
                             
-                            <option key={c.id} value={c.categoriaId}>{c.name}</option>
+                            <option key={c.id} value={c.id}>{c.nombre}</option>
                             
                         ))
                 }    
@@ -135,7 +139,7 @@ export default function FormCreateProduct({handleClosePopUp}){
                 {errors.categoriaId && (
                         <p>{errors.categoriaId}</p>
                     )}
-                </div>
+                </div> 
 
                 <div>
                     <label>Description</label>
@@ -198,4 +202,9 @@ export default function FormCreateProduct({handleClosePopUp}){
         </form>
     </div>    
     )
+    }else {
+        return (
+            <h1>Loading...</h1>
+        )
+    }
 }
