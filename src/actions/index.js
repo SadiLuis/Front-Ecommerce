@@ -17,13 +17,13 @@ export const getAllProducts = () => dispatch =>{
 }
 
 
-export const getCategories = () => dispatch =>{
-
-    return fetch(LOCALHOST + 'categories')
-            .then(res => res.json())
-            .then(data => dispatch({type: GET_CATEGORIES , payload: data}))
-            .catch(()=> console.log('NO llega la informacion'))
-}
+//export const getCategories = () => dispatch =>{
+//
+//    return fetch(LOCALHOST + 'categories')
+//            .then(res => res.json())
+//            .then(data => dispatch({type: GET_CATEGORIES , payload: data}))
+//            .catch(()=> console.log('NO llega la informacion'))
+//}
 
 export function getProductById(id) {
     return async function(dispatch) {
