@@ -1,7 +1,7 @@
 import React ,{useEffect ,useState} from 'react';
 import {useDispatch , useSelector} from 'react-redux';
-import { Link ,useParams} from 'react-router-dom';
-import {getOneProduct,addItem ,deleteItem ,totalItemSum,totalItemRes } from '../../actions/index';
+import { useParams} from 'react-router-dom';
+import {getOneProduct,addItem ,deleteItem} from '../../actions/index';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Card , ListGroup , ListGroupItem ,Button} from 'react-bootstrap'
@@ -10,7 +10,6 @@ function DetailProduct() {
    const dispatch = useDispatch();
    const [cartBtn , setCartbtn] = useState('Agregar al carrito')
    const detailProduct = useSelector(state => state.details);
-   const item = useSelector(state => state.cart)
    const {id} = useParams()
 
    useEffect(()=>{
@@ -18,24 +17,31 @@ function DetailProduct() {
    
   },[dispatch , id])
 
-   console.log(detailProduct)
- 
+  console.log("detail", detailProduct)
+//    console.log(detailProduct)
+//   let rate;
+//   let count;
+  
+//   if(Object.keys(detailProduct).length){
+//     rate = detailProduct.rating.rate;
+//     count= detailProduct.rating.count
+//   }
+
 
   const handleCart = (detailProduct)=>{
-    const itemProduct= item.filter(i => i.id === detailProduct.id)
-   console.log(itemProduct)
     if(cartBtn === 'Agregar al carrito'){
-      dispatch(totalItemSum(detailProduct.price))
-      dispatch(addItem(detailProduct))
+      dispatch(addItem(detailProduct[0]))
       setCartbtn('Eliminar del carrito')
     }else{
-      dispatch(totalItemRes(detailProduct.price * itemProduct[0].quantity ))
-       dispatch(deleteItem(detailProduct.id))
+       dispatch(deleteItem(detailProduct[0].id))
       setCartbtn('Agregar al carrito')
     }
-    
   }
+ 
+  
+  if (detailProduct ) {
 
+  
   return( 
     <div>
   <Card className="text-center" style={{ width: '50rem' }}>
@@ -54,20 +60,23 @@ function DetailProduct() {
      
     </Card.Body>
     <ListGroup className="list-group-flush">
-    <ListGroupItem>Categoria: {detailProduct.category}</ListGroupItem>
+    <ListGroupItem>Categoria: {detailProduct.categoriaId}</ListGroupItem>
     <ListGroupItem>Rate: {detailProduct.rate}</ListGroupItem>
-    <ListGroupItem>Stock: {detailProduct.cantidad}</ListGroupItem>
+    <ListGroupItem>Count: {detailProduct.count}</ListGroupItem>
    
   </ListGroup>
-  <Link to={`home/buy/${detailProduct.id}`}>
   <Button variant="primary">Comprar</Button>
-  </Link>
   <br />
   <Button variant="primary" onClick={()=> handleCart(detailProduct)}>{cartBtn}</Button>
   <br />
   </Card>
   </div>
   )
+    }else {
+        return (
+            <h1>Loading Details...</h1>  
+        )
+    }
 }
 
 export default DetailProduct;
