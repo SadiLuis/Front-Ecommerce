@@ -1,5 +1,7 @@
 import axios from 'axios';
-import {GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME, ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT, GET_CATEGORIES } from "./types";
+import {GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME,
+     ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT , FILTER_BY_CATEGORY,GET_CATEGORIES } from "./types";
+
 
 let LOCALHOST = "http://localhost:3001/"
 
@@ -116,3 +118,92 @@ export function searchByName(name){
         }
     }
 }
+
+export function postLogin({email, contraseña}){
+    return async function(dispatch){
+        try {
+            var json= await axios.post(LOCALHOST + 'login', {email, contraseña})
+            return dispatch({
+                type: "LOGIN",
+                payload:json.data
+            })
+        } catch (err) {
+            alert("Login failed")
+        }
+    }
+}
+
+export function postRegister({email, contraseña, nombre, usuario, direccion, pais, provincia, telefono}){
+    return async function(dispatch){
+        try {
+            var json= await axios.post(LOCALHOST + 'register', {email, contraseña, nombre, usuario, direccion, pais, provincia, telefono})
+            return dispatch({
+                type: "REGISTER",
+                payload:json.data
+            })
+        } catch (err) {
+            alert("Register failed")
+        }
+    }
+}
+
+export const totalItemSum = (total)=>{
+    return {
+        type:'PRECIO_TOTAL_SUM',
+        payload: total
+    }
+}
+export const totalItemRes = (total)=>{
+    return {
+        type:'PRECIO_TOTAL_RES',
+        payload: total
+    }
+}
+
+export const addQuantity = (payload) =>{
+    return{
+        type:'ADD_QUANTITY',
+        payload
+    }
+}
+
+export const restQuantity = (payload) =>{
+    return{
+        type:'REST_QUANTITY',
+        payload
+    }
+}
+
+export function getCategories(){
+    return async function(dispatch){
+        try {
+            const responseCategories=await axios.get(LOCALHOST + 'categories')
+            return dispatch({
+                type: GET_CATEGORIES,
+                payload: responseCategories.data
+            })
+        } catch(err){
+            console.log(err)
+        }
+    }
+}
+
+export function filterByCategory(payload){
+    return {
+        type: FILTER_BY_CATEGORY,
+        payload
+        
+    } 
+}
+    export function orderByPrice(payload){
+        return {
+            type: "ORDER_BY_PRICE",
+            payload
+        }
+    }
+    export function orderByRate(payload){
+        return {
+            type: "ORDER_BY_RATE",
+            payload
+        }
+    }

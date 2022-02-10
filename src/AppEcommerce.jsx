@@ -7,7 +7,8 @@ import Cart from './components/Cart/Cart'
 import Login from './components/Login/Login';
 import LandingPage from './components/LandingPage/LandingPage'
 import CreateUser from './components/CreateUser/CreateUser';
-import NavBar from './components/NavBar/NavBar'
+import NavBar from './components/NavBar/NavBar';
+import BuyProduct from './components/BuyProduct/BuyProduct'
 
 
 const AppEcommerce = () => {
@@ -25,6 +26,7 @@ const AppEcommerce = () => {
       <Route  path ='/cart' element={<Cart />} />
       <Route  path='/home/:id' element={< DetailProduct />} />
       <Route exact path="/dashboard" element={<Dashboard/>} />
+      <Route path='/home/buy' element= {<BuyProduct />} />
           
       </Routes>
       </BrowserRouter>

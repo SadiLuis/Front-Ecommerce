@@ -98,12 +98,8 @@ export default function FormEditProduct(props){
     
     
 
-    console.log("input", input)
-    //console.log(auxCategoryId)
-    
-    
-    //if (product.length > 0 && input.length > 0)
     if (product && category.length > 0 )
+
     {
         return (
             
@@ -136,8 +132,10 @@ export default function FormEditProduct(props){
                         type='number'
                         name='price'
                         onChange={e => handleInputChange(e)}
+
                         value={input.price}
                         
+
                     />
                     {errors.price && (
                         <p>{input.price}</p>
@@ -201,11 +199,10 @@ export default function FormEditProduct(props){
                 <div>
                     <label >Stock</label>
                     <input
-                        type='number'
+                        type='text'
                         name='cantidad'
                         onChange={e => handleInputChange(e)}
                         value={input.cantidad}
-                        
                     />
                     {errors.cantidad && (
                         <p>{errors.cantidad}</p>

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-//import {postUser} from '../../actions/userActions'
+import { Link, useNavigate } from 'react-router-dom';
+import {postRegister} from '../../actions/index'
 import style from'./styleUser/CreateUser.module.css';
 import Swal from 'sweetalert2';
+
+
 
 
 function CreateUser(){
@@ -15,7 +17,8 @@ function CreateUser(){
         Username: '',
         Password: '',
         Email: '',
-        Address: '',
+        Address: '',  
+        
     });
 
     const [errors, setErrors] = useState({});
@@ -62,7 +65,7 @@ function CreateUser(){
             user.Email &&
             user.Address 
         ) {
-            //postUser(user);
+            postRegister(user);
             Swal.fire({
                 text: `You have created a new user ${user.Username} , redirecting to login`,
                 icon: 'success',
@@ -87,6 +90,7 @@ function CreateUser(){
     return(
         <div className={style.bkg} >
 
+            <Link to="/login" className={style.link}> Go to Login </Link>
             <h1  className={style.register} > REGISTER</h1>
             <div className={style.conteiner} >
                 
@@ -166,6 +170,10 @@ function CreateUser(){
                         }
                     
                     </div>
+
+                    
+
+
 
                     <button 
                     type="submit" 

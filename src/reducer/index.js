@@ -1,4 +1,7 @@
-import { GET_PRODUCTS, GET_PRODUCT_BY_ID, DELETE_PRODUCT, EDIT_PRODUCT, DETAIL_PRODUCT , ADD_ITEM , DELETE_ITEM , SEARCH_BY_NAME, GET_CATEGORIES} from '../actions/types';
+
+import { GET_PRODUCTS, GET_PRODUCT_BY_ID, 
+    DELETE_PRODUCT, EDIT_PRODUCT, DETAIL_PRODUCT , 
+    ADD_ITEM , DELETE_ITEM , SEARCH_BY_NAME ,FILTER_BY_CATEGORY ,GET_CATEGORIES} from '../actions/types';
 
 const initialState ={
     allProducts: [],
@@ -7,7 +10,8 @@ const initialState ={
     productName:[],
     details:{},
     cart:[],
-    categories: []
+    categories: [],
+    precioTotal:0
 }
 
 export default function rootReducer(state= initialState , action){
@@ -39,9 +43,20 @@ export default function rootReducer(state= initialState , action){
                     ...state,
                     details: action.payload
                 }
-                case ADD_ITEM: return{
+                case ADD_ITEM: 
+                let itemCart = state.cart.find(item => item.id === action.payload.id)
+                return itemCart 
+                  ? {
                     ...state,
-                     cart: [...state.cart,action.payload]
+                     cart: state.cart.map(item => 
+                        item.id === action.payload.id
+                        ?{...item, quantity: item.quantity + 1 }
+                        : item )
+                  }
+                   
+                  : {
+                    ...state,
+                     cart: [...state.cart,{...action.payload ,quantity:1}] 
         
                 }
                 case DELETE_ITEM: return{
@@ -55,12 +70,80 @@ export default function rootReducer(state= initialState , action){
                         productName: action.payload,
                         filtered:  action.payload
                     }
-                case GET_CATEGORIES: {
-                    return {
-                        ...state,
-                        categories: action.payload
-                    }
-                }                      
+
+                case 'PRECIO_TOTAL_SUM': 
+                    const totalsum = state.precioTotal + action.payload
+                    const fixed1 = Math.round((totalsum + Number.EPSILON) * 100) / 100;
+                        return{
+                           ...state,
+                            precioTotal: fixed1
+                     }
+                case 'PRECIO_TOTAL_RES':
+                       const totalres = state.precioTotal - action.payload
+                       const fixed2 = Math.round((totalres + Number.EPSILON) * 100) / 100;
+                         return{
+                             ...state,
+                             precioTotal: fixed2
+                         }
+                
+                case 'ADD_QUANTITY': 
+                       
+                      return{
+                       ...state,
+                        cart: state.cart.map(item => 
+                           item.id === action.payload.id
+                           ? {...item, quantity: action.payload.addQuantity + 1}
+                           : item )
+                     }   
+                case 'REST_QUANTITY': 
+                       
+                      return{
+                       ...state,
+                        cart: state.cart.map(item => 
+                           item.id === action.payload.id
+                           ? {...item, quantity: action.payload.addQuantity - 1  }
+                           : item )
+                     } 
+                     case GET_CATEGORIES:
+                        return {
+                            ...state,
+                            categories:action.payload
+                        }
+                    case FILTER_BY_CATEGORY:
+                        let categoriesProducts = action.payload === "all" ? state.allProducts : state.allProducts.filter((elem)=>elem.category.includes(action.payload))  
+                         return {
+                             ...state,
+                             filtered:categoriesProducts
+                         } 
+    
+                         case 'ORDER_BY_PRICE':
+                            let sortedPrice=action.payload==="asc"?
+                            [...state.filtered].sort(function(a,b){
+                                return (a.price - b.price);
+                            }) :
+                            [...state.filtered].sort(function(a,b){
+                                return (b.price - a.price)
+                            })
+                           
+                            return {
+                                ...state,
+                                filtered:sortedPrice
+                            } 
+    
+                            case 'ORDER_BY_RATE':
+                            let sortedRate=action.payload==="asc"?
+                            [...state.filtered].sort(function(a,b){
+                                return (a.rate - b.rate);
+                            }) :
+                            [...state.filtered].sort(function(a,b){
+                                return (b.rate - a.rate)
+                            })
+                           
+                            return {
+                                ...state,
+                                filtered:sortedRate
+                            }       
+                                   
 
         default: return state;
     }
