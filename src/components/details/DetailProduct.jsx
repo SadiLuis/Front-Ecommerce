@@ -9,8 +9,8 @@ import {Card , ListGroup , ListGroupItem ,Button} from 'react-bootstrap'
 function DetailProduct() {
    const dispatch = useDispatch();
    const [cartBtn , setCartbtn] = useState('Agregar al carrito')
-   const detailProduct = useSelector(state => state.details);
-   const item = useSelector(state => state.cart)
+   const detailProduct = useSelector(state => state.productsReducer.details);
+   const item = useSelector(state => state.cartReducer.cart)
    const {id} = useParams()
 
    useEffect(()=>{
@@ -42,7 +42,7 @@ function DetailProduct() {
     <Card.Img variant="top" src={detailProduct.image} />
     <Card.Body>
     <Card.Title>{detailProduct.title}</Card.Title>
-    <Card.Title> Precio : $ {detailProduct.price}</Card.Title>
+    <Card.Title> Price : $ {detailProduct.price}</Card.Title>
     </Card.Body>
   </Card>
   <br />
@@ -54,13 +54,13 @@ function DetailProduct() {
      
     </Card.Body>
     <ListGroup className="list-group-flush">
-    <ListGroupItem>Categoria: {detailProduct.category}</ListGroupItem>
+    <ListGroupItem>Category: {detailProduct.category}</ListGroupItem>
     <ListGroupItem>Rate: {detailProduct.rate}</ListGroupItem>
     <ListGroupItem>Stock: {detailProduct.cantidad}</ListGroupItem>
    
   </ListGroup>
-  <Link to={`/home/buy`}>
-  <Button variant="primary">Comprar</Button>
+  <Link  className=' btn btn-lg btn-block btn-primary' to={`/home/buy`}>
+     comprar
   </Link>
   <br />
   <Button variant="primary" onClick={()=> handleCart(detailProduct)}>{cartBtn}</Button>

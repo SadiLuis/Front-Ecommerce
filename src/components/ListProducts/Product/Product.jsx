@@ -7,8 +7,8 @@ import { Button, Card , ListGroup, ListGroupItem} from 'react-bootstrap';
 function Product({title,price,description,image,category,rate}) {
   const dispatch = useDispatch();
   const [cartBtn , setCartbtn] = useState('Agregar al carrito')
-  const items= useSelector(state => state.filtered)
-  const cart = useSelector(state => state.cart)
+  const items= useSelector(state => state.productsReducer.filtered)
+  const cart = useSelector(state => state.cartReducer.cart)
   
   const handleCart = (e)=>{
     e.preventDefault()

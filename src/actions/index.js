@@ -2,7 +2,7 @@ import axios from 'axios';
 import {GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME,
      ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT , FILTER_BY_CATEGORY,GET_CATEGORIES } from "./types";
 
-let LOCALHOST = "http://localhost:3001/"
+let LOCALHOST = "http://localhost:5000/"
 
 
 

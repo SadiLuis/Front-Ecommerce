@@ -17,7 +17,7 @@ const headers = {
 const stripePromise = loadStripe("pk_test_51KQbAWIarjJt2FCS6eI6jVEzZ1DxAJRwWufxmdBGh2POhYLyJN22NSwQPIa4nBIoWoz0h76iRKTsi3DZ4l5ok0aK00E5DScE38");
 
 const CheckoutForm = () => {
-    const detailProduct = useSelector(state => state.details);
+    const detailProduct = useSelector(state => state.productsReducer.details);
     
   const stripe = useStripe();
   const elements = useElements();
@@ -38,7 +38,7 @@ const CheckoutForm = () => {
       const { id } = paymentMethod;
       try {
         const { data } = await axios.post(
-          "http://localhost:3001/pagos",
+          "http://localhost:5000/pagos",
           {
             transaccionId: id,
             pedidoId: 1

@@ -7,11 +7,11 @@ import {Container , Button ,Row , Col} from 'react-bootstrap';
 
 function Cart() {
   
-  const items = useSelector(state => state.cart)
-  const total = useSelector(state => state.precioTotal)
+  const items = useSelector(state => state.cartReducer.cart)
+  const total = useSelector(state => state.cartReducer.precioTotal)
   console.log(items)
 
-    
+  
   
    const emptyCart = ()=>{
     return(
