@@ -4,13 +4,14 @@ import { addItem ,deleteItem ,totalItemSum , totalItemRes, getAllProducts} from 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Card , ListGroup, ListGroupItem} from 'react-bootstrap';
 
-function Product({title,price,description,image,category,rate}) {
+function Product({title,price,description,image,category,rate,cantidad}) {
   const dispatch = useDispatch();
   const [cartBtn , setCartbtn] = useState('Agregar al carrito')
   const [noProduct, setNoProduct]=useState('Product out of stock')
   const items= useSelector(state => state.filtered)
   console.log(items)
   const cart = useSelector(state => state.cart)
+  console.log(cart)
   const allProducts=useSelector(state=>state.allProducts)
   console.log(allProducts)
   
@@ -18,7 +19,9 @@ function Product({title,price,description,image,category,rate}) {
     e.preventDefault()
     console.log(e)
     const oneProduct = items?.filter(p => p.title === e.target.name)
-    let itemCart = cart.filter(i => i.id === oneProduct[0].id)
+    console.log(oneProduct)
+    const itemCart = cart.filter(i => i.id === oneProduct[0].id)
+    
     if(cartBtn === 'Agregar al carrito'){
       dispatch(totalItemSum(oneProduct[0].price))
       dispatch(addItem(oneProduct[0]))
@@ -32,7 +35,7 @@ function Product({title,price,description,image,category,rate}) {
   }
   function handleNoProduct(e){
     e.preventDefault()
-     allProducts.forEach(function (element) {
+      allProducts.forEach(function (element) {
         if (element.cantidad === 0) {
           setNoProduct("Product out of stock");
         }
@@ -56,20 +59,21 @@ function Product({title,price,description,image,category,rate}) {
           <ListGroupItem>{category}</ListGroupItem>
           <ListGroupItem>{rate}</ListGroupItem>
         </ListGroup>
-        <Button variant="primary" name={title} onClick={(e) => handleCart(e)}>{cartBtn}</Button>
+        
+         
       </Card.Body>
     </Card>
-  //     {
-  //       allProducts.can===0 ? 
-  // <button onClick={handleNoProduct} > Product out of Stock</button>
-  // :
-  //   }
+     
+  )
+      
     
   
   
-  )
+  
 
 }
   
 
 export default Product;
+{/* <Button disabled variant="primary" name={title} onClick={(e) => handleCart(e)}>{cartBtn}</Button>
+        <Button variant="danger" onClick={handleNoProduct}>Product out of stock</Button></> */}

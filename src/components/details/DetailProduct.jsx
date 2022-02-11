@@ -9,7 +9,7 @@ import {Card , ListGroup , ListGroupItem ,Button} from 'react-bootstrap'
 function DetailProduct() {
    const dispatch = useDispatch();
    const [cartBtn , setCartbtn] = useState('Agregar al carrito')
-   const [noProduct, setNoProduct]=useState("Product out of stock")
+   
    const detailProduct = useSelector(state => state.details);
    const item = useSelector(state => state.cart)
    const {id} = useParams()
@@ -36,11 +36,7 @@ function DetailProduct() {
     }
     
   }
-  // function handleNoProduct(e){
-  //   e.preventDefault()
-  //   dispatch(getAllProducts)
-  //   setNoProduct("Product out of stock")
-  // }
+  
 
   return( 
     <div>
@@ -76,8 +72,7 @@ function DetailProduct() {
 
 
           {detailProduct.cantidad===0?
-    //  <><Button disabled cartBtn> </Button>
-    //  <Button disabled variant='primary' ></Button>
+   
      <div>
           <Link to={'/home'}>
             <Button variant="danger">Product out of stock</Button>
