@@ -81,7 +81,10 @@ export function deleteProduct(id) {
           type: "DELETE_PRODUCT",
           payload: deleteProd.data,
 
-        }
+        })
+      } catch (err) {
+        console.log(err)
+      }
     }
 };
 
@@ -266,15 +269,17 @@ export function filterByCategory(payload){
         
     } 
 }
-    export function orderByPrice(payload){
-        return {
-            type: "ORDER_BY_PRICE",
-            payload
-        }
+export function orderByPrice(payload){
+     return {
+        type: "ORDER_BY_PRICE",
+        payload
     }
-    export function orderByRate(payload){
-        return {
-            type: "ORDER_BY_RATE",
-            payload
-        }
+}
+export function orderByRate(payload){
+    return {
+        type: "ORDER_BY_RATE",
+        payload
     }
+}
+
+
