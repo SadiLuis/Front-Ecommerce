@@ -1,65 +1,108 @@
-import React, {useState} from 'react';
-import Swal from 'sweetalert2';
-import LoginForm from './LoginForm';
-import { useDispatch } from 'react-redux';
-import {postLogin} from '../../actions/index';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { login } from "../../actions/index";
+import { Link, useNavigate } from "react-router-dom";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import Swal from "sweetalert2";
 
+const initialForm = {
+  contrasena: "",
+  email: "",
+};
 
+const validateForm = (form) => {
+  const { email, contrasena } = form;
+  const errors = {};
 
+  if (email.trim().length === 0) {
+    errors.email = "El email es requerido";
+  }
 
-const Login = () => {
-    const dispatch = useDispatch()
+  if (!contrasena.trim()) {
+    errors.contrasena = "La contraseña es requerida";
+  }
 
-    const [user, setUser] = useState({ password:'', email:''});
+  return errors;
+};
 
-    const [error, setError] = useState("");
+const Login = ({ login, isAuth, user }) => {
+  const navigate = useNavigate();
+  const [form, setForm] = useState(initialForm);
+  const [error, setError] = useState({});
 
-    const appLogin = details => {
-        console.log(details);
-        // eslint-disable-next-line no-self-compare
-        if ( postLogin.password === postLogin.password && postLogin.email === postLogin.email) {
-            console.log("Login Successful");
-            setUser({
-                user: postLogin.user,
-                password: postLogin.password,
-                email: postLogin.email
-            })
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
-        } else {
-            console.log("Login Failed");
-            //setError("Login Failed");
-            Swal.fire({
-                icon: 'error',
-                text: 'Login Failed please Login or Register',
-            })
-        }
+    const newForm = { ...form, [name]: value };
+
+    setForm(newForm);
+    setError(validateForm(newForm));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const errors = validateForm(form);
+    setError(errors);
+
+    if (Object.keys(errors).length) {
+      return window.alert("El formulario contiene errrores");
     }
 
-    const Logout = () => {
-        setUser({
-           
-            password: '',
-            email: ''
-            });
+    login(form);
+  };
+
+  useEffect(() => {
+    // Si ya está logueado que lo redireccione al dashboard
+    if (isAuth && user) {
+      setForm(initialForm);
+      const { nombre, rol } = user;
+      Swal.fire({
+        text: `Welcome ${nombre}`,
+        icon: "success",
+      });
+      if (rol === "1") return navigate("/dashboard/user");
+      if (rol === "2") return navigate("/dashboard/admin");
     }
+  }, [isAuth, navigate, user]);
 
-	return (
-			<div >
-				{(user.email != "") ? (
-                    <div className="Welcome" >
-                        <h2> Welcome, Admin <span>{postLogin.user}</span> </h2>
-                    <button onClick={Logout} className="btn btn-secondary"  >Logout</button> 
-                    <Link to="/dashboard" className="btn btn-primary">Dashboard</Link>  
-                    </div> 
-                ): (
-                    <LoginForm appLogin={appLogin} error={error} />
-                )
-                }	
-				
-			</div>
+  return (
+    <>
+      <form onSubmit={handleSubmit}>
+        <label>Correo:</label>
+        <input
+          type="email"
+          onChange={handleChange}
+          name="email"
+          value={form.email}
+        />
+        {error.email && <span>{error.email}</span>}
+        <label>Contraseña:</label>
+        <input
+          type="password"
+          onChange={handleChange}
+          name="contrasena"
+          value={form.contrasena}
+        />
+        {error.contrasena && <span>{error.contrasena}</span>}
+        <input type="submit" value="Ingresar" />
+      </form>
 
-	)
-}
+      <div>
+        <Link to="/register">Aún no tienes una cuenta? Registrate</Link>
+      </div>
+    </>
+  );
+};
 
-export default Login;
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ login }, dispatch);
+};
+
+const mapStateToProps = (state) => {
+  return {
+    isAuth: state.isAuth,
+    user: state.userDetail,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

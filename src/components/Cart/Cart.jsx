@@ -1,3 +1,4 @@
+
 import React  from 'react';
 import {useSelector } from 'react-redux';
 import Item from './Item/Item';
@@ -20,12 +21,13 @@ function Cart() {
       <Row>
         <h3>Su Carrito esta vacío</h3>
       </Row>
+
       </Container>
-     
-    )
-  }
+    );
+  };
 
   return (
+
     <>
   <Container>
   <Container className='py-4 bg-light rounded-3 ' >
@@ -48,6 +50,7 @@ function Cart() {
   </>
   )
   
+
 }
 
 export default Cart;
