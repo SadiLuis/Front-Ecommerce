@@ -1,8 +1,8 @@
 import axios from 'axios';
 import {GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME,
-     ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT , FILTER_BY_CATEGORY,GET_CATEGORIES } from "./types";
+     ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT , FILTER_BY_CATEGORY,GET_CATEGORIES, GET_PEDIDOS } from "./types";
 
-let LOCALHOST = "http://localhost:5000/"
+let LOCALHOST = "https://ecommerce-pg-henry.herokuapp.com/"
 
 
 
@@ -205,4 +205,12 @@ export function filterByCategory(payload){
             type: "ORDER_BY_RATE",
             payload
         }
+    }
+
+    export const getAllPedidos = () => dispatch =>{
+
+        return fetch(LOCALHOST + 'pedidos')
+                .then(res => res.json())
+                .then(data => dispatch({type: GET_PEDIDOS , payload: data}))
+                .catch(()=> console.log('NO llega la informacion'))
     }

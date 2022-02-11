@@ -9,6 +9,8 @@ import LandingPage from './components/LandingPage/LandingPage'
 import CreateUser from './components/CreateUser/CreateUser';
 import NavBar from './components/NavBar/NavBar';
 import BuyProduct from './components/BuyProduct/BuyProduct'
+import AdminSales from './components/Dashboard/AdminSales/AdminSales';
+import SideBarAdmin from './components/Dashboard/SideBar/SideBar';
 
 
 const AppEcommerce = () => {
@@ -25,10 +27,13 @@ const AppEcommerce = () => {
       <Route  path='/home' element={< Home/>}/>
       <Route  path ='/cart' element={<Cart />} />
       <Route  path='/home/:id' element={< DetailProduct />} />
-      <Route exact path="/dashboard" element={<Dashboard/>} />
+      <Route exact path="/admin/dashboard" element={<Dashboard/>} />
+      <Route exact path="/admin/sales" element={<AdminSales/>} />
       <Route path='/home/buy' element= {<BuyProduct />} />
+      {/* <Route path='/admin' element={<SideBarAdmin/>} /> */}
           
       </Routes>
+      
       </BrowserRouter>
     </div>
   );
