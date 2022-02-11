@@ -4,7 +4,7 @@ import {GET_PRODUCT_BY_ID,
     const initialState= {
     singleProduct:[],
     details: {},
-    allProducts:[]
+    allProducts:[],
     }
 
     export default function adminReducer(state= initialState , action){
