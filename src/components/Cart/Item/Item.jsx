@@ -9,9 +9,9 @@ function Item({id ,title , price , image, stock , quantity}) {
   const dispatch = useDispatch()
   const [input , setInput] = useState(quantity)
   //const [precio , setPrecio] = useState(price*quantity)
-  const sumaTotal = useSelector(state => state.precioTotal)
+  const sumaTotal = useSelector(state => state.cartReducer.precioTotal)
    let priceTotal = price * quantity
-  
+   
  
    const payload ={
      addQuantity: parseInt(input),

@@ -1,3 +1,4 @@
+
 import React  from 'react';
 import {useSelector } from 'react-redux';
 import Item from './Item/Item';
@@ -7,11 +8,11 @@ import {Container , Button ,Row , Col} from 'react-bootstrap';
 
 function Cart() {
   
-  const items = useSelector(state => state.cart)
-  const total = useSelector(state => state.precioTotal)
+  const items = useSelector(state => state.cartReducer.cart)
+  const total = useSelector(state => state.cartReducer.precioTotal)
   console.log(items)
 
-    
+  
   
    const emptyCart = ()=>{
     return(
@@ -20,12 +21,13 @@ function Cart() {
       <Row>
         <h3>Su Carrito esta vacío</h3>
       </Row>
+
       </Container>
-     
-    )
-  }
+    );
+  };
 
   return (
+
     <>
   <Container>
   <Container className='py-4 bg-light rounded-3 ' >
@@ -48,6 +50,7 @@ function Cart() {
   </>
   )
   
+
 }
 
 export default Cart;

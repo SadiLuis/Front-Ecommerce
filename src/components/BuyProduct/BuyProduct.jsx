@@ -1,24 +1,24 @@
 import React, { useState } from "react";
-
-import {useSelector} from 'react-redux';
+import axios from "axios";
+import { useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
+import getHeaderToken from "../helpers/getHeaderToken";
 import {
   Elements,
   CardElement,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
+import { BASEURL } from "../../assets/URLS";
 
-import axios from "axios";
-const headers = {
-"x-auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7ImlkIjoyfSwiaWF0IjoxNjQ0MzY1NjQwLCJleHAiOjE2NDQ3MjU2NDB9.mDrwe1BvcHcL9Lph3xUkn1K2rHr1BVTViBeGkItzt34"
-};
-
-const stripePromise = loadStripe("pk_test_51KQbAWIarjJt2FCS6eI6jVEzZ1DxAJRwWufxmdBGh2POhYLyJN22NSwQPIa4nBIoWoz0h76iRKTsi3DZ4l5ok0aK00E5DScE38");
+const headers = getHeaderToken();
+const stripePromise = loadStripe(
+  "pk_test_51KQbAWIarjJt2FCS6eI6jVEzZ1DxAJRwWufxmdBGh2POhYLyJN22NSwQPIa4nBIoWoz0h76iRKTsi3DZ4l5ok0aK00E5DScE38"
+);
 
 const CheckoutForm = () => {
-    const detailProduct = useSelector(state => state.details);
-    
+  const detailProduct = useSelector((state) => state.productsReducer.details);
+
   const stripe = useStripe();
   const elements = useElements();
 
@@ -38,12 +38,12 @@ const CheckoutForm = () => {
       const { id } = paymentMethod;
       try {
         const { data } = await axios.post(
-          "http://localhost:3001/pagos",
+          `${BASEURL}/pagos`,
           {
             transaccionId: id,
-            pedidoId: 1
+            pedidoId: 1,
           },
-	{headers}
+          headers
         );
         console.log(data);
 
@@ -67,7 +67,7 @@ const CheckoutForm = () => {
       />
 
       <h3 className="text-center my-2">Precio: $ {detailProduct.price}</h3>
-      
+
       {/* User Card Input */}
       <div className="form-group">
         <CardElement />
@@ -87,7 +87,6 @@ const CheckoutForm = () => {
 };
 
 function BuyProduct() {
-    
   return (
     <Elements stripe={stripePromise}>
       <div className="container p-4">

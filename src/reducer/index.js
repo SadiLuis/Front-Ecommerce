@@ -1,17 +1,11 @@
-import { GET_PRODUCTS, GET_PRODUCT_BY_ID, 
-    DELETE_PRODUCT, EDIT_PRODUCT, DETAIL_PRODUCT , 
-    ADD_ITEM , DELETE_ITEM , SEARCH_BY_NAME ,FILTER_BY_CATEGORY ,GET_CATEGORIES} from '../actions/types';
 
-const initialState ={
-    allProducts: [],
-    singleProduct: {},
-    filtered:[],
-    productName:[],
-    details:{},
-    cart:[],
-    precioTotal:0
-}
+import { combineReducers } from 'redux';
+import cartReducer from './cart';
+import productsReducer from './products';
+import adminReducer from './admin';
+import loginReducer from './loginRegister'
 
+<<<<<<< HEAD
 export default function rootReducer(state= initialState , action){
     switch(action.type){
         case GET_PRODUCTS: return{
@@ -142,7 +136,15 @@ export default function rootReducer(state= initialState , action){
                                 filtered:sortedRate
                             }       
                                      
+=======
+>>>>>>> 3964ec6cbffcce65ba54f8ee00d1428bfedfafa6
 
-        default: return state;
-    }
-}
+const rootReducer = combineReducers({
+    cartReducer,
+    productsReducer,
+    adminReducer,
+    loginReducer
+})
+   
+    
+   export default rootReducer

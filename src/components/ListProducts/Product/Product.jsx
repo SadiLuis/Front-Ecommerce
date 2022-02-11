@@ -7,6 +7,7 @@ import { Button, Card , ListGroup, ListGroupItem} from 'react-bootstrap';
 function Product({title,price,description,image,category,rate,cantidad}) {
   const dispatch = useDispatch();
   const [cartBtn , setCartbtn] = useState('Agregar al carrito')
+<<<<<<< HEAD
   const [noProduct, setNoProduct]=useState('Product out of stock')
   const items= useSelector(state => state.filtered)
   console.log(items)
@@ -14,6 +15,10 @@ function Product({title,price,description,image,category,rate,cantidad}) {
   console.log(cart)
   const allProducts=useSelector(state=>state.allProducts)
   console.log(allProducts)
+=======
+  const items= useSelector(state => state.productsReducer.filtered)
+  const cart = useSelector(state => state.cartReducer.cart)
+>>>>>>> 3964ec6cbffcce65ba54f8ee00d1428bfedfafa6
   
   const handleCart = (e)=>{
     e.preventDefault()

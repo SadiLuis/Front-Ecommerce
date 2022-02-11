@@ -16,15 +16,15 @@ const Home = () => {
 
     //paginado
      const dispatch=useDispatch();
-     const productsAll = useSelector((state) => state.filtered)
+     const productsAll = useSelector((state) => state.productsReducer.filtered)
     //  console.log(productsAll)
-     const categories= useSelector((state)=> state.categories)
+     const categories= useSelector((state)=> state.productsReducer.categories)
      console.log(categories)
-     const filtered=useSelector((state)=>state.filtered)
+     const filtered=useSelector((state)=>state.productsReducer.filtered)
      console.log(filtered)
-     const sortedPrice=useSelector((state)=>state.price)
+     const sortedPrice=useSelector((state)=>state.productsReducer.price)
      console.log(sortedPrice)
-     const sortedRate=useSelector((state)=>state.rate)
+     const sortedRate=useSelector((state)=>state.productsReducer.rate)
      console.log(sortedRate)
 
     
@@ -34,13 +34,14 @@ const Home = () => {
   const indexOfLastProduct=currentPage * productsPerPage;
   const indexOfFirstProduct= indexOfLastProduct- productsPerPage;
   const currentProducts=filtered.slice(indexOfFirstProduct, indexOfLastProduct);
-
+   
+  console.log(currentProducts)
   const pagination=(pageNumbers)=>{
     setCurrentPage(pageNumbers)
   }
 
   useEffect(()=>{
-      dispatch(getAllProducts())
+     if(productsAll.length === 0) dispatch(getAllProducts())
   },[dispatch])
 
 useEffect(()=>{
@@ -80,7 +81,7 @@ function handleOrderByRate(e){
         <>
         <Container >
 
-  <ListProducts /> 
+  
   
   <h4>Show all the products</h4><button type="button" class="btn btn-primary" onClick={handleClick}>Products</button>
 
