@@ -81,19 +81,11 @@ export function deleteProduct(id) {
         return dispatch({
           type: "DELETE_PRODUCT",
           payload: deleteProd.data,
-
         })
-<<<<<<< Updated upstream
     } catch(err){
         console.log(err)
     }
 }
-=======
-      }catch(err){
-          console.log(err)
-      }
-    }  
->>>>>>> Stashed changes
 };
 
 export function editProduct(product) {
