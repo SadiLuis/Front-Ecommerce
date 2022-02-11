@@ -1,9 +1,11 @@
 import axios from 'axios';
+
 import { GET_USER_URL, LOGIN_URL, REGISTER_URL } from '../assets/URLS';
 import getHeaderToken from '../helpers/getHeaderToken';
-import { GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME, ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT, LOGIN_SUCCESS, LOGIN_FAILED, REGISTER_SUCCESS, REGISTER_FAILED, GET_USER_DETAIL, AUTHENTICATION_ERROR } from "./types";
+import { GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME, ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT, LOGIN_SUCCESS, LOGIN_FAILED, REGISTER_SUCCESS, REGISTER_FAILED, GET_USER_DETAIL, AUTHENTICATION_ERROR, FILTER_BY_CATEGORY,GET_CATEGORIES } from "./types";
 
-let LOCALHOST = "http://localhost:5000/"
+
+let LOCALHOST = "https://ecommerce-pg-henry.herokuapp.com/"
 
 
 export const getAllProducts = () => dispatch => {
@@ -14,6 +16,14 @@ export const getAllProducts = () => dispatch => {
         .catch(() => console.log('NO llega la informacion'))
 }
 
+
+//export const getCategories = () => dispatch =>{
+//
+//    return fetch(LOCALHOST + 'categories')
+//            .then(res => res.json())
+//            .then(data => dispatch({type: GET_CATEGORIES , payload: data}))
+//            .catch(()=> console.log('NO llega la informacion'))
+//}
 
 export function getProductById(id) {
     return async function (dispatch) {
@@ -54,7 +64,7 @@ export const deleteItem = (id) => {
 export function createProduct(product) {
     return async function (dispatch) {
         try {
-            var response = await axios.post(LOCALHOST + 'products/create', product)
+            var response = await axios.post(LOCALHOST + 'products', product)
             return response
         } catch (err) {
             console.log(err)
@@ -64,17 +74,13 @@ export function createProduct(product) {
 
 export function deleteProduct(id) {
     return async function (dispatch) {
-        try {
-            const deleteProd = await axios.delete(LOCALHOST + "products/ " + id);
-            return dispatch({
-                type: "DELETE_PRODUCT",
-                payload: deleteProd.data.remove,
-            }
-            )
-        }
-        catch (err) {
 
-            console.log(err);
+      try {
+        const deleteProd = await axios.delete(LOCALHOST + "products/ " + id);
+        return dispatch({
+          type: "DELETE_PRODUCT",
+          payload: deleteProd.data,
+
         }
     }
 };
@@ -83,7 +89,7 @@ export function editProduct(product) {
     const { id } = product
     return async function (dispatch) {
         try {
-            var response = await axios.post(LOCALHOST + 'products/' + id, product)
+            var response = await axios.put(LOCALHOST + 'products/' + id, product)
             return {
                 type: "EDIT_PRODUCT",
                 payload: response.data
@@ -211,3 +217,64 @@ const getUserDetail = () => {
         }
     }
 }
+
+export const totalItemSum = (total)=>{
+    return {
+        type:'PRECIO_TOTAL_SUM',
+        payload: total
+    }
+}
+export const totalItemRes = (total)=>{
+    return {
+        type:'PRECIO_TOTAL_RES',
+        payload: total
+    }
+}
+
+export const addQuantity = (payload) =>{
+    return{
+        type:'ADD_QUANTITY',
+        payload
+    }
+}
+
+export const restQuantity = (payload) =>{
+    return{
+        type:'REST_QUANTITY',
+        payload
+    }
+}
+
+export function getCategories(){
+    return async function(dispatch){
+        try {
+            const responseCategories=await axios.get(LOCALHOST + 'categories')
+            return dispatch({
+                type: GET_CATEGORIES,
+                payload: responseCategories.data
+            })
+        } catch(err){
+            console.log(err)
+        }
+    }
+}
+
+export function filterByCategory(payload){
+    return {
+        type: FILTER_BY_CATEGORY,
+        payload
+        
+    } 
+}
+    export function orderByPrice(payload){
+        return {
+            type: "ORDER_BY_PRICE",
+            payload
+        }
+    }
+    export function orderByRate(payload){
+        return {
+            type: "ORDER_BY_RATE",
+            payload
+        }
+    }
