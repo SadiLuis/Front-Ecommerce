@@ -1,8 +1,8 @@
 import axios from 'axios';
 import {GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME,
-     ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT , FILTER_BY_CATEGORY,GET_CATEGORIES } from "./types";
+     ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT , FILTER_BY_CATEGORY,GET_CATEGORIES, ORDER_BY_PRICE, ORDER_BY_RATE } from "./types";
 
-let LOCALHOST = "http://localhost:3001/"
+let LOCALHOST = "http://localhost:5000/"
 
 
 
@@ -188,13 +188,13 @@ export function filterByCategory(payload){
 }
     export function orderByPrice(payload){
         return {
-            type: "ORDER_BY_PRICE",
+            type: ORDER_BY_PRICE,
             payload
         }
     }
     export function orderByRate(payload){
         return {
-            type: "ORDER_BY_RATE",
+            type: ORDER_BY_RATE,
             payload
         }
     }

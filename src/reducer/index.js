@@ -114,7 +114,7 @@ export default function rootReducer(state= initialState , action){
                              filtered:categoriesProducts
                          } 
     
-                         case 'ORDER_BY_PRICE':
+                         case "ORDER_BY_PRICE":
                             let sortedPrice=action.payload==="asc"?
                             [...state.filtered].sort(function(a,b){
                                 return (a.price - b.price);
@@ -128,7 +128,7 @@ export default function rootReducer(state= initialState , action){
                                 filtered:sortedPrice
                             } 
     
-                            case 'ORDER_BY_RATE':
+                            case "ORDER_BY_RATE":
                             let sortedRate=action.payload==="asc"?
                             [...state.filtered].sort(function(a,b){
                                 return (a.rate - b.rate);

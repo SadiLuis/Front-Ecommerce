@@ -3,7 +3,7 @@ import styles from "./Paginado.module.css";
 
 export default function Paginado({productsPerPage, productsAll, pagination}){
     const pageNumbers= []
-    for (let i=0; i<=Math.ceil(productsAll/productsPerPage); i++){
+    for (let i=0; i<Math.ceil(productsAll/productsPerPage); i++){
         pageNumbers.push(i + 1)
     }
     return (
