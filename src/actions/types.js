@@ -6,7 +6,6 @@ export const SEARCH_BY_NAME = 'SEARCH_BY_NAME'
 export const ADD_ITEM = 'ADD_ITEM'
 export const DELETE_ITEM = 'DELETE_ITEM'
 export const DETAIL_PRODUCT = 'DETAIL_PRODUCT'
-export const LOCALHOST = "http://localhost:5000/"
 export const FILTER_BY_CATEGORY = 'FILTER_BY_CATEGORY'
 export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";

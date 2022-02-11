@@ -1,16 +1,13 @@
 import axios from 'axios';
 
-import { GET_USER_URL, LOGIN_URL, REGISTER_URL } from '../assets/URLS';
+import { BASEURL } from '../assets/URLS';
 import getHeaderToken from '../helpers/getHeaderToken';
-import { GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME, ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT, LOGIN_SUCCESS, LOGIN_FAILED, REGISTER_SUCCESS, REGISTER_FAILED, GET_USER_DETAIL, AUTHENTICATION_ERROR, FILTER_BY_CATEGORY,GET_CATEGORIES } from "./types";
-
-
-let LOCALHOST = "https://ecommerce-pg-henry.herokuapp.com/"
+import { GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME, ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT, LOGIN_SUCCESS, LOGIN_FAILED, REGISTER_SUCCESS, REGISTER_FAILED, GET_USER_DETAIL, AUTHENTICATION_ERROR, FILTER_BY_CATEGORY, GET_CATEGORIES } from "./types";
 
 
 export const getAllProducts = () => dispatch => {
 
-    return fetch(LOCALHOST + 'products')
+    return fetch(`${BASEURL}/products`)
         .then(res => res.json())
         .then(data => dispatch({ type: GET_PRODUCTS, payload: data }))
         .catch(() => console.log('NO llega la informacion'))
@@ -19,7 +16,7 @@ export const getAllProducts = () => dispatch => {
 
 //export const getCategories = () => dispatch =>{
 //
-//    return fetch(LOCALHOST + 'categories')
+//    return fetch(BASEURL + 'categories')
 //            .then(res => res.json())
 //            .then(data => dispatch({type: GET_CATEGORIES , payload: data}))
 //            .catch(()=> console.log('NO llega la informacion'))
@@ -28,7 +25,7 @@ export const getAllProducts = () => dispatch => {
 export function getProductById(id) {
     return async function (dispatch) {
         try {
-            var json = await axios.get(LOCALHOST + 'products/' + id);
+            var json = await axios.get(`${BASEURL}/products/${id}`);
             return dispatch({
                 type: GET_PRODUCT_BY_ID,
                 payload: json.data
@@ -40,8 +37,7 @@ export function getProductById(id) {
 }
 
 export const getOneProduct = (id) => dispatch => {
-
-    return fetch(LOCALHOST + 'products/' + id)
+    return fetch(`${BASEURL}/products/${id}`)
         .then(res => res.json())
         .then(data => dispatch({ type: DETAIL_PRODUCT, payload: data }))
         .catch(e => console.log(e))
@@ -64,7 +60,7 @@ export const deleteItem = (id) => {
 export function createProduct(product) {
     return async function (dispatch) {
         try {
-            var response = await axios.post(LOCALHOST + 'products', product)
+            var response = await axios.post(`${BASEURL}/products`, product)
             return response
         } catch (err) {
             console.log(err)
@@ -75,16 +71,16 @@ export function createProduct(product) {
 export function deleteProduct(id) {
     return async function (dispatch) {
 
-      try {
-        const deleteProd = await axios.delete(LOCALHOST + "products/ " + id);
-        return dispatch({
-          type: "DELETE_PRODUCT",
-          payload: deleteProd.data,
+        try {
+            const deleteProd = await axios.delete(`${BASEURL}/products/${id}`);
+            return dispatch({
+                type: "DELETE_PRODUCT",
+                payload: deleteProd.data,
 
-        })
-      } catch (err) {
-        console.log(err)
-      }
+            })
+        } catch (err) {
+            console.log(err)
+        }
     }
 };
 
@@ -92,7 +88,7 @@ export function editProduct(product) {
     const { id } = product
     return async function (dispatch) {
         try {
-            var response = await axios.put(LOCALHOST + 'products/' + id, product)
+            var response = await axios.put(`${BASEURL}/products/${id}`, product)
             return {
                 type: "EDIT_PRODUCT",
                 payload: response.data
@@ -106,7 +102,7 @@ export function editProduct(product) {
 export function searchByName(name) {
     return async function (dispatch) {
         try {
-            var json = await axios.get(LOCALHOST + 'products?title=' + name) //OJO: VER BIEN LA ruta por query del back
+            var json = await axios.get(`${BASEURL}/products?title=${name}`) //OJO: VER BIEN LA ruta por query del back
             return dispatch({
                 type: SEARCH_BY_NAME,
                 payload: json.data
@@ -131,7 +127,7 @@ export function login({ email, contrasena }) {
             const body = { email, contrasena };
 
             // Envío la petición con el body y config armados
-            let { data } = await axios.post(LOGIN_URL, body, config);
+            let { data } = await axios.post(`${BASEURL}/user/login`, body, config);
 
             // Si todo bien configuro al usuario como logueado
             dispatch({
@@ -182,7 +178,7 @@ export function register({
                 telefono
             };
 
-            let { data } = await axios.post(REGISTER_URL, body, config);
+            let { data } = await axios.post(`${BASEURL}/user/register`, body, config);
 
             console.log(data);
             dispatch({
@@ -206,7 +202,7 @@ const getUserDetail = () => {
         const headers = getHeaderToken();
         console.log(headers);
         try {
-            const { data } = await axios.get(GET_USER_URL, headers);
+            const { data } = await axios.get(`${BASEURL}/user`, headers);
             dispatch({
                 type: GET_USER_DETAIL,
                 payload: data
@@ -221,65 +217,63 @@ const getUserDetail = () => {
     }
 }
 
-export const totalItemSum = (total)=>{
+export const totalItemSum = (total) => {
     return {
-        type:'PRECIO_TOTAL_SUM',
+        type: 'PRECIO_TOTAL_SUM',
         payload: total
     }
 }
-export const totalItemRes = (total)=>{
+export const totalItemRes = (total) => {
     return {
-        type:'PRECIO_TOTAL_RES',
+        type: 'PRECIO_TOTAL_RES',
         payload: total
     }
 }
 
-export const addQuantity = (payload) =>{
-    return{
-        type:'ADD_QUANTITY',
+export const addQuantity = (payload) => {
+    return {
+        type: 'ADD_QUANTITY',
         payload
     }
 }
 
-export const restQuantity = (payload) =>{
-    return{
-        type:'REST_QUANTITY',
+export const restQuantity = (payload) => {
+    return {
+        type: 'REST_QUANTITY',
         payload
     }
 }
 
-export function getCategories(){
-    return async function(dispatch){
+export function getCategories() {
+    return async function (dispatch) {
         try {
-            const responseCategories=await axios.get(LOCALHOST + 'categories')
+            const responseCategories = await axios.get(`${BASEURL}/categories`)
             return dispatch({
                 type: GET_CATEGORIES,
                 payload: responseCategories.data
             })
-        } catch(err){
+        } catch (err) {
             console.log(err)
         }
     }
 }
 
-export function filterByCategory(payload){
+export function filterByCategory(payload) {
     return {
         type: FILTER_BY_CATEGORY,
         payload
-        
-    } 
+
+    }
 }
-export function orderByPrice(payload){
-     return {
+export function orderByPrice(payload) {
+    return {
         type: "ORDER_BY_PRICE",
         payload
     }
 }
-export function orderByRate(payload){
+export function orderByRate(payload) {
     return {
         type: "ORDER_BY_RATE",
         payload
     }
 }
-
-
