@@ -6,7 +6,7 @@ import DetailProduct from './components/details/DetailProduct'
 import Cart from './components/Cart/Cart'
 import Login from './components/Login/Login';
 import LandingPage from './components/LandingPage/LandingPage'
-import CreateUser from './components/CreateUser/CreateUser';
+//import CreateUser from './components/CreateUser/CreateUser';
 import NavBar from './components/NavBar/NavBar';
 import BuyProduct from './components/BuyProduct/BuyProduct'
 import Register from "./components/Register/Register";
@@ -27,7 +27,7 @@ const AppEcommerce = () => {
       <Route  path='/home' element={< Home/>}/>
       <Route  path ='/cart' element={<Cart />} />
       <Route  path='/home/:id' element={< DetailProduct />} />
-      <Route exact path="/admin/dashboard" element={<Dashboard/>} />
+      <Route exact path="/admin/products" element={<Dashboard/>} />
       <Route exact path="/admin/sales" element={<AdminSales/>} />
       <Route path='/home/buy' element= {<BuyProduct />} />
       {/* <Route path='/admin' element={<SideBarAdmin/>} /> */}

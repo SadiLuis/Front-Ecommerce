@@ -3,34 +3,33 @@ import React , {useEffect , useState} from 'react';
 import { useDispatch ,useSelector } from 'react-redux';
 
 import DataTable from 'react-data-table-component'
-import ReactModal from 'react-modal';
-import { MdDeleteForever } from 'react-icons/md';
-import { AiFillEdit } from 'react-icons/ai'
-import { getAllPedidos } from '../../../actions';
-import FormEditPedidos from './FormEditPedidos'
+// import ReactModal from 'react-modal';
+// import { MdDeleteForever } from 'react-icons/md';
+import { AiFillCheckCircle } from 'react-icons/ai'
+import { editStatusPedido, getAllPedidos } from '../../../actions';
+//import FormEditPedidos from './FormEditPedidos'
 
 export default function AdminSales(){
 
     const dispatch = useDispatch()
     const pedidos = useSelector((state) => state.pedidosReducer.allPedidos)
     
+    const statusCompletado = {
+        status: "COMPLETADO"
+    }
     
     useEffect(()=>{
         dispatch(getAllPedidos())
       },[dispatch])
 
-      //Estados para manejar popUp edit
-    const [openPopUpEdit, setOpenPopUpEdit] = useState(false)
-    const [idToEdit, setIdToEdit] = useState('')
+    const handleMarkCompleted = (pedidoId) => {
+        
+        console.log("pedidoId", pedidoId)
+        console.log("newStatus", statusCompletado)
+        dispatch(editStatusPedido(pedidoId, statusCompletado))
+    }
+
     
-    //handlers para manejar popUp Edit
-    const handleOpenPopUpEdit = () => {
-        setOpenPopUpEdit(true)
-    }
-    const handleClosePopUpEdit = (e) => {
-        e.preventDefault()
-        setOpenPopUpEdit(false)
-    }
     
       const columns = [
         {
@@ -38,12 +37,10 @@ export default function AdminSales(){
             cell: row => (
             <div>
                 <button type="button" 
-                    title="Edit"
+                    title="Mark as completed"
                     onClick={() => {
-                    handleOpenPopUpEdit()
-                    setIdToEdit(row.id)
-                    //console.log(row.id)    
-                    }}><AiFillEdit /></button>
+                    handleMarkCompleted(row.pedidoId)    
+                    }}><AiFillCheckCircle /></button>
     
                     
                     {/* <button type="button" 
@@ -99,8 +96,7 @@ export default function AdminSales(){
       if (pedidos.length > 0) {
         return (
             <div>
-                {console.log(pedidos)}
-                {(pedidos.map(p => console.log(p.usuario["nombre"])))}
+                
     
             <DataTable
                 columns={columns}
@@ -114,10 +110,7 @@ export default function AdminSales(){
                 responsive
             />
 
-            <ReactModal isOpen={openPopUpEdit}>
-                <h1>Edit this product</h1>
-                <FormEditPedidos handleClosePopUp={handleClosePopUpEdit} id={idToEdit} />  
-            </ReactModal>
+            
         </div>  
         )
       }else{
