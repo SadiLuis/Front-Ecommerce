@@ -5,7 +5,7 @@ import { useDispatch ,useSelector } from 'react-redux';
 import DataTable from 'react-data-table-component'
 import ReactModal from 'react-modal';
 import { MdDeleteForever } from 'react-icons/md';
-import { AiFillEdit } from 'react-icons/ai'
+import { FaRegEdit } from 'react-icons/fa'
 
 import FormEditProduct from './FormEditProduct/FormEditProduct';
 import FormCreateProduct from './FormCreateProduct/FormCreateProduct'
@@ -13,7 +13,7 @@ import FormCreateProduct from './FormCreateProduct/FormCreateProduct'
 
 export default function Dashboard(){
     const dispatch = useDispatch()
-    const products = useSelector((state) => state.productsReducer.allProducts)
+    const products = useSelector(state => state.allProducts)
 
     //Estados para manejar popUp edit
     const [openPopUpEdit, setOpenPopUpEdit] = useState(false)
@@ -54,6 +54,7 @@ export default function Dashboard(){
 
    useEffect(()=>{
      dispatch(getAllProducts())
+    
    },[dispatch])
 
 
@@ -69,7 +70,7 @@ export default function Dashboard(){
                 handleOpenPopUpEdit()
                 setIdToEdit(row.id)
                 //console.log(row.id)    
-                }}><AiFillEdit /></button>
+                }}><FaRegEdit /></button>
 
                 
                 <button type="button" 

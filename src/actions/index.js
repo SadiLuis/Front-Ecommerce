@@ -1,16 +1,11 @@
 import axios from 'axios';
 
-
 import { GET_USER_URL, LOGIN_URL, REGISTER_URL } from '../assets/URLS';
 import getHeaderToken from '../helpers/getHeaderToken';
-import { GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME, ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT, LOGIN_SUCCESS, LOGIN_FAILED, REGISTER_SUCCESS, REGISTER_FAILED, GET_USER_DETAIL, AUTHENTICATION_ERROR, FILTER_BY_CATEGORY,GET_CATEGORIES, GET_PEDIDOS } from "./types";
+import { GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME, ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT, LOGIN_SUCCESS, LOGIN_FAILED, REGISTER_SUCCESS, REGISTER_FAILED, GET_USER_DETAIL, AUTHENTICATION_ERROR, FILTER_BY_CATEGORY,GET_CATEGORIES } from "./types";
 
 
 let LOCALHOST = "https://ecommerce-pg-henry.herokuapp.com/"
-
-
-
-
 
 
 export const getAllProducts = () => dispatch => {
@@ -282,12 +277,4 @@ export function filterByCategory(payload){
             type: "ORDER_BY_RATE",
             payload
         }
-    }
-
-    export const getAllPedidos = () => dispatch =>{
-
-        return fetch(LOCALHOST + 'pedidos')
-                .then(res => res.json())
-                .then(data => dispatch({type: GET_PEDIDOS , payload: data}))
-                .catch(()=> console.log('NO llega la informacion'))
     }
