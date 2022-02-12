@@ -4,22 +4,21 @@ import Item from "./Item/Item";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Button, Row } from "react-bootstrap";
-import { sumCart } from "../../actions";
 
 function Cart() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  let items = useSelector((state) => {
-    let completeProducts = state.productsReducer.cart.products;
-    completeProducts = completeProducts.map((e) => {
-      const finded = state.productsReducer.allProducts.find(
-        (el) => el.id === e.id
-      );
-      return finded ? { ...finded, quantity: e.quantity } : null;
-    });
+  let items =
+    useSelector((state) => {
+      let completeProducts = state.productsReducer.cart.products;
+      completeProducts = completeProducts.map((e) => {
+        const finded = state.productsReducer.allProducts.find(
+          (el) => el.id === e.id
+        );
+        return finded ? { ...finded, quantity: e.quantity } : null;
+      });
 
-    return completeProducts;
-  });
+      return completeProducts;
+    }) || [];
   const total = useSelector((state) => state.productsReducer.cart.precioTotal);
   const isAuth = useSelector((state) => state.loginReducer.isAuth);
   items = items.filter((e) => e);
@@ -43,15 +42,11 @@ function Cart() {
     );
   };
 
-  useEffect(() => {
-    dispatch(sumCart());
-  }, [dispatch]);
-
   return (
     <>
       <Container>
         <Container className="py-4 bg-light rounded-3 ">
-          {(!items || items.length === 0) && emptyCart()}
+          {items.length === 0 && emptyCart()}
           {items?.map((i) => (
             <Item
               key={i.id}

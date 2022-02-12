@@ -5,7 +5,7 @@ import {
     GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME,
     ADD_ITEM, DELETE_ITEM, LOGIN_SUCCESS,
     LOGIN_FAILED, REGISTER_SUCCESS, REGISTER_FAILED, GET_USER_DETAIL,
-    AUTHENTICATION_ERROR, FILTER_BY_CATEGORY, GET_CATEGORIES, GET_PEDIDOS, EDIT_STATUS_PEDIDO, EDIT_PRODUCT, DELETE_PRODUCT, SUM_CART, ORDER_BY_PRICE, ORDER_BY_RATE, LOGOUT, REST_ITEM, UPDATE_USER, UPDATE_CART
+    AUTHENTICATION_ERROR, FILTER_BY_CATEGORY, GET_CATEGORIES, GET_PEDIDOS, EDIT_STATUS_PEDIDO, EDIT_PRODUCT, DELETE_PRODUCT, ORDER_BY_PRICE, ORDER_BY_RATE, LOGOUT, REST_ITEM, UPDATE_USER, UPDATE_CART
 } from "./types";
 
 
@@ -242,11 +242,11 @@ export const getUserDetail = () => {
     }
 }
 
-export const sumCart = () => {
-    return {
-        type: SUM_CART,
-    }
-}
+// export const sumCart = () => {
+//     return {
+//         type: SUM_CART,
+//     }
+// }
 
 export function getCategories() {
     return async function (dispatch) {

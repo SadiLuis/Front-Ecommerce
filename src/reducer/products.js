@@ -8,7 +8,6 @@ import {
     ADD_ITEM,
     DELETE_ITEM,
     REST_ITEM,
-    SUM_CART,
     UPDATE_CART
 } from '../actions/types';
 import { getCartLocalStorage, saveCartLocalStorage } from "../helpers/localstorage";
@@ -23,7 +22,7 @@ const initialState = {
 
 export default function productsReducer(state = initialState, action) {
     const { type, payload } = action;
-    let newCart, newProducts, itemCart;
+    let newCart = state.cart, newProducts, itemCart;
 
     switch (type) {
         //! TODO SOBRE EL CARRITO
@@ -34,24 +33,20 @@ export default function productsReducer(state = initialState, action) {
             if (itemCart) {
                 newProducts = state.cart.products.filter(e => e.id !== itemCart.id);
                 newProducts.push({ ...itemCart, quantity: itemCart.quantity + 1 });
-                newCart = { ...state.cart, products: newProducts };
-            } else {
-                newCart = { ...state.cart, products: [...state.cart.products, { id: payload, quantity: 1 }] };
-            }
-            saveCartLocalStorage(newCart);
-            return {
-                ...state,
-                cart: newCart
-            };
-        case SUM_CART:
-            newCart = {
-                ...state.cart,
-                precioTotal: state.cart.products.reduce((prev, e) => {
-                    let prod = state.allProducts.find(el => el.id === e.id);
+                newCart = {
+                    products: newProducts,
+                    precioTotal: newProducts.reduce((prev, e) => {
+                        let prod = state.allProducts.find(el => el.id === e.id);
 
-                    return Math.round(prev + ((prod.price * e.quantity) * 100)) / 100;
-                }, 0)
-            };
+                        return Math.round((prev + (prod.price * e.quantity)) * 100) / 100;
+                    }, 0)
+                };
+            } else {
+                newCart = {
+                    products: [...state.cart.products, { id: payload, quantity: 1 }],
+                    precioTotal: Math.round((state.cart.precioTotal + state.allProducts.find(e => e.id === payload).price) * 100) / 100
+                };
+            }
             saveCartLocalStorage(newCart);
             return {
                 ...state,
@@ -59,12 +54,15 @@ export default function productsReducer(state = initialState, action) {
             };
         case REST_ITEM:
             itemCart = state.cart.products.find(e => e.id === payload);
-            newCart = state.cart;
             if (itemCart) {
                 newProducts = state.cart.products.filter(e => e.id !== itemCart.id);
                 itemCart.quantity > 1 &&
                     newProducts.push({ ...itemCart, quantity: itemCart.quantity - 1 });
-                newCart = { ...newCart, products: newProducts };
+                newCart = {
+                    ...newCart,
+                    products: newProducts,
+                    precioTotal: Math.round((state.cart.precioTotal - state.allProducts.find(e => e.id === payload).price) * 100) / 100
+                };
                 saveCartLocalStorage(newCart);
             }
             return {
@@ -72,10 +70,17 @@ export default function productsReducer(state = initialState, action) {
                 cart: newCart
             };
         case DELETE_ITEM:
-            newCart = {
-                ...state.cart,
-                products: state.cart.products.filter(e => e.id !== payload)
-            };
+            itemCart = state.cart.products.find(e => e.id === payload);
+            itemCart && (newCart = {
+                products: state.cart.products.filter(e => e.id !== payload),
+                precioTotal:
+                    Math.round(
+                        (
+                            state.cart.precioTotal -
+                            (itemCart.quantity * state.allProducts.find(e => e.id === payload).price)
+                        ) * 100)
+                    / 100
+            });
             saveCartLocalStorage(newCart)
             return {
                 ...state,

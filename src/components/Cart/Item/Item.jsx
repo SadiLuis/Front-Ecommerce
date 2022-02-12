@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addItem, deleteItem, restItem, sumCart } from "../../../actions/index";
+import { addItem, deleteItem, restItem } from "../../../actions/index";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Button, Row, Col } from "react-bootstrap";
@@ -19,7 +19,6 @@ function Item({ id, title, price, image, stock, quantity }) {
     if (input < stock) {
       setInput((prev) => prev + 1);
       dispatch(addItem(id));
-      dispatch(sumCart());
     } else {
       alert("Se supero el limite de stock , el limite es: " + stock);
       // setInput((prev) => prev - 1);
@@ -31,7 +30,6 @@ function Item({ id, title, price, image, stock, quantity }) {
     if (input > 1) {
       setInput((prev) => prev - 1);
       dispatch(restItem(id));
-      dispatch(sumCart());
     } else {
       dispatch(deleteItem(id));
     }
@@ -40,7 +38,6 @@ function Item({ id, title, price, image, stock, quantity }) {
   const handleDelete = () => {
     // e.preventDefault();
     dispatch(deleteItem(id));
-    dispatch(sumCart());
   };
 
   const fixedPrice = Math.round((priceTotal + Number.EPSILON) * 100) / 100;

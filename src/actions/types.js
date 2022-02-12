@@ -12,7 +12,7 @@ export const ORDER_BY_RATE = "ORDER_BY_RATE"
 export const ADD_ITEM = 'ADD_ITEM'
 export const REST_ITEM = "REST_ITEM"
 export const DELETE_ITEM = 'DELETE_ITEM'
-export const SUM_CART = "SUM_CART"
+// export const SUM_CART = "SUM_CART"
 export const UPDATE_CART = "UPDATE_CART"
 // AUTENTICACION Y USUARIO
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
