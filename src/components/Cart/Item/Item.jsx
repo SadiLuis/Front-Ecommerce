@@ -6,13 +6,13 @@ import { Container, Button, Row, Col } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 
 function Item({ id, title, price, image, stock, quantity }) {
-  const [input, setInput] = useState(quantity);
+  const [input, setInput] = useState(parseInt(quantity));
   let priceTotal = price * quantity;
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
     // console.log(e);
-    setInput(e.target.value);
+    setInput(parseInt(e.target.value));
   };
 
   const handleButtonMas = () => {
@@ -72,11 +72,11 @@ function Item({ id, title, price, image, stock, quantity }) {
           <input
             type="number"
             value={input}
-            min="1"
+            min={1}
             max={stock}
-            defaultValue={input}
+            // defaultValue={input}
             onChange={handleChange}
-            disabled="true"
+            disabled
           />
           <Button onClick={handleButtonMas}>+</Button>
         </Col>

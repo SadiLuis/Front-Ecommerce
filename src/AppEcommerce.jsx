@@ -11,7 +11,7 @@ import Register from "./components/Register/Register";
 import PedidosCompra from "./components/Pedidos-de-compra/PedidosCompra";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getUserDetail } from "./actions";
+import { getUserDetail, updateCart } from "./actions";
 import Profile from "./pages/Profile/Profile";
 
 const AppEcommerce = () => {
@@ -23,6 +23,10 @@ const AppEcommerce = () => {
   useEffect(() => {
     token && !isAuth && !userDetail && dispatch(getUserDetail());
   }, [token, dispatch, userDetail, isAuth]);
+
+  useEffect(() => {
+    !isAuth && dispatch(updateCart());
+  }, [isAuth, dispatch]);
 
   return (
     <div>

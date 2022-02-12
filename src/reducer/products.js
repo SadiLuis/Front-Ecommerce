@@ -8,7 +8,8 @@ import {
     ADD_ITEM,
     DELETE_ITEM,
     REST_ITEM,
-    SUM_CART
+    SUM_CART,
+    UPDATE_CART
 } from '../actions/types';
 import { getCartLocalStorage, saveCartLocalStorage } from "../helpers/localstorage";
 
@@ -26,6 +27,8 @@ export default function productsReducer(state = initialState, action) {
 
     switch (type) {
         //! TODO SOBRE EL CARRITO
+        case UPDATE_CART:
+            return { ...state, cart: getCartLocalStorage() }
         case ADD_ITEM:
             itemCart = state.cart.products.find(e => e.id === payload);
             if (itemCart) {

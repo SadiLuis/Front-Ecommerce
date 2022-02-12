@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { searchByName, logout } from "../../actions";
 import CartBtn from "../ShoppingCart/CartBtn";
 import { bindActionCreators } from "redux";
@@ -7,10 +7,16 @@ import { connect } from "react-redux";
 
 function NavBar({ isAuth, user, searchByName, logout }) {
   const [name, setName] = useState("");
+  const navigate = useNavigate();
 
   function handleChange(e) {
     setName(e.target.value);
   }
+
+  const handleLogout = () => {
+    logout();
+    navigate("/home");
+  };
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -33,11 +39,14 @@ function NavBar({ isAuth, user, searchByName, logout }) {
               <NavLink to="/home">Home </NavLink>
               {isAuth && user ? (
                 <>
-                  <button onClick={logout}>Log out </button>
+                  <button onClick={handleLogout}>Log out </button>
                   <NavLink to="/profile">Perfil</NavLink>
                 </>
               ) : (
                 <NavLink to="/login">Log in </NavLink>
+              )}
+              {user && user.rol === "2" && (
+                <NavLink to="/dashboard/admin">Dashboard</NavLink>
               )}
               <NavLink to="/cart">
                 <CartBtn />

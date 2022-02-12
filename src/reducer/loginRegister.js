@@ -34,11 +34,12 @@ export default function loginReducer(state = initialState, action) {
         case LOGOUT:
             // Eliminamos el token del localStorage y la info del usuario
             localStorage.removeItem('token_ecommerce');
+            localStorage.removeItem('cart');
             return {
                 ...state,
                 token: null,
                 isAuth: false,
-                user: null
+                userDetail: null
             };
 
         default: return state;

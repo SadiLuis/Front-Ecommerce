@@ -51,7 +51,7 @@ function Cart() {
     <>
       <Container>
         <Container className="py-4 bg-light rounded-3 ">
-          {items.length === 0 && emptyCart()}
+          {(!items || items.length === 0) && emptyCart()}
           {items?.map((i) => (
             <Item
               key={i.id}
