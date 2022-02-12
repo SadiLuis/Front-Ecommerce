@@ -1,15 +1,8 @@
 import axios from 'axios';
-<<<<<<< HEAD
-import {GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME,
-     ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT , FILTER_BY_CATEGORY,GET_CATEGORIES, ORDER_BY_PRICE, ORDER_BY_RATE } from "./types";
-
-let LOCALHOST = "http://localhost:5000/"
-=======
 
 import { BASEURL } from '../assets/URLS';
 import getHeaderToken from '../helpers/getHeaderToken';
 import { GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME, ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT, LOGIN_SUCCESS, LOGIN_FAILED, REGISTER_SUCCESS, REGISTER_FAILED, GET_USER_DETAIL, AUTHENTICATION_ERROR, FILTER_BY_CATEGORY, GET_CATEGORIES } from "./types";
->>>>>>> 3964ec6cbffcce65ba54f8ee00d1428bfedfafa6
 
 
 export const getAllProducts = () => dispatch => {
@@ -272,20 +265,6 @@ export function filterByCategory(payload) {
 
     }
 }
-<<<<<<< HEAD
-    export function orderByPrice(payload){
-        return {
-            type: ORDER_BY_PRICE,
-            payload
-        }
-    }
-    export function orderByRate(payload){
-        return {
-            type: ORDER_BY_RATE,
-            payload
-        }
-    }
-=======
 export function orderByPrice(payload) {
     return {
         type: "ORDER_BY_PRICE",
@@ -298,4 +277,3 @@ export function orderByRate(payload) {
         payload
     }
 }
->>>>>>> 3964ec6cbffcce65ba54f8ee00d1428bfedfafa6

@@ -9,14 +9,8 @@ import {Card , ListGroup , ListGroupItem ,Button} from 'react-bootstrap'
 function DetailProduct() {
    const dispatch = useDispatch();
    const [cartBtn , setCartbtn] = useState('Agregar al carrito')
-<<<<<<< HEAD
-   
-   const detailProduct = useSelector(state => state.details);
-   const item = useSelector(state => state.cart)
-=======
    const detailProduct = useSelector(state => state.productsReducer.details);
    const item = useSelector(state => state.cartReducer.cart)
->>>>>>> 3964ec6cbffcce65ba54f8ee00d1428bfedfafa6
    const {id} = useParams()
 
    useEffect(()=>{
@@ -45,7 +39,6 @@ function DetailProduct() {
 
   return( 
     <div>
-<<<<<<< HEAD
       
     
 
@@ -96,38 +89,3 @@ function DetailProduct() {
   )
 }
 export default DetailProduct;
-=======
-  <Card className="text-center" style={{ width: '50rem' }}>
-    <Card.Img variant="top" src={detailProduct.image} />
-    <Card.Body>
-    <Card.Title>{detailProduct.title}</Card.Title>
-    <Card.Title> Price : $ {detailProduct.price}</Card.Title>
-    </Card.Body>
-  </Card>
-  <br />
-  <Card className="text-center" style={{ width: '50rem' }}>
-    <Card.Body>
-      <Card.Text>
-       {detailProduct.description}
-      </Card.Text>
-     
-    </Card.Body>
-    <ListGroup className="list-group-flush">
-    <ListGroupItem>Category: {detailProduct.category}</ListGroupItem>
-    <ListGroupItem>Rate: {detailProduct.rate}</ListGroupItem>
-    <ListGroupItem>Stock: {detailProduct.cantidad}</ListGroupItem>
-   
-  </ListGroup>
-  <Link  className=' btn btn-lg btn-block btn-primary' to={`/home/buy`}>
-     comprar
-  </Link>
-  <br />
-  <Button variant="primary" onClick={()=> handleCart(detailProduct)}>{cartBtn}</Button>
-  <br />
-  </Card>
-  </div>
-  )
-}
-
-export default DetailProduct;
->>>>>>> 3964ec6cbffcce65ba54f8ee00d1428bfedfafa6
