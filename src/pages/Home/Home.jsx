@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import {
   getAllProducts,
@@ -34,6 +33,7 @@ const Home = ({
     indexOfFirstProduct,
     indexOfLastProduct
   );
+  // console.log(currentProducts);
 
   const pagination = (pageNumbers) => {
     setCurrentPage(pageNumbers);
@@ -78,6 +78,11 @@ const Home = ({
         <button type="button" className="btn btn-primary" onClick={handleClick}>
           Products
         </button>
+        <Paginado
+          productsPerPage={productsPerPage}
+          filtered={filtered.length}
+          pagination={pagination}
+        />
 
         <div className="filters">
           <label>Choose products by categories:</label>
@@ -87,15 +92,13 @@ const Home = ({
             onChange={(e) => handleFilterByCategories(e)}
           >
             <option value="all">All Categories</option>
-            {categories &&
-              categories.length &&
-              categories.map((category) => {
-                return (
-                  <option key={category.id} value={category.nombre}>
-                    {category.nombre}
-                  </option>
-                );
-              })}
+            {categories?.map((category) => {
+              return (
+                <option key={category.id} value={category.nombre}>
+                  {category.nombre}
+                </option>
+              );
+            })}
           </select>
         </div>
         <div className="orders">
@@ -115,17 +118,12 @@ const Home = ({
           </div>
         </div>
 
-        <Paginado
-          productsPerPage={productsPerPage}
-          allProducts={allProducts.length}
-          pagination={pagination}
-        />
-
         <div className="home">
           {currentProducts &&
             currentProducts.length &&
             currentProducts.map((p) => {
               return (
+                // <Link to={"/home/" + p.id}>
                 <Product
                   key={p.id}
                   id={p.id}
@@ -135,6 +133,7 @@ const Home = ({
                   category={p.category}
                   rate={p.rate}
                 />
+                // </Link>
               );
             })}
         </div>
