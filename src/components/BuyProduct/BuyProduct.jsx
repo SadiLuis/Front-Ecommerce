@@ -1,28 +1,29 @@
 import React, { useState } from "react";
-import {useParams} from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
+import getHeaderToken from "../../helpers/getHeaderToken";
 import {
   Elements,
   CardElement,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
+import { BASEURL } from "../../assets/URLS";
+import { PUBLIC_KEY_STRIPE } from "../../assets/constants";
+import { useSelector } from "react-redux";
 
-import axios from "axios";
-const headers = {
-"x-auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7ImlkIjoyfSwiaWF0IjoxNjQ0MzY1NjQwLCJleHAiOjE2NDQ3MjU2NDB9.mDrwe1BvcHcL9Lph3xUkn1K2rHr1BVTViBeGkItzt34"
-};
-
-const stripePromise = loadStripe("pk_test_51KQbAWIarjJt2FCS6eI6jVEzZ1DxAJRwWufxmdBGh2POhYLyJN22NSwQPIa4nBIoWoz0h76iRKTsi3DZ4l5ok0aK00E5DScE38");
+const headers = getHeaderToken();
+const stripePromise = loadStripe(PUBLIC_KEY_STRIPE);
 
 const CheckoutForm = () => {
-    const detailProduct = useSelector(state => state.details);
-    const {id} = useParams();
   const stripe = useStripe();
   const elements = useElements();
-
   const [loading, setLoading] = useState(false);
+  const pedidoId = useSelector(
+    (state) => state.pedidosReducer.pedidoDetail.pedidoId
+  );
+
+  // console.log(pedidoId);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,12 +39,12 @@ const CheckoutForm = () => {
       const { id } = paymentMethod;
       try {
         const { data } = await axios.post(
-          "http://localhost:3001/pagos",
+          `${BASEURL}/pagos`,
           {
             transaccionId: id,
-            pedidoId: 1
+            pedidoId,
           },
-	{headers}
+          headers
         );
         console.log(data);
 
@@ -55,20 +56,8 @@ const CheckoutForm = () => {
     }
   };
 
-  // console.log(!stripe || loading);
-
   return (
     <form className="" onSubmit={handleSubmit}>
-      {/* Product Information */}
-      <img
-        src={detailProduct.image}
-        alt="Corsair Gaming Keyboard RGB"
-        className="img-fluid"
-      />
-
-      <h3 className="text-center my-2">Price: {detailProduct.price}</h3>
-      
-      {/* User Card Input */}
       <div className="form-group">
         <CardElement />
       </div>
@@ -87,17 +76,18 @@ const CheckoutForm = () => {
 };
 
 function BuyProduct() {
-    
   return (
-    <Elements stripe={stripePromise}>
-      <div className="container p-4">
-        <div className="row h-100">
-          <div className="col-md-4 offset-md-4 h-100">
-            <CheckoutForm />
+    <>
+      <Elements stripe={stripePromise}>
+        <div className="container p-4">
+          <div className="row h-100">
+            <div className="col-md-4 offset-md-4 h-100">
+              <CheckoutForm />
+            </div>
           </div>
         </div>
-      </div>
-    </Elements>
+      </Elements>
+    </>
   );
 }
 
