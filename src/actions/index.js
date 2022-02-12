@@ -1,16 +1,12 @@
 import axios from 'axios';
-
 import { BASEURL } from '../assets/URLS';
 import getHeaderToken from '../helpers/getHeaderToken';
-
-import { GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME, 
-    ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT, LOGIN_SUCCESS, 
+import {
+    GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME,
+    ADD_ITEM, DELETE_ITEM, LOGIN_SUCCESS,
     LOGIN_FAILED, REGISTER_SUCCESS, REGISTER_FAILED, GET_USER_DETAIL,
-     AUTHENTICATION_ERROR, FILTER_BY_CATEGORY,GET_CATEGORIES, GET_PEDIDOS, EDIT_STATUS_PEDIDO } from "./types";
-
-
-let LOCALHOST = "https://ecommerce-pg-henry.herokuapp.com"
-
+    AUTHENTICATION_ERROR, FILTER_BY_CATEGORY, GET_CATEGORIES, GET_PEDIDOS, EDIT_STATUS_PEDIDO, EDIT_PRODUCT, DELETE_PRODUCT, SUM_CART, ORDER_BY_PRICE, ORDER_BY_RATE, LOGOUT, REST_ITEM
+} from "./types";
 
 
 export const getAllProducts = () => dispatch => {
@@ -20,15 +16,6 @@ export const getAllProducts = () => dispatch => {
         .then(data => dispatch({ type: GET_PRODUCTS, payload: data }))
         .catch(() => console.log('NO llega la informacion'))
 }
-
-
-//export const getCategories = () => dispatch =>{
-//
-//    return fetch(BASEURL + 'categories')
-//            .then(res => res.json())
-//            .then(data => dispatch({type: GET_CATEGORIES , payload: data}))
-//            .catch(()=> console.log('NO llega la informacion'))
-//}
 
 export function getProductById(id) {
     return async function (dispatch) {
@@ -44,23 +31,23 @@ export function getProductById(id) {
     }
 }
 
-export const getOneProduct = (id) => dispatch => {
-    return fetch(`${BASEURL}/products/${id}`)
-        .then(res => res.json())
-        .then(data => dispatch({ type: DETAIL_PRODUCT, payload: data }))
-        .catch(e => console.log(e))
-}
-
-export const addItem = (product) => {
+export const addItem = (id) => {
     return {
         type: ADD_ITEM,
-        payload: product
+        payload: id
     }
 }
 
 export const deleteItem = (id) => {
     return {
         type: DELETE_ITEM,
+        payload: id
+    }
+}
+
+export const restItem = (id) => {
+    return {
+        type: REST_ITEM,
         payload: id
     }
 }
@@ -82,16 +69,16 @@ export function deleteProduct(id) {
         try {
             const deleteProd = await axios.delete(`${BASEURL}/products/${id}`);
             return dispatch({
-                type: "DELETE_PRODUCT",
+                type: DELETE_PRODUCT,
                 payload: deleteProd.data,
 
 
-        })
-     } catch (err) {
-        console.log(err)
+            })
+        } catch (err) {
+            console.log(err)
 
+        }
     }
-  }
 }
 
 export function editProduct(product) {
@@ -100,7 +87,7 @@ export function editProduct(product) {
         try {
             var response = await axios.put(`${BASEURL}/products/${id}`, product)
             return {
-                type: "EDIT_PRODUCT",
+                type: EDIT_PRODUCT,
                 payload: response.data
             }
         } catch (err) {
@@ -122,6 +109,10 @@ export function searchByName(name) {
             alert("Product not found")
         }
     }
+}
+
+export function logout() {
+    return { type: LOGOUT }
 }
 
 export function login({ email, contrasena }) {
@@ -147,7 +138,7 @@ export function login({ email, contrasena }) {
 
             dispatch(getUserDetail());
         } catch (err) {
-            window.alert(err.response);
+            window.alert(err.response.data);
             console.log(err.response);
 
             // Si ocurrió un error durante el logen, envio el login_fail
@@ -190,7 +181,7 @@ export function register({
 
             let { data } = await axios.post(`${BASEURL}/user/register`, body, config);
 
-            console.log(data);
+            // console.log(data);
             dispatch({
                 type: REGISTER_SUCCESS,
                 payload: data
@@ -207,12 +198,14 @@ export function register({
     }
 }
 
-const getUserDetail = () => {
+export const getUserDetail = () => {
     return async (dispatch) => {
         const headers = getHeaderToken();
-        console.log(headers);
+        // console.log(headers);
         try {
             const { data } = await axios.get(`${BASEURL}/user`, headers);
+            window.alert(`Bienvenido ${data.nombre}`)
+            console.log(data);
             dispatch({
                 type: GET_USER_DETAIL,
                 payload: data
@@ -227,30 +220,9 @@ const getUserDetail = () => {
     }
 }
 
-export const totalItemSum = (total) => {
+export const sumCart = () => {
     return {
-        type: 'PRECIO_TOTAL_SUM',
-        payload: total
-    }
-}
-export const totalItemRes = (total) => {
-    return {
-        type: 'PRECIO_TOTAL_RES',
-        payload: total
-    }
-}
-
-export const addQuantity = (payload) => {
-    return {
-        type: 'ADD_QUANTITY',
-        payload
-    }
-}
-
-export const restQuantity = (payload) => {
-    return {
-        type: 'REST_QUANTITY',
-        payload
+        type: SUM_CART,
     }
 }
 
@@ -277,51 +249,51 @@ export function filterByCategory(payload) {
 }
 export function orderByPrice(payload) {
     return {
-        type: "ORDER_BY_PRICE",
+        type: ORDER_BY_PRICE,
         payload
     }
 }
 export function orderByRate(payload) {
     return {
-        type: "ORDER_BY_RATE",
+        type: ORDER_BY_RATE,
         payload
     }
 }
 
-    export const postPedido = async (pedido) => {
-        await axios.post(`${LOCALHOST}/pedidos`,pedido)
-   }
+export const postPedido = async (pedido) => {
+    await axios.post(`${BASEURL}/pedidos`, pedido)
+}
 
 
-   export const getPedido = () => dispatch => {
+export const getPedido = () => async dispatch => {
+    const res = await fetch(`${BASEURL}/pedidos`);
+    const data = await res.json();
+    return dispatch({ type: GET_PEDIDOS, payload: data });
+}
 
-       return fetch(`${LOCALHOST}/pedidos`)
-              .then(res => res.json())
-              .then(data => dispatch({type:GET_PEDIDOS , payload: data}))
-   }
 
-
-    export const getAllPedidos = () => dispatch =>{
-                 let headers =  getHeaderToken()
-
-        return fetch(LOCALHOST + 'pedidos/', headers)
-                .then(res => res.json())
-                .then(data => dispatch({type: GET_PEDIDOS , payload: data}))
-                .catch(()=> console.log('NO llega la informacion'))
+export const getAllPedidos = () => async dispatch => {
+    try {
+        let config = getHeaderToken()
+        const res = await fetch(`${BASEURL}/pedidos`, config);
+        const data = await res.json();
+        return dispatch({ type: GET_PEDIDOS, payload: data });
+    } catch {
+        return console.log('NO llega la informacion');
     }
-    
-    export function editStatusPedido(pedidoId, newStatus) {
-        
-        return async function (dispatch) {
-            try {
-                const headers = getHeaderToken()
-                const response = await axios.put(LOCALHOST + 'pedidos/' + pedidoId, newStatus, headers)
-                return {
-                    type: EDIT_STATUS_PEDIDO,
-                    payload: response.data
-                }
-            } catch (err) {
-                console.log(err)
+}
+
+export function editStatusPedido(pedidoId, newStatus) {
+    return async function (dispatch) {
+        try {
+            const config = getHeaderToken()
+            const response = await axios.put(`${BASEURL}/pedidos/${pedidoId}`, newStatus, config)
+            return {
+                type: EDIT_STATUS_PEDIDO,
+                payload: response.data
             }
+        } catch (err) {
+            console.log(err)
         }
     }
+}

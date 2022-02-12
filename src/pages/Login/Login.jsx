@@ -3,7 +3,6 @@ import { login } from "../../actions/index";
 import { Link, useNavigate } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import Swal from "sweetalert2";
 
 const initialForm = {
   contrasena: "",
@@ -47,7 +46,6 @@ const Login = ({ login, isAuth, user }) => {
     if (Object.keys(errors).length) {
       return window.alert("El formulario contiene errrores");
     }
-
     login(form);
   };
 
@@ -55,13 +53,7 @@ const Login = ({ login, isAuth, user }) => {
     // Si ya está logueado que lo redireccione al dashboard
     if (isAuth && user) {
       setForm(initialForm);
-      const { nombre, rol } = user;
-      Swal.fire({
-        text: `Welcome ${nombre}`,
-        icon: "success",
-      });
-      if (rol === "1") return navigate("/dashboard/user");
-      if (rol === "2") return navigate("/admin/products");
+      navigate("/home");
     }
   }, [isAuth, navigate, user]);
 

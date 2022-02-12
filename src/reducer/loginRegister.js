@@ -1,23 +1,24 @@
-import { LOGIN_SUCCESS,
+import {
+    LOGIN_SUCCESS,
     LOGIN_FAILED,
     REGISTER_SUCCESS,
     REGISTER_FAILED,
     LOGOUT,
     GET_USER_DETAIL,
-    AUTHENTICATION_ERROR} from '../actions/types'
+    AUTHENTICATION_ERROR
+} from '../actions/types'
 
-
-const initialState={
+const initialState = {
     token: localStorage.getItem('token_ecommerce'),
     isAuth: null,
     userDetail: null,
 }
 
-export default function loginReducer(state= initialState, action){
+export default function loginReducer(state = initialState, action) {
 
-    switch(action.type){
+    switch (action.type) {
         case GET_USER_DETAIL:
-            return { ...state, userDetail: action.payload };
+            return { ...state, isAuth: true, userDetail: action.payload };
         case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
             // Set Token in localstorage
@@ -40,6 +41,6 @@ export default function loginReducer(state= initialState, action){
                 user: null
             };
 
-            default: return state;
+        default: return state;
     }
 }
