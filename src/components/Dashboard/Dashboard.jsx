@@ -1,12 +1,12 @@
 import React , {useEffect , useState} from 'react';
 import {getAllProducts, deleteProduct} from '../../actions/index';
 import { useDispatch ,useSelector } from 'react-redux';
+import "./DashBoard.css";
 
 import DataTable from 'react-data-table-component'
 import ReactModal from 'react-modal';
-import { MdDeleteForever } from 'react-icons/md';
-import { FaRegEdit } from 'react-icons/fa'
-
+import { MdDeleteForever, MdOutlineAddCircle } from 'react-icons/md';
+import { AiFillEdit } from 'react-icons/ai'
 import FormEditProduct from './FormEditProduct/FormEditProduct';
 import FormCreateProduct from './FormCreateProduct/FormCreateProduct'
 
@@ -70,7 +70,7 @@ export default function Dashboard(){
                 handleOpenPopUpEdit()
                 setIdToEdit(row.id)
                 //console.log(row.id)    
-                }}><FaRegEdit /></button>
+                }}><AiFillEdit /></button>
 
                 
                 <button type="button" 
@@ -136,14 +136,15 @@ export default function Dashboard(){
             return (
                   
                 <div>
-                      <div>
-                        <button onClick={handleOpenPopUpCreate}>Add New Product</button>
+                      <div className="add-button-div">
+                        <button className='create add-button' onClick={handleOpenPopUpCreate}><MdOutlineAddCircle size={32} /></button>
                     </div>
+
 
                     <DataTable
                             columns={columns}
                             data={products}
-                            title="My products"
+                            title="Products"
                             striped
                             highlightOnHover
                             paginationPerPage={5}

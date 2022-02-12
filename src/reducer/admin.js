@@ -30,6 +30,7 @@ import {GET_PRODUCT_BY_ID,
                         ...state,
                         allProducts: [...state.products]
                     };
+                    
           
             default: return state
         }

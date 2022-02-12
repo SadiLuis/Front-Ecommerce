@@ -10,9 +10,9 @@ export default function FormEditProduct(props){
 
     
     const dispatch = useDispatch()
-    const product = useSelector((state) => state.singleProduct)
+    const product = useSelector((state) => state.adminReducer.singleProduct)
     const [errors, setErrors] = useState({})
-    const category = useSelector( (state) => state.categories)
+    const category = useSelector( (state) => state.state.productsReducer.categories)
      
     const [input, setInput] = useState({
         

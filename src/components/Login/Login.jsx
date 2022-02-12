@@ -61,7 +61,7 @@ const Login = ({ login, isAuth, user }) => {
         icon: "success",
       });
       if (rol === "1") return navigate("/dashboard/user");
-      if (rol === "2") return navigate("/dashboard/admin");
+      if (rol === "2") return navigate("/admin/products");
     }
   }, [isAuth, navigate, user]);
 
