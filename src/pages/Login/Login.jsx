@@ -54,8 +54,7 @@ const Login = ({ login, isAuth, user }) => {
     if (isAuth && user) {
       const { rol } = user;
       setForm(initialForm);
-      rol === "1" && navigate("/home");
-      rol === "2" && navigate("/dashboard/admin");
+      rol === "2" ? navigate("/dashboard/admin") : navigate("/home");
     }
   }, [isAuth, navigate, user]);
 

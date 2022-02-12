@@ -103,7 +103,7 @@ function Createform({ updateUser, register, isAuth, user, edit = false }) {
 
   return (
     <div className={style.bkg}>
-      <h1 className={style.register}>REGISTRO</h1>
+      <h1 className={style.register}>{edit ? "NUEVOS DATOS" : "REGISTRO"}</h1>
       <div className={style.container}>
         <div className={style.form}>
           <form onSubmit={handleSubmit}>
@@ -236,7 +236,6 @@ function Createform({ updateUser, register, isAuth, user, edit = false }) {
                 <p className={style.error}>{errors.confirm_contrasena}</p>
               )}
             </div>
-            }
             <input
               type="submit"
               value={edit ? "Guardar cambios" : "Registrarse"}

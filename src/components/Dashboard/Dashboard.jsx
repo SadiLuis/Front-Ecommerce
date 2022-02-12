@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { getAllProducts, deleteProduct } from "../../actions/index";
 import { useDispatch, useSelector } from "react-redux";
 import "./DashBoard.css";
-
 import DataTable from "react-data-table-component";
 import ReactModal from "react-modal";
 import { MdDeleteForever, MdOutlineAddCircle } from "react-icons/md";
@@ -12,7 +11,7 @@ import FormCreateProduct from "./FormCreateProduct/FormCreateProduct";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.allProducts);
+  const products = useSelector((state) => state.productsReducer.allProducts);
 
   //Estados para manejar popUp edit
   const [openPopUpEdit, setOpenPopUpEdit] = useState(false);
@@ -84,13 +83,6 @@ export default function Dashboard() {
         </div>
       ),
     },
-
-    // {
-    //     name: "Image",
-    //     selector: "image",
-    //     sortable: false
-    // }
-    // ,
 
     {
       name: "Title",
