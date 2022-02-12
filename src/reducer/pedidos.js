@@ -1,8 +1,8 @@
-import {EDIT_STATUS_PEDIDOS, GET_PEDIDOS} from '../actions/types';
+import {EDIT_STATUS_PEDIDO, GET_PEDIDOS} from '../actions/types';
 
     const initialState= {
     allPedidos: [],
-    filteredPedidos: [],
+    filteredPedidos: []
     }
 
     export default function pedidosReducer(state= initialState , action){
@@ -13,9 +13,11 @@ import {EDIT_STATUS_PEDIDOS, GET_PEDIDOS} from '../actions/types';
                 allPedidos: action.payload,
                 filteredPedidos: action.payload
             }
-            case EDIT_STATUS_PEDIDOS: 
+            case EDIT_STATUS_PEDIDO: 
             return {
-                ...state
+                ...state,
+                allPedidos: action.payload,
+                filteredPedidos: action.payload
             }
             default: return state
         }

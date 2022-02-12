@@ -27,7 +27,7 @@ const AppEcommerce = () => {
       <Route  path='/home' element={< Home/>}/>
       <Route  path ='/cart' element={<Cart />} />
       <Route  path='/home/:id' element={< DetailProduct />} />
-      <Route exact path="/admin/products" element={<Dashboard/>} />
+      <Route exact path="/dashboard/admin" element={<Dashboard/>} />
       <Route exact path="/admin/sales" element={<AdminSales/>} />
       <Route path='/home/buy' element= {<BuyProduct />} />
       {/* <Route path='/admin' element={<SideBarAdmin/>} /> */}

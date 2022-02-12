@@ -27,6 +27,12 @@ export default function AdminSales(){
         console.log("pedidoId", pedidoId)
         console.log("newStatus", statusCompletado)
         dispatch(editStatusPedido(pedidoId, statusCompletado))
+        setTimeout(function () {
+            window.location.reload();
+             }, 3000); 
+        alert("Order Status was updated. You will be redirected to your sales after 3 seconds")
+        // recargar página
+        
     }
 
     
@@ -82,6 +88,7 @@ export default function AdminSales(){
                 selector: "status",
                 sortable: true
             }
+            
             ,
             {
                 name: "Date",
@@ -97,7 +104,7 @@ export default function AdminSales(){
         return (
             <div>
                 
-    
+            {console.log(pedidos)}
             <DataTable
                 columns={columns}
                 data={pedidos}

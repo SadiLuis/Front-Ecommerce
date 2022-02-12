@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { GET_USER_URL, LOGIN_URL, REGISTER_URL } from '../assets/URLS';
 import getHeaderToken from '../helpers/getHeaderToken';
-import { GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME, ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT, LOGIN_SUCCESS, LOGIN_FAILED, REGISTER_SUCCESS, REGISTER_FAILED, GET_USER_DETAIL, AUTHENTICATION_ERROR, FILTER_BY_CATEGORY,GET_CATEGORIES, GET_PEDIDOS, EDIT_STATUS_PEDIDOS } from "./types";
+import { GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME, ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT, LOGIN_SUCCESS, LOGIN_FAILED, REGISTER_SUCCESS, REGISTER_FAILED, GET_USER_DETAIL, AUTHENTICATION_ERROR, FILTER_BY_CATEGORY,GET_CATEGORIES, GET_PEDIDOS, EDIT_STATUS_PEDIDO } from "./types";
 
 
 let LOCALHOST = "https://ecommerce-pg-henry.herokuapp.com/"
@@ -283,28 +283,22 @@ export function filterByCategory(payload){
     }
 
     export const getAllPedidos = () => dispatch =>{
+                 let headers =  getHeaderToken()
 
-        return fetch(LOCALHOST + 'pedidos')
+        return fetch(LOCALHOST + 'pedidos/', headers)
                 .then(res => res.json())
                 .then(data => dispatch({type: GET_PEDIDOS , payload: data}))
                 .catch(()=> console.log('NO llega la informacion'))
     }
-
-    // export const editStatusPedidos = (pedidoId) => dispatch => {
-    //     console.log(pedidoId)
-    //     return fetch(LOCALHOST + 'pedidos/'+ pedidoId)
-    //     .then(res => res.json())
-    //     .then(data => dispatch({type: EDIT_STATUS_PEDIDOS, payload: data}))
-    //     .catch(() => console.log('No se puede editar el status'))
-    // }
-
+    
     export function editStatusPedido(pedidoId, newStatus) {
         
         return async function (dispatch) {
             try {
-                var response = await axios.put(LOCALHOST + 'pedidos/' + pedidoId, newStatus)
+                const headers = getHeaderToken()
+                const response = await axios.put(LOCALHOST + 'pedidos/' + pedidoId, newStatus, headers)
                 return {
-                    type: "EDIT_STATUS_PEDIDO",
+                    type: EDIT_STATUS_PEDIDO,
                     payload: response.data
                 }
             } catch (err) {

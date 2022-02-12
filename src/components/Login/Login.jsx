@@ -61,7 +61,7 @@ const Login = ({ login, isAuth, user }) => {
         icon: "success",
       });
       if (rol === "1") return navigate("/dashboard/user");
-      if (rol === "2") return navigate("/dashboard/admin");
+      if (rol === "2") return navigate("/admin/products");
     }
   }, [isAuth, navigate, user]);
 
@@ -100,8 +100,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    isAuth: state.isAuth,
-    user: state.userDetail,
+    isAuth: state.loginReducer.isAuth,
+    user: state.loginReducer.userDetail,
   };
 };
 
