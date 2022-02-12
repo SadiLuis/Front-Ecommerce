@@ -5,7 +5,7 @@ import {
     GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME,
     ADD_ITEM, DELETE_ITEM, LOGIN_SUCCESS,
     LOGIN_FAILED, REGISTER_SUCCESS, REGISTER_FAILED, GET_USER_DETAIL,
-    AUTHENTICATION_ERROR, FILTER_BY_CATEGORY, GET_CATEGORIES, GET_PEDIDOS, EDIT_STATUS_PEDIDO, EDIT_PRODUCT, DELETE_PRODUCT, ORDER_BY_PRICE, ORDER_BY_RATE, LOGOUT, REST_ITEM, UPDATE_USER, UPDATE_CART
+    AUTHENTICATION_ERROR, FILTER_BY_CATEGORY, GET_CATEGORIES, GET_PEDIDOS, EDIT_STATUS_PEDIDO, EDIT_PRODUCT, DELETE_PRODUCT, ORDER_BY_PRICE, ORDER_BY_RATE, LOGOUT, REST_ITEM, UPDATE_USER, UPDATE_CART, GET_PEDIDO_BY_USER, GET_PEDIDO_DETAIL
 } from "./types";
 
 
@@ -282,26 +282,70 @@ export function orderByRate(payload) {
     }
 }
 
-export const postPedido = async (pedido) => {
-    await axios.post(`${BASEURL}/pedidos`, pedido)
+
+const getDetailPedido = (pedido) => {
+    return { type: GET_PEDIDO_DETAIL, payload: pedido };
+}
+
+export const postPedido = (pedido) => {
+    return async function (dispatch) {
+        try {
+            const { data } = await axios.post(
+                `${BASEURL}/pedidos`,
+                pedido,
+                getHeaderToken()
+            );
+            console.log(data);
+            return dispatch(getDetailPedido(data));
+        } catch (err) {
+            console.log(err.response.data);
+        }
+    }
 }
 
 
-export const getPedido = () => async dispatch => {
-    const res = await fetch(`${BASEURL}/pedidos`);
-    const data = await res.json();
-    return dispatch({ type: GET_PEDIDOS, payload: data });
+export const deletePedido = (pedidoId) => {
+    return async function (dispatch) {
+        try {
+            await axios.delete(
+                `${BASEURL}/pedidos/${pedidoId}`,
+                getHeaderToken()
+            );
+            console.log("Pedido eliminado exitosamente");
+            return dispatch(getDetailPedido(null));
+        } catch (err) {
+            console.log("No se ha podido eliminar el pedido");
+            console.log(err.response.data);
+        }
+    }
 }
 
 
-export const getAllPedidos = () => async dispatch => {
+export const getAllPedidos = () => {
+    return async function (dispatch) {
+        try {
+            const { data } = await axios.get(
+                `${BASEURL}/pedidos`,
+                getHeaderToken()
+            );
+            return dispatch({ type: GET_PEDIDOS, payload: data });
+        } catch (err) {
+            console.log(err);
+        }
+    }
+}
+
+
+export const getPedidosByUser = (userId) => async dispatch => {
     try {
-        let config = getHeaderToken()
-        const res = await fetch(`${BASEURL}/pedidos`, config);
-        const data = await res.json();
-        return dispatch({ type: GET_PEDIDOS, payload: data });
-    } catch {
-        return console.log('NO llega la informacion');
+        let config = getHeaderToken();
+        const { data } = await axios.get(
+            `${BASEURL}/pedidos/${userId}`,
+            config
+        );
+        return dispatch({ type: GET_PEDIDO_BY_USER, payload: data });
+    } catch (err) {
+        return console.log(err.response.data);
     }
 }
 
@@ -315,7 +359,7 @@ export function editStatusPedido(pedidoId, newStatus) {
                 payload: response.data
             }
         } catch (err) {
-            console.log(err)
+            return console.log(err.response.data);
         }
     }
 }

@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Item from "./Item/Item";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Button, Row } from "react-bootstrap";
+import { postPedido } from "../../actions";
 
 function Cart() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   let items =
     useSelector((state) => {
       let completeProducts = state.productsReducer.cart.products;
@@ -28,7 +30,14 @@ function Cart() {
       let result = window.confirm("Registrese para poder realizar una compra");
       if (result) navigate("/register");
     } else {
-      navigate("/home/pedidos");
+      let pedido = {
+        pedidos: items.map((e) => ({
+          productoId: e.id,
+          cantidad: e.quantity,
+        })),
+      };
+      dispatch(postPedido(pedido));
+      navigate("/pedido/detail");
     }
   };
 
@@ -74,7 +83,7 @@ function Cart() {
             className="align-self-end btn btn-lg btn-block btn-primary"
             onClick={handlebtnCompra}
           >
-            Continuar compra
+            Comprar
           </Button>
         </div>
       </Container>
