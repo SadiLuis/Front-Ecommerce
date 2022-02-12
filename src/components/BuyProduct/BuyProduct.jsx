@@ -51,7 +51,7 @@ const CheckoutForm = () => {
   };
 
   return (
-    <form classNameName="" onSubmit={handleSubmit}>
+    <form className="" onSubmit={handleSubmit}>
       {/* Product Information */}
       {/* {itemCart?.map((i) => (
         <div key={i.handleSubmit}>

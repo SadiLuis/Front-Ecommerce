@@ -11,7 +11,7 @@ const PedidosCompra = () => {
   const pedidoDetail =
     useSelector((state) => state.pedidosReducer.pedidoDetail) || {};
   console.log(pedidoDetail);
-  const { totalCompra, estado, pagado, productosComprados } = pedidoDetail;
+  const { totalPedido, status, pagado, productos, pedidoId } = pedidoDetail;
 
   const handleBtnCompra = async (e) => {
     e.preventDefault();
@@ -20,22 +20,22 @@ const PedidosCompra = () => {
 
   const handleBtnCancelar = async (e) => {
     e.preventDefault();
-    dispatch(deletePedido(5));
+    dispatch(deletePedido(pedidoId));
     navigate("/home");
   };
 
-  return estado ? (
+  return status ? (
     <div>
       <div>
-        <div>Estado: {estado}</div>
+        <div>Estado: {status}</div>
         <div>Pagado: {pagado ? "Si" : "No"}</div>
         <div>
           <h3>Productos disponibles</h3>
-          {productosComprados.map((prod) => {
+          {productos.map((prod) => {
             return (
-              <div key={prod.title}>
+              <div key={prod.producto}>
                 <h5>Descripcion</h5>
-                <span>{prod.title}</span>
+                <span>{prod.producto}</span>
                 <h5>Cantidad</h5>
                 <span>{prod.cantidad}</span>
                 <h5>Precio unitario</h5>
@@ -48,9 +48,9 @@ const PedidosCompra = () => {
         </div>
       </div>
       <div>
-        <div>SubTotal compra: {totalCompra}</div>
+        <div>SubTotal compra: {totalPedido}</div>
         <div>Descuentos: 0</div>
-        <div>Total: {totalCompra}</div>
+        <div>Total: {totalPedido}</div>
       </div>
       <Button variant="success" onClick={handleBtnCompra}>
         Pagar
