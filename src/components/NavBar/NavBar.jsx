@@ -32,7 +32,10 @@ function NavBar({ isAuth, user, searchByName, logout }) {
             <li className="list-item">
               <NavLink to="/home">Home </NavLink>
               {isAuth && user ? (
-                <button onClick={logout}>Log out </button>
+                <>
+                  <button onClick={logout}>Log out </button>
+                  <NavLink to="/profile">Perfil</NavLink>
+                </>
               ) : (
                 <NavLink to="/login">Log in </NavLink>
               )}

@@ -12,6 +12,7 @@ import PedidosCompra from "./components/Pedidos-de-compra/PedidosCompra";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getUserDetail } from "./actions";
+import Profile from "./pages/Profile/Profile";
 
 const AppEcommerce = () => {
   const token = useSelector((state) => state.loginReducer.token);
@@ -31,6 +32,7 @@ const AppEcommerce = () => {
           <Route path="/" exact element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/profile/edit" element={<Register edit={true} />} />
           <Route path="/home" element={<Home />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/home/:id" element={<DetailProduct />} />
@@ -38,8 +40,9 @@ const AppEcommerce = () => {
           {/* <Route exact path="/admin/sales" element={<AdminSales/>} /> */}
           <Route path="/home/buy" element={<BuyProduct />} />
           <Route path="/home/pedidos" element={<PedidosCompra />} />
-          <Route path="user" element={<Dashboard />} />
-          <Route path="admin" element={<Dashboard />} />
+          {/* <Route path="user" element={<Dashboard />} /> */}
+          <Route path="/dashboard/admin" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </div>

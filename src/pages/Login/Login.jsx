@@ -52,8 +52,10 @@ const Login = ({ login, isAuth, user }) => {
   useEffect(() => {
     // Si ya está logueado que lo redireccione al dashboard
     if (isAuth && user) {
+      const { rol } = user;
       setForm(initialForm);
-      navigate("/home");
+      rol === "1" && navigate("/home");
+      rol === "2" && navigate("/dashboard/admin");
     }
   }, [isAuth, navigate, user]);
 

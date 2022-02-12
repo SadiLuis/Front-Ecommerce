@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { register } from "../../actions/index";
+import { register, updateUser } from "../../actions/index";
 import style from "./styles/Register.module.css";
 import Swal from "sweetalert2";
 import { bindActionCreators } from "redux";
@@ -50,9 +50,11 @@ const validateform = function (form) {
   return errors;
 };
 
-function Createform({ register, isAuth, user }) {
+function Createform({ updateUser, register, isAuth, user, edit = false }) {
   const navigate = useNavigate();
-  const [form, setForm] = useState(initialForm);
+  const [form, setForm] = useState(
+    edit ? { ...user, confirm_contrasena: "", contrasena: "" } : initialForm
+  );
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
@@ -60,7 +62,7 @@ function Createform({ register, isAuth, user }) {
 
     const newform = { ...form, [name]: value };
     setForm(newform);
-    const errors = validateform(newform);
+    const errors = validateform(newform, edit);
     setErrors(errors);
     return newform;
   };
@@ -68,7 +70,7 @@ function Createform({ register, isAuth, user }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const errors = validateform(form);
+    const errors = validateform(form, edit);
 
     if (Object.keys(errors).length) {
       return Swal.fire({
@@ -81,12 +83,12 @@ function Createform({ register, isAuth, user }) {
     const userForm = { ...form };
     delete userForm.confirm_contrasena;
 
-    register(userForm);
+    edit ? updateUser(userForm) : register(userForm);
   };
 
   useEffect(() => {
     // Si ya está logueado que lo redireccione al dashboard
-    if (isAuth && user) {
+    if (isAuth && user && !edit) {
       setForm(initialForm);
       const { nombre, rol } = user;
       Swal.fire({
@@ -97,7 +99,7 @@ function Createform({ register, isAuth, user }) {
       if (rol === "1") return navigate("/dashboard/user");
       if (rol === "2") return navigate("/dashboard/admin");
     }
-  }, [isAuth, navigate, user]);
+  }, [isAuth, navigate, user, edit]);
 
   return (
     <div className={style.bkg}>
@@ -118,7 +120,6 @@ function Createform({ register, isAuth, user }) {
               />
               {errors.nombre && <p className={style.error}>{errors.nombre}</p>}
             </div>
-
             <div className={style.section}>
               <h4>Correo electrónico</h4>
               <input
@@ -132,7 +133,6 @@ function Createform({ register, isAuth, user }) {
               />
               {errors.email && <p className={style.error}>{errors.email}</p>}
             </div>
-
             <div className={style.section}>
               <h4>País</h4>
               <input
@@ -146,7 +146,6 @@ function Createform({ register, isAuth, user }) {
               />
               {errors.pais && <p className={style.error}>{errors.pais}</p>}
             </div>
-
             <div className={style.section}>
               <h4>Provincia</h4>
               <input
@@ -162,7 +161,6 @@ function Createform({ register, isAuth, user }) {
                 <p className={style.error}>{errors.provincia}</p>
               )}
             </div>
-
             <div className={style.section}>
               <h4>Dirección</h4>
               <input
@@ -178,7 +176,6 @@ function Createform({ register, isAuth, user }) {
                 <p className={style.error}>{errors.direccion}</p>
               )}
             </div>
-
             <div className={style.section}>
               <h4>Teléfono</h4>
               <input
@@ -194,7 +191,6 @@ function Createform({ register, isAuth, user }) {
                 <p className={style.error}>{errors.telefono}</p>
               )}
             </div>
-
             <div className={style.section}>
               <h4>Usuario</h4>
               <input
@@ -210,7 +206,6 @@ function Createform({ register, isAuth, user }) {
                 <p className={style.error}>{errors.usuario}</p>
               )}
             </div>
-
             <div className={style.section}>
               <h4>Contraseña</h4>
               <input
@@ -226,7 +221,6 @@ function Createform({ register, isAuth, user }) {
                 <p className={style.error}>{errors.contrasena}</p>
               )}
             </div>
-
             <div className={style.section}>
               <h4>Confirmar contraseña</h4>
               <input
@@ -242,25 +236,31 @@ function Createform({ register, isAuth, user }) {
                 <p className={style.error}>{errors.confirm_contrasena}</p>
               )}
             </div>
-            <input type="submit" value="Registrarse" />
+            }
+            <input
+              type="submit"
+              value={edit ? "Guardar cambios" : "Registrarse"}
+            />
           </form>
         </div>
       </div>
-      <div>
-        <Link to="/login">Ya tienes una cuenta? Login</Link>
-      </div>
+      {!edit && (
+        <div>
+          <Link to="/login">Ya tienes una cuenta? Login</Link>
+        </div>
+      )}
     </div>
   );
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ register }, dispatch);
+  return bindActionCreators({ register, updateUser }, dispatch);
 };
 
 const mapStateToProps = (state) => {
   return {
-    isAuth: state.isAuth,
-    user: state.userDetail,
+    isAuth: state.loginReducer.isAuth,
+    user: state.loginReducer.userDetail,
   };
 };
 

@@ -5,7 +5,7 @@ import {
     GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME,
     ADD_ITEM, DELETE_ITEM, LOGIN_SUCCESS,
     LOGIN_FAILED, REGISTER_SUCCESS, REGISTER_FAILED, GET_USER_DETAIL,
-    AUTHENTICATION_ERROR, FILTER_BY_CATEGORY, GET_CATEGORIES, GET_PEDIDOS, EDIT_STATUS_PEDIDO, EDIT_PRODUCT, DELETE_PRODUCT, SUM_CART, ORDER_BY_PRICE, ORDER_BY_RATE, LOGOUT, REST_ITEM
+    AUTHENTICATION_ERROR, FILTER_BY_CATEGORY, GET_CATEGORIES, GET_PEDIDOS, EDIT_STATUS_PEDIDO, EDIT_PRODUCT, DELETE_PRODUCT, SUM_CART, ORDER_BY_PRICE, ORDER_BY_RATE, LOGOUT, REST_ITEM, UPDATE_USER
 } from "./types";
 
 
@@ -90,6 +90,24 @@ export function editProduct(product) {
                 type: EDIT_PRODUCT,
                 payload: response.data
             }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+}
+
+export function updateUser(newUser) {
+    return async function (dispatch) {
+        try {
+            await axios.put(
+                `${BASEURL}/user/update`,
+                newUser,
+                getHeaderToken()
+            )
+            dispatch(getUserDetail());
+            return {
+                type: UPDATE_USER,
+            };
         } catch (err) {
             console.log(err)
         }
