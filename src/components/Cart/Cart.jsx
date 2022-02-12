@@ -2,17 +2,28 @@
 import React  from 'react';
 import {useSelector } from 'react-redux';
 import Item from './Item/Item';
-
+import {useNavigate} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Container , Button ,Row , Col} from 'react-bootstrap';
 
 function Cart() {
-  
+  const navigate = useNavigate()
   const items = useSelector(state => state.cartReducer.cart)
   const total = useSelector(state => state.cartReducer.precioTotal)
   console.log(items)
 
   
+  const handlebtnCompra =()=>{
+    if(!localStorage.token_ecommerce){
+
+      let result = window.confirm('No estas registrado para realizar la compra . ¿Quiere crear una cuenta?')
+      if(result) navigate('/register')
+
+    }else{
+      navigate('/home/pedidos')
+     
+    }
+  }
   
    const emptyCart = ()=>{
     return(
@@ -44,7 +55,7 @@ function Cart() {
   <div style={{display:'flex' , flexDirection:'column' , justifyContent:'flex-start' , textAlign:'end'}}>
   <h1>Total</h1>
   <h3>{total}</h3>
-  <Button className='align-self-end btn btn-lg btn-block btn-primary'>Comprar</Button>
+  <Button className='align-self-end btn btn-lg btn-block btn-primary' onClick={handlebtnCompra}>Continuar compra</Button>
   </div>
   </Container>
   </>

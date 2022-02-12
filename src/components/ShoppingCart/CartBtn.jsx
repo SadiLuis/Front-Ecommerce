@@ -9,10 +9,10 @@ function CartBtn() {
 
   return (
     <div>
-      <Link to="/cart">
+      
         <BsCart3 />
         {item.length}
-      </Link>
+     
     </div>
   );
 }

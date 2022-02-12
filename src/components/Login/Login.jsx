@@ -100,8 +100,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    isAuth: state.isAuth,
-    user: state.userDetail,
+    isAuth: state.loginReducer.isAuth,
+    user: state.loginReducer.userDetail,
   };
 };
 
