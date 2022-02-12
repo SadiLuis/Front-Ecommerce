@@ -2,7 +2,17 @@ import axios from 'axios';
 
 import { BASEURL } from '../assets/URLS';
 import getHeaderToken from '../helpers/getHeaderToken';
+<<<<<<< Updated upstream
 import { GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME, ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT, LOGIN_SUCCESS, LOGIN_FAILED, REGISTER_SUCCESS, REGISTER_FAILED, GET_USER_DETAIL, AUTHENTICATION_ERROR, FILTER_BY_CATEGORY, GET_CATEGORIES } from "./types";
+=======
+import { GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME, 
+    ADD_ITEM, DELETE_ITEM, DETAIL_PRODUCT, LOGIN_SUCCESS, 
+    LOGIN_FAILED, REGISTER_SUCCESS, REGISTER_FAILED, GET_USER_DETAIL,
+     AUTHENTICATION_ERROR, FILTER_BY_CATEGORY,GET_CATEGORIES, GET_PEDIDOS } from "./types";
+
+
+let LOCALHOST = "https://ecommerce-pg-henry.herokuapp.com"
+>>>>>>> Stashed changes
 
 
 export const getAllProducts = () => dispatch => {
@@ -77,12 +87,19 @@ export function deleteProduct(id) {
                 type: "DELETE_PRODUCT",
                 payload: deleteProd.data,
 
+<<<<<<< Updated upstream
             })
         } catch (err) {
             console.log(err)
         }
+=======
+        })
+     } catch (err) {
+        console.log(err)
+>>>>>>> Stashed changes
     }
-};
+  }
+}
 
 export function editProduct(product) {
     const { id } = product
@@ -276,4 +293,19 @@ export function orderByRate(payload) {
         type: "ORDER_BY_RATE",
         payload
     }
+<<<<<<< Updated upstream
 }
+=======
+
+
+    export const postPedido = async (pedido) => {
+        await axios.post(`${LOCALHOST}/pedidos`,pedido)
+   }
+
+   export const getPedido = () => dispatch => {
+
+       return fetch(`${LOCALHOST}/pedidos`)
+              .then(res => res.json())
+              .then(data => dispatch({type:GET_PEDIDOS , payload: data}))
+   }
+>>>>>>> Stashed changes
