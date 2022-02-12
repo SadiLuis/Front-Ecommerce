@@ -10,6 +10,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { BASEURL } from "../../assets/URLS";
 import { PUBLIC_KEY_STRIPE } from "../../assets/constants";
+import { useSelector } from "react-redux";
 
 const headers = getHeaderToken();
 const stripePromise = loadStripe(PUBLIC_KEY_STRIPE);
@@ -18,6 +19,11 @@ const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
+  const pedidoId = useSelector(
+    (state) => state.pedidosReducer.pedidoDetail.pedidoId
+  );
+
+  // console.log(pedidoId);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,7 +42,7 @@ const CheckoutForm = () => {
           `${BASEURL}/pagos`,
           {
             transaccionId: id,
-            pedidoId: 1,
+            pedidoId,
           },
           headers
         );
@@ -52,20 +58,6 @@ const CheckoutForm = () => {
 
   return (
     <form className="" onSubmit={handleSubmit}>
-      {/* Product Information */}
-      {/* {itemCart?.map((i) => (
-        <div key={i.handleSubmit}>
-          <img
-            src={i.image}
-            alt="Corsair Gaming Keyboard RGB"
-            className="img-fluid"
-          />
-          <h4>Cantidad: {i.quantity}</h4>
-          <h3 className="text-center my-2">Precio: $ {i.price}</h3>
-        </div>
-      ))} */}
-      {/* <h3>Total:$ {total.precioTotal}</h3> */}
-      {/* User Card Input */}
       <div className="form-group">
         <CardElement />
       </div>
