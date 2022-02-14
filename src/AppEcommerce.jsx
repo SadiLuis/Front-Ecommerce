@@ -8,8 +8,8 @@ import LandingPage from "./pages/LandingPage/LandingPage";
 import NavBar from "./components/NavBar/NavBar";
 import BuyProduct from "./components/BuyProduct/BuyProduct";
 import Register from "./components/Register/Register";
-import PedidosCompra from "./components/Pedidos-de-compra/PedidosCompra";
-import PedidoDetail from "./components/Pedidos-de-compra/PedidoDetail";
+import PedidoUnaCompra from "./components/Pedidos-de-compra/PedidosCompra";
+import PedidosCompra from "./components/Pedidos-de-compra/PedidoDetail";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getUserDetail, updateCart } from "./actions";
@@ -44,8 +44,8 @@ const AppEcommerce = () => {
           <Route exact path="/dashboard/admin" element={<Dashboard />} />
           {/* <Route exact path="/admin/sales" element={<AdminSales/>} /> */}
           <Route path="/pedido/payment" element={<BuyProduct />} />
-          <Route path="/home/pedidos" element={<PedidosCompra />} />
-          <Route path="/pedido/detail" element={<PedidoDetail />} />
+          <Route path="/pedido/detail/:id" element={<PedidoUnaCompra />} />
+          <Route path="/pedido/detail" element={<PedidosCompra />} />
           {/* <Route path="user" element={<Dashboard />} /> */}
           <Route path="/dashboard/admin" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
