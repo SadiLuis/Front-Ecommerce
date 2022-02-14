@@ -1,61 +1,110 @@
-import React , {useState} from 'react';
-import {useSelector,useDispatch} from 'react-redux';
-import {postPedido} from '../../actions/index'
-import {useNavigate} from 'react-router-dom'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import {Table ,ListGroup, ListGroupItem ,Button} from 'react-bootstrap'
-const PedidosCompra = () => {
-  const navigate = useNavigate()
-  const dispatch= useDispatch();
-  const productsCart = useSelector(state => state.cartReducer.cart) 
-  const total = useSelector(state => state.cartReducer.precioTotal)
-  const [compra , setCompra] = useState({pedido:[{idProducto:productsCart.id , 
-                                         cantidad:productsCart.quantity} ]})
+import React ,{ useState} from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { deletePedido } from "../../actions/index";
+import { useNavigate } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Button , Modal} from "react-bootstrap";
 
-  const handleBtnCompra= async(e) =>{
-     e.preventDefault()
-    await postPedido(compra)
-     navigate('/home/buy')
-  }
- 
-  return (
-    <div>
+const PedidoUnaCompra = () => {
+  const [show , setShow] = useState(false)
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const pedidoDetail =
+    useSelector((state) => state.pedidosReducer.pedidoDetail) || {};
+  console.log(pedidoDetail);
+  const { totalPedido, status, pagado, productos, pedidoId } = pedidoDetail;
+  const detailSend = useSelector((state) => state.loginReducer.userDetail)
 
-  <Table striped bordered hover size="md">
 
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>PRODUCTO</th>
-      <th>CANTIDAD</th>
-      <th>PRECIO</th>
-    </tr>
-  </thead>
-{
-  productsCart?.map((el )=>(
-     
-  <tbody>
-    <tr>
-      <td>{el.id}</td>
-      <td>{el.title}</td>
-      <td>{el.quantity}</td>
-      <td>{el.price}</td>
-    </tr>
+  const handleBtnCompra = async (e) => {
+    e.preventDefault();
+    setShow(true)
    
-  </tbody>
+  };
 
+  const handleBtnCancelar = async (e) => {
+    e.preventDefault();
+    dispatch(deletePedido(pedidoId));
+    navigate("/home");
+  };
+
+
+  const PopUp =(props)=> {
+    return (
+      <Modal
+        {...props}
+        size="md"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Detalle de envio
+          </Modal.Title>
+        </Modal.Header>
+          <img src={detailSend.avatar} alt="Profile" style={{width:'100px'}}/>
+        <Modal.Body>
+          <h4>Nombre</h4>
+          <p>{detailSend.nombre}</p>
+          <h4>Pais</h4>
+          <p>{detailSend.pais}</p>
+          <h4>Provincia</h4>
+          <p>{detailSend.provincia}</p>
+          <h4>Direccion</h4>
+          <p>{detailSend.direccion}</p>
+          </Modal.Body>
+        <Modal.Footer>
+         
+          <Button  onClick={ ()=> navigate("/pedido/payment")}>Confirmar</Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
   
-  ))};
-  </Table>
-  <ListGroup>
-  <ListGroup.Item>subTotal: {total}</ListGroup.Item>
-  <ListGroup.Item>Descuentos:</ListGroup.Item>
-  <ListGroup.Item>Total:</ListGroup.Item>
   
-</ListGroup>
-<Button variant="primary" onClick={handleBtnCompra}>Continuar compra</Button>
+
+  return status ? (
+    <div>
+      <div>
+        <div>Estado: {status}</div>
+        <div>Pagado: {pagado ? "Si" : "No"}</div>
+        <div>
+          <h3>Productos disponibles</h3>
+          {productos.map((prod) => {
+            return (
+              <div key={prod.producto}>
+                <h5>Descripcion</h5>
+                <span>{prod.producto}</span>
+                <h5>Cantidad</h5>
+                <span>{prod.cantidad}</span>
+                <h5>Precio unitario</h5>
+                <span>{prod.precioUnitario}</span>
+                <h5>Subtotal unitario</h5>
+                <span>{prod.total}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div>
+        <div>SubTotal compra: {totalPedido}</div>
+        <div>Descuentos: 0</div>
+        <div>Total: {totalPedido}</div>
+      </div>
+      <Button variant="success" onClick={handleBtnCompra}>
+        Pagar
+      </Button>
+      <Button variant="danger" onClick={handleBtnCancelar}>
+        Cancelar compra
+      </Button>
+      <PopUp
+        show={show}
+        onHide={() => setShow(false)}
+      />
     </div>
-  )
-}
+  ) : (
+    <span>Loading...</span>
+  );
+};
 
-export default PedidosCompra
+export default PedidoUnaCompra;
