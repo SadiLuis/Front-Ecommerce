@@ -12,7 +12,7 @@ export default function FormEditProduct(props){
     const dispatch = useDispatch()
     const product = useSelector((state) => state.adminReducer.singleProduct)
     const [errors, setErrors] = useState({})
-    const category = useSelector( (state) => state.state.productsReducer.categories)
+    const category = useSelector( (state) => state.productsReducer.categories)
      
     const [input, setInput] = useState({
         
@@ -20,8 +20,8 @@ export default function FormEditProduct(props){
         title: '',
         price: '',
         description: '',
-        categoriaId: '',
-        caterogy: '',
+        category: '',
+        caterogyName: '',
         image: '',
         cantidad: ''
     
@@ -39,8 +39,8 @@ export default function FormEditProduct(props){
             title: product.title || '',
             price: product.price || '',
             description: product.description || '',
-            categoriaId: '',
-            caterogy: product.category || '',
+            category: '',
+            caterogyName: product.category || '',
             image: product.image || '',
             cantidad: product.cantidad || ''
         })
@@ -53,7 +53,7 @@ export default function FormEditProduct(props){
         setInput({
             ...input,
             [e.target.name] : e.target.value,
-            categoriaId: (category.filter(c => c.nombre === product.category)).map(c => c.id)[0]
+            category: (category.filter(c => c.nombre === product.category)).map(c => c.id)[0]
         })
         setErrors(validationFunction({
             ...input,
@@ -66,7 +66,7 @@ export default function FormEditProduct(props){
         
         setInput({
             ...input,
-            categoriaId: e.target.value
+            category: e.target.value
         })
         setErrors(validationFunction({
             ...input,
@@ -81,14 +81,14 @@ export default function FormEditProduct(props){
             title: '',
             price: '',
             description: '',
-            categoriaId: '',
+            category: '',
             image: '',
             cantidad: ''
              })
-        //alert("Product was succesfully created")   
-        //handleClosePopUp()       
+        
+
         setTimeout(function () {
-            window.location.href = "/dashboard";
+            window.location.href = "/dashboard/admin";
              }, 3000); 
         alert("Product was updated. You will be redirected to your products after 3 seconds")
     }    
@@ -96,9 +96,10 @@ export default function FormEditProduct(props){
     
     //let auxCategoryId = category.filter(c => c.nombre === product.caterogy)
     
-    
+    console.log(input)
+    //if (product && category.length > 0 )
+    if (product && category)
 
-    if (product && category.length > 0 )
 
     {
         return (
@@ -153,8 +154,8 @@ export default function FormEditProduct(props){
                         ))
                 }    
                 </select>
-                {errors.categoriaId && (
-                        <p>{errors.categoriaId}</p>
+                {errors.category && (
+                        <p>{errors.category}</p>
                     )}
                 </div>
 
