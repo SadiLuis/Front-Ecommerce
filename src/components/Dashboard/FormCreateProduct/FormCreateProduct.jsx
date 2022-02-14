@@ -8,7 +8,7 @@ export default function FormCreateProduct({ handleClosePopUp }) {
   const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
 
-  const category = useSelector((state) => state.categories);
+  const category = useSelector((state) => state.productsReducer.categories);
   //console.log(caterory)
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function FormCreateProduct({ handleClosePopUp }) {
     title: "",
     price: "",
     description: "",
-    categoriaId: "",
+    category: "",
     image: "",
     cantidad: "",
   });
@@ -41,7 +41,7 @@ export default function FormCreateProduct({ handleClosePopUp }) {
   function handleSelectCategory(e) {
     setInput({
       ...input,
-      categoriaId: e.target.value,
+      category: e.target.value,
     });
     setErrors(
       validationFunction({
@@ -59,19 +59,21 @@ export default function FormCreateProduct({ handleClosePopUp }) {
       title: "",
       price: "",
       description: "",
-      categoriaId: "",
+      category: "",
       image: "",
       cantidad: "",
     });
     //alert("Product was succesfully created")
     //handleClosePopUp()
     setTimeout(function () {
-      window.location.href = "/dashboard";
+      window.location.href = "/dashboard/admin";
     }, 3000);
     alert(
       "Product was created. You will be redirected to your products after 3 seconds"
     );
   }
+
+  console.log(input)
 
   if (category.length > 0) {
     return (
@@ -120,7 +122,7 @@ export default function FormCreateProduct({ handleClosePopUp }) {
                 </option>
               ))}
             </select>
-            {errors.categoriaId && <p>{errors.categoriaId}</p>}
+            {errors.category && <p>{errors.category}</p>}
           </div>
 
           <div>

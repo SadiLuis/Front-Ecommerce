@@ -14,6 +14,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getUserDetail, updateCart } from "./actions";
 import Profile from "./pages/Profile/Profile";
+import AdminSales  from "./components/Dashboard/AdminSales/AdminSales";
+
 
 const AppEcommerce = () => {
   const token = useSelector((state) => state.loginReducer.token);
@@ -42,7 +44,7 @@ const AppEcommerce = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/home/:id" element={<DetailProduct />} />
           <Route exact path="/dashboard/admin" element={<Dashboard />} />
-          {/* <Route exact path="/admin/sales" element={<AdminSales/>} /> */}
+          <Route exact path="/dashboard/sales" element={<AdminSales/>} /> 
           <Route path="/pedido/payment" element={<BuyProduct />} />
           <Route path="/pedido/detail/:id" element={<PedidoUnaCompra />} />
           <Route path="/pedido/detail" element={<PedidosCompra />} />

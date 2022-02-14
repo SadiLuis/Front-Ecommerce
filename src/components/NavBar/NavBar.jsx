@@ -48,6 +48,9 @@ function NavBar({ isAuth, user, searchByName, logout }) {
               {user && user.rol === "2" && (
                 <NavLink to="/dashboard/admin">Dashboard</NavLink>
               )}
+              {user && user.rol === "2" && (
+                <NavLink to="/dashboard/sales">Sales</NavLink>
+              )}
               <NavLink to="/cart">
                 <CartBtn />
               </NavLink>
