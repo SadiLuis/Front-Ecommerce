@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter,Navigate } from "react-router-dom";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Home from "./pages/Home/Home";
 import DetailProduct from "./pages/DetailProduct/DetailProduct";
@@ -34,7 +34,7 @@ const AppEcommerce = () => {
       <BrowserRouter>
         <NavBar />
         <Routes>
-          <Route path="/" exact element={<LandingPage />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile/edit" element={<Register edit={true} />} />
@@ -49,6 +49,8 @@ const AppEcommerce = () => {
           {/* <Route path="user" element={<Dashboard />} /> */}
           <Route path="/dashboard/admin" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
+          {/* <Route path="*" element={<div>404 - not found</div>} /> */}
+          <Route path="*" element={<Navigate replace to="/home"/>} />
         </Routes>
       </BrowserRouter>
     </div>
