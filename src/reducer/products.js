@@ -16,7 +16,8 @@ const initialState = {
     allProducts: [],
     filtered: [],
     productName: [],
-    cart: getCartLocalStorage()
+    cart: getCartLocalStorage(),
+    categories : []
 }
 
 

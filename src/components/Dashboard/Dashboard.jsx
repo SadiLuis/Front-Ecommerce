@@ -44,7 +44,7 @@ export default function Dashboard() {
     console.log("id a borrar", id);
     dispatch(deleteProduct(id));
     setTimeout(function () {
-      window.location.href = "/dashboard";
+      window.location.href = "/dashboard/admin";
     }, 5000);
     alert(
       "Product was deleted. You will be redirected to your products after 5 seconds"
