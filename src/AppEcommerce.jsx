@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import { getUserDetail, updateCart } from "./actions";
 import Profile from "./pages/Profile/Profile";
 import AdminSales  from "./components/Dashboard/AdminSales/AdminSales";
+import ContactForm from "./components/ConctactForm/ContactForm";
 
 
 const AppEcommerce = () => {
@@ -53,6 +54,7 @@ const AppEcommerce = () => {
           <Route path="/profile" element={<Profile />} />
           {/* <Route path="*" element={<div>404 - not found</div>} /> */}
           <Route path="*" element={<Navigate replace to="/home"/>} />
+          <Route path="/contactform" element={<ContactForm/>}/>
         </Routes>
       </BrowserRouter>
     </div>
