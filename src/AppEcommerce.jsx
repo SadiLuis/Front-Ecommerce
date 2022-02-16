@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter,Navigate } from "react-router-dom";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Home from "./pages/Home/Home";
 import DetailProduct from "./pages/DetailProduct/DetailProduct";
@@ -14,6 +14,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getUserDetail, updateCart } from "./actions";
 import Profile from "./pages/Profile/Profile";
+import AdminSales  from "./components/Dashboard/AdminSales/AdminSales";
+
 
 const AppEcommerce = () => {
   const token = useSelector((state) => state.loginReducer.token);
@@ -34,7 +36,7 @@ const AppEcommerce = () => {
       <BrowserRouter>
         <NavBar />
         <Routes>
-          <Route path="/" exact element={<LandingPage />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile/edit" element={<Register edit={true} />} />
@@ -42,13 +44,15 @@ const AppEcommerce = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/home/:id" element={<DetailProduct />} />
           <Route exact path="/dashboard/admin" element={<Dashboard />} />
-          {/* <Route exact path="/admin/sales" element={<AdminSales/>} /> */}
+          <Route exact path="/dashboard/sales" element={<AdminSales/>} /> 
           <Route path="/pedido/payment" element={<BuyProduct />} />
           <Route path="/pedido/detail/:id" element={<PedidoUnaCompra />} />
           <Route path="/pedido/detail" element={<PedidosCompra />} />
           {/* <Route path="user" element={<Dashboard />} /> */}
           <Route path="/dashboard/admin" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
+          {/* <Route path="*" element={<div>404 - not found</div>} /> */}
+          <Route path="*" element={<Navigate replace to="/home"/>} />
         </Routes>
       </BrowserRouter>
     </div>

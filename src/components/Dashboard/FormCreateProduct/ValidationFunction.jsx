@@ -10,7 +10,7 @@ export const validationFunction = (input) => {
 
     if(!input.description || /^([0-9])*$/.test(input.description)) errors.description = "Description is required and it can't be just numbers"
 
-    if(!input.categoriaId) errors.categoriaId = 'Category is required'
+    if(!input.category) errors.category = 'Category is required'
 
     if(!input.image || input.image.slice(0, 4) !== 'http' ) errors.image ='Image is required and must be an URL'
 
