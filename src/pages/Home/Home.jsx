@@ -45,7 +45,7 @@ const Home = ({
 
   useEffect(() => {
     getCategories();
-    getAllProducts();
+   if(filtered.length === 0) getAllProducts();
   }, [getCategories, getAllProducts]);
 
   function handleClick(e) {

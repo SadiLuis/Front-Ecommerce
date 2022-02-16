@@ -40,6 +40,7 @@ function NavBar({  setCurrentPage, isAuth, user, searchByName, logout }) {
               <NavLink to="/cart">
                 <CartBtn />
               </NavLink>
+              <NavLink to="/contactform">Contáctenos</NavLink>
             </li>
           </ul>
         </div>

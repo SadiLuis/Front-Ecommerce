@@ -31,7 +31,7 @@ function Cart() {
   
 
   useEffect(() => {
-    dispatch(getAllProducts())
+   if(products.length === 0) dispatch(getAllProducts())
     
   },[dispatch,getAllProducts]);
 
