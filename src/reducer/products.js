@@ -17,7 +17,7 @@ const initialState = {
     filtered: [],
     productName: [],
     cart: getCartLocalStorage(),
-    categories : []
+    categories : [],
 }
 
 
@@ -30,10 +30,15 @@ export default function productsReducer(state = initialState, action) {
         case UPDATE_CART:
             return { ...state, cart: getCartLocalStorage() }
         case ADD_ITEM:
+
             itemCart = state.cart.products.find(e => e.id === payload);
             if (itemCart) {
-                newProducts = state.cart.products.filter(e => e.id !== itemCart.id);
-                newProducts.push({ ...itemCart, quantity: itemCart.quantity + 1 });
+                newProducts = state.cart.products.map(item => 
+                    item.id === payload
+                    ?{...item, quantity: item.quantity + 1 }
+                    : item )
+                
+                
                 newCart = {
                     products: newProducts,
                     precioTotal: newProducts.reduce((prev, e) => {
@@ -41,7 +46,9 @@ export default function productsReducer(state = initialState, action) {
 
                         return Math.round((prev + (prod.price * e.quantity)) * 100) / 100;
                     }, 0)
+
                 };
+                saveCartLocalStorage(newCart);
             } else {
                 newCart = {
                     products: [...state.cart.products, { id: payload, quantity: 1 }],
@@ -49,6 +56,7 @@ export default function productsReducer(state = initialState, action) {
                 };
             }
             saveCartLocalStorage(newCart);
+           
             return {
                 ...state,
                 cart: newCart
@@ -56,9 +64,11 @@ export default function productsReducer(state = initialState, action) {
         case REST_ITEM:
             itemCart = state.cart.products.find(e => e.id === payload);
             if (itemCart) {
-                newProducts = state.cart.products.filter(e => e.id !== itemCart.id);
-                itemCart.quantity > 1 &&
-                    newProducts.push({ ...itemCart, quantity: itemCart.quantity - 1 });
+                newProducts = state.cart.products.map(item => 
+                    item.id === payload
+                    ?{...item, quantity: item.quantity - 1 }
+                    : item )
+
                 newCart = {
                     ...newCart,
                     products: newProducts,

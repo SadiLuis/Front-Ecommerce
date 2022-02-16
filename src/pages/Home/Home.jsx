@@ -38,6 +38,10 @@ const Home = ({
   const pagination = (pageNumbers) => {
     setCurrentPage(pageNumbers);
   };
+  //setea currentpage en 1
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [setCurrentPage,filtered]);
 
   useEffect(() => {
     getCategories();
@@ -47,27 +51,24 @@ const Home = ({
   function handleClick(e) {
     e.preventDefault();
     getAllProducts();
-    //resetea para que traiga todos los games de nuevo cuando se buggea
+    //resetea para que traiga todos los produtos de nuevo cuando se buggea
   }
 
   function handleFilterByCategories(e) {
     e.preventDefault();
     filterByCategory(e.target.value);
-    setCurrentPage(1);
     setOrden(`Ordenado ${e.target.value}`);
   }
 
   function handleOrderByPrice(e) {
     e.preventDefault();
     orderByPrice(e.target.value);
-    setCurrentPage(1);
     setOrden(`Ordenado ${e.target.value}`);
   }
 
   function handleOrderByRate(e) {
     e.preventDefault();
     orderByRate(e.target.value);
-    setCurrentPage(1);
     setOrden(`Ordenado ${e.target.value}`);
   }
 
@@ -117,7 +118,9 @@ const Home = ({
             </select>
           </div>
         </div>
-
+        {/* <SearchBar
+        setCurrentPage={setCurrentPage}
+        /> */}
         <div className="home">
           {currentProducts &&
             currentProducts.length &&
