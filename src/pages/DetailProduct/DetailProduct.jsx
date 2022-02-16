@@ -61,19 +61,29 @@ function DetailProduct({ cartProducts, addItem, deleteItem }) {
       let result = window.confirm("Registrese para poder realizar una compra");
       if (result) navigate("/register");
     } else {
-       setShow(true)
-     
+      
+      if(items.length > 0) setShow(true)
+      else {
+        let pedido = {
+          pedidos:[{
+            productoId: id,
+            cantidad: 1,
+          }]
+        }
+         dispatch(postPedido(pedido));
+          navigate("/pedido/detail/"+id);
+      }
     }
   };
 
-  const handleOneProduct =()=>{
+  const handleOneProduct = async()=>{
     let pedido = {
       pedidos:[{
         productoId: id,
         cantidad: 1,
       }]
     }
-      dispatch(postPedido(pedido));
+     dispatch(postPedido(pedido));
       navigate("/pedido/detail/"+id);
   }
 

@@ -1,14 +1,20 @@
-import React, { useState } from "react";
-import { addItem, deleteItem, restItem } from "../../../actions/index";
+import React, { useState , useEffect } from "react";
+import { addItem, deleteItem, restItem ,updateCart } from "../../../actions/index";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 import { Container, Button, Row, Col } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 
 function Item({ id, title, price, image, stock, quantity }) {
   const [input, setInput] = useState(parseInt(quantity));
+  
   let priceTotal = price * quantity;
   const dispatch = useDispatch();
+
+  
+ 
+  console.log(input)
 
   const handleChange = (e) => {
     // console.log(e);
@@ -30,11 +36,9 @@ function Item({ id, title, price, image, stock, quantity }) {
     if (input > 1) {
       setInput((prev) => prev - 1);
       dispatch(restItem(id));
-    } else {
-      dispatch(deleteItem(id));
-    }
-  };
-
+   
+   };
+  }  
   const handleDelete = () => {
     // e.preventDefault();
     dispatch(deleteItem(id));
