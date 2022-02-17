@@ -1,10 +1,10 @@
 .bkg{
     position: absolute;
-    background: url('./img/login.jpg');
+    background: url('./img/pc.jpg') no-repeat center center fixed;
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: scroll;
-    height: 100%;
+    height: 92.3%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -13,17 +13,21 @@
 .link{
     text-decoration: none;
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 20px;
     font-weight: bold;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    padding: 1rem;
-    border: 1px solid #fff;
-    border-radius: 5px;
-    transition: all 0.3s ease-in-out;
-    cursor: pointer;
+    margin: 10px;
+    padding: 10px;
+    width: 35%;
+    background-color: rgba(255, 255, 255, 0.534);
+    border: border-box;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-left: 35%;
+
 }
 
 
@@ -39,37 +43,36 @@
   font-weight: bold;
 
   align-items:center;
-  box-shadow: 6px 7px 8px -6px rgba(255, 0, 0, 0.75);
+  
   border-radius: 47px;
   background: rgba(255, 255, 255, 0.527); 
   color: rgb(0, 0, 0);
   padding: 2%;
-}
-.register:hover{
-    background-color: rgb(241, 74, 33);  
-    color: white;
 }
 .conteiner{
-  margin-top: -1%;
-  margin-left: 40%;
-  margin-right: 15%;
-  margin-bottom: 20%;
-  width: 25%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 2fr;
-  justify-content: space-around;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 6px 7px 8px -6px rgba(255, 0, 0, 0.75);
-  border-radius: 47px;
-  background: rgba(255, 255, 255, 0.527); 
-  color: rgb(0, 0, 0);
-  padding: 2%;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 70%;
+    background-color: #8b8b8b75; 
+    border-radius: 10px;       
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 6px 7px 8px -6px rgb(0, 0, 0);
+    font-size: 20px;
+    text-align: center;
+    margin: 10px;
+    padding: 10px;
+ 
 }
 
 .conteiner:hover{
-    background-color: rgb(241, 74, 33);
+    background-color: rgba(0, 0, 0, 0.342);
     color: white;
 }
 
@@ -82,17 +85,12 @@
 }
 
 .section{
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: baseline;
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid transparent;
   border-radius: 15px;
-  gap: 5px;
+  width: 100%;
+  padding: 5px;
   box-shadow: 6px 7px 8px -6px rgba(0, 0, 0, 0.75);
-  background-color: rgb(0, 183, 255);
+  background-color: rgba(255, 255, 255, 0.438);
+  color: #000;
 }
 
 .error{
@@ -104,21 +102,23 @@
 }
 
 .input{
-  border: none;
+    margin: 5px;
+    padding: 5px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.534);
+    border: border-box;
+    border-radius: 5px;
+    font-size: 20px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0);
-  background: none;
+  outline: none;
   
 }
-input::placeholder {
-    background-color: transparent;
-    color: white;
-    font-size: 1rem;
-    align-items: center;
-    align-content: center;
-  }
 
 .btn{
-  min-width: 90%;
+  min-width: 30%;
   height: 40px;
   color: rgb(0, 0, 0);
   padding: 5px 10px;
@@ -135,7 +135,31 @@ input::placeholder {
   margin-left: 12px;
 }
 .btn:hover:hover {
-    background: rgba(5, 84, 255, 0.596);
+    background: rgba(0, 253, 114, 0.596);
     color: #fffefef3;
   }
   
+.check{
+ 
+  color: rgb(0, 0, 0);
+  padding: 5px 10px;
+  font-weight: bold;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  outline: none;
+  border-radius: 10px;
+  border: none;
+  background: #ffffff96;
+  margin-left: 12px;
+}
+
+h5{
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: 10%;
+}
