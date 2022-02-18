@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import {getCartLocalStorage} from '../../helpers/localstorage'
+import { Button, Col, Form, Row } from "react-bootstrap";
 
 const initialForm = {
   nombre: "",
@@ -112,8 +113,189 @@ function Createform({ updateUser, register, isAuth, user, edit = false }) {
   return (
     <div className={style.bkg}>
       <h1 className={style.register}>{edit ? "NUEVOS DATOS" : "REGISTRO"}</h1>
-      <div className={style.container}>
-        <div className={style.form}>
+      <div>
+        <div className={style.conteiner} >
+          <Form className="rounded p-4 p-sm-3"  onSubmit={handleSubmit} >
+          <Row className="mb-3" >
+            <Form.Group className="mb-3" as={Col} md="4" >
+              <Form.Label  className={style.section}> Nombre </Form.Label>
+              <Form.Control
+                type="text"
+                name="nombre"
+                value={form.nombre}
+                onChange={handleChange}
+                className={style.input}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.nombre}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" as={Col} md="4" >
+              <Form.Label className={style.section}> Usuario </Form.Label>
+              <Form.Control
+                type="text"
+                name="usuario"
+                value={form.usuario}
+                onChange={handleChange}
+                className={style.input}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.usuario}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" as={Col} md="4">
+              <Form.Label className={style.section} > Contraseña </Form.Label>
+              <Form.Control
+                type="password"
+                name="contrasena"
+                value={form.contrasena}
+                onChange={handleChange}
+                className={style.input}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.contrasena}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" as={Col} md="4" >
+              <Form.Label className={style.section} > Confirmar Contraseña </Form.Label>
+              <Form.Control
+                type="password"
+                name="confirm_contrasena"
+                value={form.confirm_contrasena}
+                onChange={handleChange}
+                className={style.input}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.confirm_contrasena}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group  className="mb-3" as={Col} md="4" >
+              <Form.Label className={style.section}> Email </Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                className={style.input}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.email}
+              </Form.Control.Feedback>  
+              </Form.Group>  
+
+              <Form.Group className="mb-3" as={Col} md="4" >
+              <Form.Label className={style.section}> País </Form.Label>
+              <Form.Control
+                type="text"
+                name="pais"
+                value={form.pais}
+                onChange={handleChange}
+                className={style.input}
+               /> 
+               <Form.Control.Feedback type="invalid">
+                {errors.pais}
+              </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group className="mb-3" as={Col} md="4" >
+              <Form.Label className={style.section} > Provincia </Form.Label>
+              <Form.Control
+                type="text"
+                name="provincia"
+                value={form.provincia}
+                onChange={handleChange}
+                className={style.input}
+                />
+                <Form.Control.Feedback type="invalid">
+                {errors.provincia}
+              </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group className="mb-3" as={Col} md="4" >
+              <Form.Label className={style.section}> Dirección </Form.Label>
+              <Form.Control
+                type="text"
+                name="direccion"
+                value={form.direccion}
+                onChange={handleChange}
+                className={style.input}
+                />
+                <Form.Control.Feedback type="invalid">
+                {errors.direccion}
+              </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group className="mb-3" as={Col} md="4" >
+              <Form.Label className={style.section}> Teléfono </Form.Label>
+              <Form.Control
+                type="text"
+                name="telefono"
+                value={form.telefono}
+                onChange={handleChange}
+                className={style.input}
+                />
+                <Form.Control.Feedback type="invalid">
+                {errors.telefono}
+              </Form.Control.Feedback>
+              </Form.Group>
+          </Row>
+
+
+          <Form.Group className="mb-3">
+            <Form.Check
+              className={style.check}
+              type="checkbox"
+              required
+              label="Agree to terms and conditions"
+              feedback="You must agree before submitting."
+              feedbackType="invalid"
+            />
+          </Form.Group>
+
+          <input
+              type="submit"
+              value={edit ? "Guardar cambios" : "Registrarse"}
+              className={style.btn}
+            />
+
+      {!edit && (
+        <div>
+          <h5> Ya tienes cuenta?</h5>
+          <Link to="/login" className={style.link} > Login</Link>
+        </div>
+      )}
+          </Form>
+              
+
+        </div>
+       
+      </div>
+    </div>
+  );
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ register, updateUser }, dispatch);
+};
+
+const mapStateToProps = (state) => {
+  return {
+    isAuth: state.loginReducer.isAuth,
+    user: state.loginReducer.userDetail,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Createform);
+
+
+{/*
+
+
+ <div className={style.form}>
           <form onSubmit={handleSubmit}>
             <div className={style.section}>
               <h4>Nombre</h4>
@@ -250,25 +432,5 @@ function Createform({ updateUser, register, isAuth, user, edit = false }) {
             />
           </form>
         </div>
-      </div>
-      {!edit && (
-        <div>
-          <Link to="/login">Ya tienes una cuenta? Login</Link>
-        </div>
-      )}
-    </div>
-  );
-}
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ register, updateUser }, dispatch);
-};
-
-const mapStateToProps = (state) => {
-  return {
-    isAuth: state.loginReducer.isAuth,
-    user: state.loginReducer.userDetail,
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Createform);
+*/}

@@ -10,10 +10,10 @@
      background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-   margin-top: 50px;
-    margin-left:150px;
-    margin-right: 150px;
-    padding: 150px; 
+    margin-top: auto;
+    margin-left:auto;
+    margin-right: auto;
+    padding: auto; 
 }
 .btn btn-primary{
     position:absolute;
