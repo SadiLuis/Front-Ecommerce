@@ -12,7 +12,7 @@ import PedidoUnaCompra from "./components/Pedidos-de-compra/PedidosCompra";
 import PedidosCompra from "./components/Pedidos-de-compra/PedidoDetail";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getUserDetail, updateCart } from "./actions";
+import { getUserDetail, updateCart , getCartDB} from "./actions";
 import Profile from "./pages/Profile/Profile";
 import AdminSales  from "./components/Dashboard/AdminSales/AdminSales";
 import ContactForm from "./components/ConctactForm/ContactForm";
@@ -22,14 +22,20 @@ const AppEcommerce = () => {
   const token = useSelector((state) => state.loginReducer.token);
   const isAuth = useSelector((state) => state.loginReducer.isAuth);
   const userDetail = useSelector((state) => state.loginReducer.userDetail);
+  const products = useSelector((state) => state.productsReducer.allProducts);
   const dispatch = useDispatch();
+  
 
   useEffect(() => {
     token && !isAuth && !userDetail && dispatch(getUserDetail());
+
   }, [token, dispatch, userDetail, isAuth]);
 
   useEffect(() => {
-    !isAuth && dispatch(updateCart());
+    setTimeout(function(){
+      dispatch(updateCart())
+  }, 3000);
+    
   }, [isAuth, dispatch]);
 
   return (

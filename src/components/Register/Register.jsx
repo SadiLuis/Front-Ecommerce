@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { register, updateUser } from "../../actions/index";
+import { register, updateUser ,postCart} from "../../actions/index";
 import style from "./styles/Register.module.css";
 import Swal from "sweetalert2";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import {getCartLocalStorage} from '../../helpers/localstorage'
 
 const initialForm = {
   nombre: "",
@@ -85,6 +86,12 @@ function Createform({ updateUser, register, isAuth, user, edit = false }) {
 
     edit ? updateUser(userForm) : register(userForm);
   };
+  const cartDB = async() =>{
+    const localS = getCartLocalStorage()
+    const cartdb = await localS.products?.map( (el) =>  postCart(el))
+    console.log(localS)
+    return cartdb
+   }
 
   useEffect(() => {
     // Si ya está logueado que lo redireccione al dashboard
@@ -96,7 +103,8 @@ function Createform({ updateUser, register, isAuth, user, edit = false }) {
         icon: "success",
         confirmButtonText: "Ok",
       });
-      if (rol === "1") return navigate("/dashboard/user");
+      cartDB()
+      if (rol === "1") return navigate("/dashboard/login");
       if (rol === "2") return navigate("/dashboard/admin");
     }
   }, [isAuth, navigate, user, edit]);

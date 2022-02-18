@@ -4,7 +4,7 @@ import Item from "./Item/Item";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Button, Row } from "react-bootstrap";
-import { postPedido ,updateCart,getAllProducts } from "../../actions";
+import { postPedido ,updateCart,getAllProducts , getCartDB } from "../../actions";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -23,21 +23,26 @@ function Cart() {
 
       return completeProducts;
     }) 
- 
+
+   console.log(items)
   const total = useSelector((state) => state.productsReducer.cart.precioTotal);
   const isAuth = useSelector((state) => state.loginReducer.isAuth);
-  items = items.filter((e) => e);
+  items = items?.filter((e) => e);
   const products = useSelector((state) => state.productsReducer.allProducts)
-  
+  const user = useSelector((state) => state.loginReducer.userDetail);
 
   useEffect(() => {
-   if(products.length === 0) dispatch(getAllProducts())
-    
+   if(products.length === 0)dispatch(getAllProducts())
+   
   },[dispatch,getAllProducts]);
 
   useEffect(()=> {
-    dispatch(updateCart())
+    
+ dispatch(updateCart())
+
+    
   },[dispatch,updateCart])
+
 
 
   const handlebtnCompra = () => {
@@ -75,11 +80,12 @@ function Cart() {
   return (
     <>
     {products.length > 0 ?
+     
        ( 
          <div>
        <Container>
         <Container className="py-4 bg-light rounded-3 ">
-          {items.length === 0 && emptyCart()}
+          {items?.length === 0 && emptyCart()}
           {items?.map((i) => (
             <Item
               key={i.id}

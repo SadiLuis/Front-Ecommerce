@@ -6,6 +6,9 @@ import {
   filterByCategory,
   orderByPrice,
   orderByRate,
+  getCartDB
+  
+ 
 } from "../../actions/index";
 import Product from "../../components/ListProducts/Product/Product";
 import Paginado from "../../components/Paginado/Paginado";
@@ -22,6 +25,10 @@ const Home = ({
   filterByCategory,
   orderByPrice,
   orderByRate,
+  isAuth,
+  user,
+  getCartDB
+  
 }) => {
   //paginado
   const [orden, setOrden] = useState("");
@@ -34,7 +41,7 @@ const Home = ({
     indexOfLastProduct
   );
   // console.log(currentProducts);
-
+  
   const pagination = (pageNumbers) => {
     setCurrentPage(pageNumbers);
   };
@@ -44,6 +51,8 @@ const Home = ({
   }, [setCurrentPage,filtered]);
 
   useEffect(() => {
+    if( isAuth) getCartDB(user.id)
+  
     getCategories();
    if(filtered.length === 0) getAllProducts();
   }, [getCategories, getAllProducts]);
@@ -71,6 +80,8 @@ const Home = ({
     orderByRate(e.target.value);
     setOrden(`Ordenado ${e.target.value}`);
   }
+
+
 
   return (
     <>
@@ -153,6 +164,8 @@ const mapDispatchToProps = (dispatch) => {
       filterByCategory,
       orderByPrice,
       orderByRate,
+      getCartDB
+     
     },
     dispatch
   );
@@ -163,7 +176,10 @@ const mapStateToProps = (state) => {
     allProducts: state.productsReducer.allProducts,
     categories: state.productsReducer.categories,
     filtered: state.productsReducer.filtered,
-  };
+    isAuth: state.loginReducer.isAuth,
+    user: state.loginReducer.userDetail,
+    
+   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

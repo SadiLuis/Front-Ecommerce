@@ -19,12 +19,17 @@ function Product({
   cart,
   addItem,
   deleteItem,
+ 
 }) {
   const [inCart, setInCart] = useState(false);
 
   useEffect(() => {
-    setInCart(cart.find((el) => el.id === id));
+    setInCart(cart?.find((el) => el.id === id));
   }, [cart, id]);
+   
+  
+
+  
 
   return (
     <Card style={{ width: "18rem" }}>
@@ -49,11 +54,12 @@ function Product({
         <Button variant="primary" onClick={() => deleteItem(id)}>
           Quitar del carrito
         </Button>
-      ) : (
+      ) :  (
         <Button variant="primary" onClick={() => addItem(id)}>
           Añadir al carrito
         </Button>
-      )}
+      ) 
+    }
     </Card>
   );
 }
@@ -65,6 +71,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     cart: state.productsReducer.cart.products,
+    isAuth: state.loginReducer.isAuth
   };
 };
 

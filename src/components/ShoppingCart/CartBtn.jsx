@@ -8,7 +8,7 @@ function CartBtn() {
   return (
     <div>
       <BsCart3 />
-      {item.length}
+      {item?.length}
     </div>
   );
 }

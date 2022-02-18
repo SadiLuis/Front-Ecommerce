@@ -31,9 +31,8 @@ function ContactForm() {
         }, error=>{
             console.log("Failed", error)
         });
-
-       
-    }
+        e.target.reset()
+     }
 
     useEffect(()=>{
         if(status==="Success"){

@@ -383,3 +383,25 @@ export function createProduct(product) {
         }
     }
 }
+
+export const getCartDB = (userId) => async dispatch => {
+    try {
+        let config = getHeaderToken();
+        const { data } = await axios.get(
+            `${BASEURL}/carritos/${userId}`,
+            config
+        );
+        return dispatch({ type: 'GET_CART', payload: data });
+    } catch (err) {
+        return console.log(err.response.data);
+    }
+}
+
+export const postCart = async (cart) => {
+    await axios.post( `${BASEURL}/carritos`,
+    {
+        "productoId": cart.id,
+        "cantidad": cart.quantity
+     },
+    getHeaderToken())
+}

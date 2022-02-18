@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { login } from "../../actions/index";
+import { login, postCart } from "../../actions/index";
+import {useSelector} from 'react-redux'
 import { Link, useNavigate } from "react-router-dom";
+import {getCartLocalStorage} from '../../helpers/localstorage'
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-
+   
 const initialForm = {
   contrasena: "",
   email: "",
@@ -24,11 +26,11 @@ const validateForm = (form) => {
   return errors;
 };
 
-const Login = ({ login, isAuth, user }) => {
+const Login = ({ login, isAuth, user , cart}) => {
   const navigate = useNavigate();
   const [form, setForm] = useState(initialForm);
   const [error, setError] = useState({});
-
+ 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -46,17 +48,26 @@ const Login = ({ login, isAuth, user }) => {
     if (Object.keys(errors).length) {
       return window.alert("El formulario contiene errrores");
     }
-    login(form);
+     login(form);
+    
   };
 
+ const cartDB = async() =>{
+   const localS = getCartLocalStorage()
+   const cartdb = await localS.products?.map( (el) =>  postCart(el))
+   console.log(localS)
+   return cartdb
+  }
+   
   useEffect(() => {
     // Si ya está logueado que lo redireccione al dashboard
     if (isAuth && user) {
       const { rol } = user;
       setForm(initialForm);
       rol === "2" ? navigate("/dashboard/admin") : navigate("/home");
+      cartDB()
     }
-  }, [isAuth, navigate, user]);
+  }, [isAuth, navigate, user,cartDB]);
 
   return (
     <>
@@ -95,6 +106,7 @@ const mapStateToProps = (state) => {
   return {
     isAuth: state.loginReducer.isAuth,
     user: state.loginReducer.userDetail,
+    cart: state.productsReducer.cart.products,
   };
 };
 

@@ -11,6 +11,7 @@ import {
     UPDATE_CART
 } from '../actions/types';
 import { getCartLocalStorage, saveCartLocalStorage } from "../helpers/localstorage";
+import {postCart} from '../actions/index'
 
 const initialState = {
     allProducts: [],
@@ -18,19 +19,46 @@ const initialState = {
     productName: [],
     cart: getCartLocalStorage(),
     categories : [],
+    carts:{}
 }
 
 
 export default function productsReducer(state = initialState, action) {
     const { type, payload } = action;
     let newCart = state.cart, newProducts, itemCart;
-
+    
     switch (type) {
         //! TODO SOBRE EL CARRITO
         case UPDATE_CART:
-            return { ...state, cart: getCartLocalStorage() }
-        case ADD_ITEM:
+            
+            if(localStorage.getItem('token_ecommerce')){
+             
+            const localS = getCartLocalStorage()
+            localS.products?.forEach( (el) =>  postCart(el))
+            
+            
+            }
+            const cartDB = state.carts.CarritoDetalles?.map(el =>{
+                return {id: el.productoId , quantity: el.cantidad}
+            })
+             if(cartDB){
+            const carrito = {
+                products: cartDB,
+                precioTotal:cartDB?.reduce((prev, e) => {
+                    let prod = state.allProducts.find(el => el.id === e.id);
 
+                    return Math.round((prev + (prod.price * e.quantity)) * 100) / 100;
+                }, 0)
+            }
+            return { ...state, cart: !localStorage.getItem('token_ecommerce') ?
+                                     getCartLocalStorage() :
+                                      carrito            
+                    }
+                }else{
+                    return { ...state, cart: getCartLocalStorage() }
+                }
+        case ADD_ITEM:
+            
             itemCart = state.cart.products.find(e => e.id === payload);
             if (itemCart) {
                 newProducts = state.cart.products.map(item => 
@@ -48,15 +76,16 @@ export default function productsReducer(state = initialState, action) {
                     }, 0)
 
                 };
-                saveCartLocalStorage(newCart);
+                
             } else {
                 newCart = {
                     products: [...state.cart.products, { id: payload, quantity: 1 }],
                     precioTotal: Math.round((state.cart.precioTotal + state.allProducts.find(e => e.id === payload).price) * 100) / 100
                 };
+                
             }
             saveCartLocalStorage(newCart);
-           
+            
             return {
                 ...state,
                 cart: newCart
@@ -142,6 +171,10 @@ export default function productsReducer(state = initialState, action) {
             return {
                 ...state,
                 filtered: sortedRate
+            }
+            case 'GET_CART': return{
+                ...state,
+                carts: payload
             }
         default:
             return { ...state }

@@ -55,7 +55,8 @@ function DetailProduct({ cartProducts, addItem, deleteItem }) {
   useEffect(() => {
     !error && setInCart(cartProducts.find((el) => el.id === parseInt(id)));
   }, [id, product, cartProducts, error]);
-
+  
+  
   const handlebtnCompra = () => {
     if (!isAuth) {
       let result = window.confirm("Registrese para poder realizar una compra");
@@ -135,7 +136,7 @@ function DetailProduct({ cartProducts, addItem, deleteItem }) {
       </Modal>
     )
   }
-
+    console.log(cartProducts)
 
   return loading ? (
     <span>loading...</span>
