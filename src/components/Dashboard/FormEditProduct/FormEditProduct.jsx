@@ -1,176 +1,170 @@
-import React, { useState, useEffect,  } from 'react';
+import React, { useState, useEffect } from "react";
+import styles from "./FormEditProduct.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductById, editProduct, getCategories } from '../../../actions';
-import { validationFunction } from './ValidationFunction';
+import { getProductById, editProduct, getCategories } from "../../../actions";
+import { validationFunction } from "./ValidationFunction";
+import { Loader } from "../../Loader/Loader";
 
+export default function FormEditProduct(props) {
+  const { id, handleClosePopUp } = props;
 
-export default function FormEditProduct(props){
+  const dispatch = useDispatch();
+  const product = useSelector((state) => state.adminReducer.singleProduct);
+  const [errors, setErrors] = useState({});
+  const category = useSelector((state) => state.productsReducer.categories);
 
-    const {id, handleClosePopUp} = props
+  const [input, setInput] = useState({
+    id: "",
+    title: "",
+    price: "",
+    description: "",
+    category: "",
+    caterogyName: "",
+    image: "",
+    cantidad: "",
+  });
 
-    
-    const dispatch = useDispatch()
-    const product = useSelector((state) => state.adminReducer.singleProduct)
-    const [errors, setErrors] = useState({})
-    const category = useSelector( (state) => state.productsReducer.categories)
-     
-    const [input, setInput] = useState({
-        
-        id: '',
-        title: '',
-        price: '',
-        description: '',
-        category: '',
-        caterogyName: '',
-        image: '',
-        cantidad: ''
-    
-})
+  useEffect(() => {
+    dispatch(getProductById(id));
+    dispatch(getCategories());
+  }, [id]);
 
+  useEffect(() => {
+    setInput({
+      id: product.id || "",
+      title: product.title || "",
+      price: product.price || "",
+      description: product.description || "",
+      category: "",
+      caterogyName: product.category || "",
+      image: product.image || "",
+      cantidad: product.cantidad || "",
+    });
+  }, [product]);
 
-    useEffect(() => {
-        dispatch(getProductById(id));
-        dispatch(getCategories())
-    }, [id])
+  function handleInputChange(e) {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+      category: category
+        .filter((c) => c.nombre === product.category)
+        .map((c) => c.id)[0],
+    });
+    setErrors(
+      validationFunction({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    );
+  }
 
-    useEffect(() => {
-        setInput({
-            id: product.id || '',
-            title: product.title || '',
-            price: product.price || '',
-            description: product.description || '',
-            category: '',
-            caterogyName: product.category || '',
-            image: product.image || '',
-            cantidad: product.cantidad || ''
-        })
-     }, [product])
-    
-    
+  function handleSelectCategory(e) {
+    setInput({
+      ...input,
+      category: e.target.value,
+    });
+    setErrors(
+      validationFunction({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    );
+  }
 
-    function handleInputChange(e){
-        
-        setInput({
-            ...input,
-            [e.target.name] : e.target.value,
-            category: (category.filter(c => c.nombre === product.category)).map(c => c.id)[0]
-        })
-        setErrors(validationFunction({
-            ...input,
-            [e.target.name] :e.target.value
-        }))
-        
-    }
+  const handleSubmit = (e) => {
+    dispatch(editProduct(input));
+    setInput({
+      id: "",
+      title: "",
+      price: "",
+      description: "",
+      category: "",
+      image: "",
+      cantidad: "",
+    });
 
-    function handleSelectCategory(e){
-        
-        setInput({
-            ...input,
-            category: e.target.value
-        })
-        setErrors(validationFunction({
-            ...input,
-            [e.target.name] :e.target.value
-        }))
-    }
+    setTimeout(function () {
+      window.location.href = "/dashboard/admin";
+    }, 3000);
+    alert(
+      "Product was updated. You will be redirected to your products after 3 seconds"
+    );
+  };
 
-    const handleSubmit = (e) => {
-        dispatch(editProduct(input))
-        setInput({
-            id: '',
-            title: '',
-            price: '',
-            description: '',
-            category: '',
-            image: '',
-            cantidad: ''
-             })
-        
+  //let auxCategoryId = category.filter(c => c.nombre === product.caterogy)
 
-        setTimeout(function () {
-            window.location.href = "/dashboard/admin";
-             }, 3000); 
-        alert("Product was updated. You will be redirected to your products after 3 seconds")
-    }    
-    
-    
-    //let auxCategoryId = category.filter(c => c.nombre === product.caterogy)
-    
-    console.log(input)
-    //if (product && category.length > 0 )
-    if (product && category)
-
-
-    {
-        return (
-            
-        <div>
-            
-            <form 
-             onSubmit={e => {
-                handleSubmit(e)
-                
-            }}
+  console.log(input);
+  //if (product && category.length > 0 )
+  if (product && category) {
+    return (
+      <div className={styles.main}>
+        <div className={styles.submain}>
+          <div className={styles.cap}>
+            <form
+              onSubmit={(e) => {
+                handleSubmit(e);
+              }}
             >
-                    <button onClick={handleClosePopUp}>Close Form</button> 
-    
-                    <div >
-                    <label >Title</label>
-                    <input
-                        type='text'
-                        name='title'
-                        onChange={e => handleInputChange(e)}
-                        value={input.title}
-                    />
-                    {errors.title && (
-                        <p>{errors.title}</p>
-                    )}
-                </div>     
+              <div className={styles.container_btns}>
+                <button className={styles.close_btn} onClick={handleClosePopUp}>
+                  ❌ Cerrar
+                </button>
+              </div>
 
-                <div>
-                    <label >Price</label>
-                    <input
-                        type='number'
-                        name='price'
-                        onChange={e => handleInputChange(e)}
+              <div className={styles.container_inputs}>
+                {/* <label className={styles.nameText}>Titulo del producto</label> */}
+                <input
+                  className={styles.title}
+                  type="text"
+                  name="title"
+                  onChange={(e) => handleInputChange(e)}
+                  value={input.title}
+                />
+                {errors.title && <p>{errors.title}</p>}
 
-                        value={input.price}
-                        
+                {/* <label className={styles.nameText}>Precio del producto</label> */}
+                <input
+                  className={styles.price}
+                  type="number"
+                  name="price"
+                  onChange={(e) => handleInputChange(e)}
+                  value={input.price}
+                />
+                {errors.price && <p>{input.price}</p>}
 
-                    />
-                    {errors.price && (
-                        <p>{input.price}</p>
-                    )}
-                </div>
-
-                <div>        
-                <select onChange={(e) => handleSelectCategory(e) } name="" id="">
-                        <option defaultValue={(category.filter(c => c.nombre === product.category)).map(c => c.id)} value={(category.filter(c => c.nombre === product.category)).map(c => c.id)}>{product.category}</option>
-                    {
-                        category.map( (c => 
-                            
-                            <option key={c.id} value={c.id}>{c.nombre}</option>
-                            
-                        ))
-                }    
+                {/* <label className={styles.nameText}>Categoria del producto</label> */}
+                <select
+                  className={styles.category}
+                  onChange={(e) => handleSelectCategory(e)}
+                  name=""
+                  id=""
+                >
+                  <option
+                    defaultValue={category
+                      .filter((c) => c.nombre === product.category)
+                      .map((c) => c.id)}
+                    value={category
+                      .filter((c) => c.nombre === product.category)
+                      .map((c) => c.id)}
+                  >
+                    {product.category}
+                  </option>
+                  {category.map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {c.nombre}
+                    </option>
+                  ))}
                 </select>
-                {errors.category && (
-                        <p>{errors.category}</p>
-                    )}
-                </div>
+                {errors.category && <p>{errors.category}</p>}
 
-                <div>
-                    <label>Description</label>
-                    <textarea
-                    name='description'
-                    onChange={e => handleInputChange(e)}
-                    value={input.description}
-                    />
-                    {errors.description && (
-                        <p>{errors.description}</p>
-                    )}
-                </div>
-
+                {/* <label className={styles.nameText}>Descripcion del producto</label> */}
+                <textarea
+                  className={styles.description}
+                  name="description"
+                  onChange={(e) => handleInputChange(e)}
+                  value={input.description}
+                />
+                {errors.description && <p>{errors.description}</p>}
 
                 {/* //Asi deberia ser el input si queremos subir una imagen desde nuestra pc
                  <div >
@@ -183,45 +177,40 @@ export default function FormEditProduct(props){
                 />
                 </div> */}
 
-                <div>
-                    <label htmlFor="">Image:</label>
-                    <input 
-                        type="text"
-                        value = {input.image}
-                        name = "image" 
-                        onChange={(e) => handleInputChange(e) }
-                    />
+                {/* <label className={styles.nameText}>Imagen del producto</label> */}
+                <input
+                  className={styles.image}
+                  type="text"
+                  value={input.image}
+                  name="image"
+                  onChange={(e) => handleInputChange(e)}
+                />
 
-                    {errors.image && (
-                        <p>{errors.image}</p>
-                    )}
-                </div>
+                {errors.image && <p>{errors.image}</p>}
 
-                <div>
-                    <label >Stock</label>
-                    <input
-                        type='text'
-                        name='cantidad'
-                        onChange={e => handleInputChange(e)}
-                        value={input.cantidad}
-                    />
-                    {errors.cantidad && (
-                        <p>{errors.cantidad}</p>
-                    )}
-                </div>
-
-                 <br />       
-                <button type="submit" disabled={Object.keys(errors).length > 0  ? true : false} >Edit Product</button> 
-         
-                    
+                {/* <label className={styles.nameText}>Cantidad</label> */}
+                <input
+                  className={styles.cantidad}
+                  type="text"
+                  name="cantidad"
+                  onChange={(e) => handleInputChange(e)}
+                  value={input.cantidad}
+                />
+                {errors.cantidad && <p>{errors.cantidad}</p>}
+                <button
+                  className={styles.create_btn}
+                  type="submit"
+                  disabled={Object.keys(errors).length > 0 ? true : false}
+                >
+                  Modificar
+                </button>
+              </div>
             </form>
-        </div>    
-        )
-    }else {
-        return (
-            <h1>Loading...</h1>
-        )
-    }
+          </div>
+        </div>
+      </div>
+    );
+  } else {
+    return <Loader/>;
+  }
 }
-
-    

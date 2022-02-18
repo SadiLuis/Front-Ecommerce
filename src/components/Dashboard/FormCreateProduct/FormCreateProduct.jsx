@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import styles from "./FormCreateProduct.module.css";
 import { validationFunction } from "./ValidationFunction";
 import { createProduct, getCategories } from "../../../actions";
+import { Loader } from "../../Loader/Loader";
 
 export default function FormCreateProduct({ handleClosePopUp }) {
   const dispatch = useDispatch();
@@ -73,71 +74,85 @@ export default function FormCreateProduct({ handleClosePopUp }) {
     );
   }
 
-  console.log(input)
+  console.log(input);
 
   if (category.length > 0) {
     return (
-      <div>
-        <form
-          onSubmit={(e) => {
-            handleSubmit(e);
-          }}
-        >
-          <button onClick={handleClosePopUp}>Close Form</button>
+      <div className={styles.main}>
+     
+        <div className={styles.submain}>
+        <div className={styles.cap}>
 
-          <div>
-            <label>Title</label>
-            <input
-              type="text"
-              name="title"
-              onChange={(e) => handleInputChange(e)}
-              value={input.title}
-              placeholder="Title of Product"
-              //required
-            />
-            {errors.title && <p>{errors.title}</p>}
-          </div>
+          <form
+            onSubmit={(e) => {
+              handleSubmit(e);
+            }}
+          >
+            <div className={styles.container_btns}>
+              <button className={styles.close_btn} onClick={handleClosePopUp}>
+                ❌ Cerrar
+              </button>
+             
+            </div>
 
-          <div>
-            <label>Price</label>
-            <input
-              type="number"
-              name="price"
-              onChange={(e) => handleInputChange(e)}
-              value={input.price}
-              placeholder="Price of Product"
-              //required
-            />
-            {errors.price && <p>{errors.price}</p>}
-          </div>
+            <div className={styles.container_inputs}>
+              {/* <label className={styles.nameText}>Titulo del producto</label> */}
+              <input
+                className={styles.title}
+                type="text"
+                name="title"
+                onChange={(e) => handleInputChange(e)}
+                value={input.title}
+                placeholder="Titulo del producto"
+                //required
+              />
+              {errors.title && <p>{errors.title}</p>}
 
-          <div>
-            <select onChange={(e) => handleSelectCategory(e)} name="" id="">
-              <option defaultValue="default" value="">
-                Select Category
-              </option>
-              {category.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.nombre}
+              {/* <label className={styles.nameText}>Precio del producto</label> */}
+              <input
+                className={styles.price}
+                type="number"
+                name="price"
+                onChange={(e) => handleInputChange(e)}
+                value={input.price}
+                placeholder="Precio del producto"
+                //required
+              />
+              {errors.price && <p>{errors.price}</p>}
+
+              {/* <label className={styles.nameText}>Categoria del producto</label> */}
+              <select
+                className={styles.category}
+                className={styles.category}
+                onChange={(e) => handleSelectCategory(e)}
+                name=""
+                id=""
+              >
+                <option defaultValue="default" value="">
+                  Seleccionar Categoria
                 </option>
-              ))}
-            </select>
-            {errors.category && <p>{errors.category}</p>}
-          </div>
+                {category.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.nombre}
+                  </option>
+                ))}
+              </select>
+              {errors.category && <p>{errors.category}</p>}
 
-          <div>
-            <label>Description</label>
-            <textarea
-              name="description"
-              onChange={(e) => handleInputChange(e)}
-              value={input.description}
-              placeholder="Description of Product"
-              //required
-            />
-            {errors.description && <p>{errors.description}</p>}
-          </div>
+              {/* <label className={styles.nameText}>
+                Descripcion del producto
+              </label> */}
+              <textarea
+                className={styles.description}
+                name="description"
+                onChange={(e) => handleInputChange(e)}
+                value={input.description}
+                placeholder="Descripcion del producto"
+                //required
+              />
+              {errors.description && <p>{errors.description}</p>}
 
-          {/* //Asi deberia ser el input si queremos subir una imagen desde nuestra pc
+              {/* //Asi deberia ser el input si queremos subir una imagen desde nuestra pc
                  <div >
                 <label>Image</label>
                 <input
@@ -148,42 +163,43 @@ export default function FormCreateProduct({ handleClosePopUp }) {
                 />
                 </div> */}
 
-          <div>
-            <label htmlFor="">Image:</label>
-            <input
-              type="text"
-              value={input.image}
-              name="image"
-              onChange={(e) => handleInputChange(e)}
-            />
+              {/* <label className={styles.nameText}>Imagen del producto</label> */}
+              <input
+                className={styles.image}
+                type="text"
+                value={input.image}
+                name="image"
+                placeholder="Imagen del producto"
+                onChange={(e) => handleInputChange(e)}
+              />
 
-            {errors.image && <p>{errors.image}</p>}
-          </div>
-
-          <div>
-            <label>Stock</label>
-            <input
-              type="number"
-              name="cantidad"
-              onChange={(e) => handleInputChange(e)}
-              value={input.cantidad}
-              placeholder="Stock of Product"
-              //required
-            />
-            {errors.cantidad && <p>{errors.cantidad}</p>}
-          </div>
-
-          <br />
-          <button
-            type="submit"
-            disabled={Object.keys(errors).length > 0 ? true : false}
-          >
-            Create Product
-          </button>
-        </form>
+              {errors.image && <p>{errors.image}</p>}
+              {/* <label className={styles.nameText}>Cantidad del producto</label> */}
+              <input
+                className={styles.cantidad}
+                type="number"
+                name="cantidad"
+                onChange={(e) => handleInputChange(e)}
+                value={input.cantidad}
+                placeholder="Cantidad del producto"
+                //required
+              />
+              {errors.cantidad && <p>{errors.cantidad}</p>}
+              <button
+                className={styles.create_btn}
+                type="submit"
+                disabled={Object.keys(errors).length > 0 ? true : false}
+              >
+                CREAR
+              </button>
+            </div>
+           
+          </form>
+        </div>
+        </div>
       </div>
     );
   } else {
-    return <h1>Loading...</h1>;
+    return <Loader/>;
   }
 }

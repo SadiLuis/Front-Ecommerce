@@ -8,6 +8,8 @@ import { MdDeleteForever, MdOutlineAddCircle } from "react-icons/md";
 import { AiFillEdit } from "react-icons/ai";
 import FormEditProduct from "./FormEditProduct/FormEditProduct";
 import FormCreateProduct from "./FormCreateProduct/FormCreateProduct";
+import { Loader } from "../Loader/Loader";
+
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -58,8 +60,9 @@ export default function Dashboard() {
   const columns = [
     {
       cell: (row) => (
-        <div>
-          <button
+        
+        <div className="table-responsive contain_btns">
+          <button className="btn_edit"
             type="button"
             title="Edit"
             onClick={() => {
@@ -71,7 +74,7 @@ export default function Dashboard() {
             <AiFillEdit />
           </button>
 
-          <button
+          <button className="btn_delete"
             type="button"
             title="Delete"
             onClick={() => {
@@ -82,67 +85,94 @@ export default function Dashboard() {
           </button>
         </div>
       ),
-    },
 
+
+    },
     {
-      name: "Title",
+      name: "Titulo",
       selector: "title",
       sortable: true,
+      grow: 2,
+      center:true
+
     },
     {
-      name: "Price",
+      name: "Precio",
       selector: "price",
       sortable: true,
+      center:true
+
     },
     {
-      name: "Stock",
+      name: "Cantidad",
       selector: "cantidad",
       sortable: true,
+      center:true
+
     },
     {
-      name: "Sales",
+      name: "Ventas",
       selector: "ventas",
       sortable: true,
+      grow:1,
+      center:true
+
     },
     {
-      name: "Rate",
+      name: "Calificacion",
       selector: "rate",
       sortable: true,
+      center:true
+
     },
     {
-      name: "Category",
+      name: "Categoria",
       selector: "category",
       sortable: true,
+      center:true,
+
     },
   ];
+
+  const paginacionOpciones = {
+    rowsPerPageText:'Filas por pagina',
+    rangeSeparatorText: 'de',
+  }
+
+  
+
 
   if (products.length > 0) {
     return (
       <div>
         <div className="add-button-div">
           <button className="create add-button" onClick={handleOpenPopUpCreate}>
-            <MdOutlineAddCircle size={32} />
+            {/* <MdOutlineAddCircle size={32} /> */}
+          Adicionar Producto
           </button>
         </div>
-
-        <DataTable
+        <DataTable 
           columns={columns}
           data={products}
-          title="Products"
+          title="Productos"
           striped
           highlightOnHover
           paginationPerPage={5}
           paginationRowsPerPageOptions={[5, 10, 15]}
           pagination
+          paginationComponentOptions={paginacionOpciones}
+          // fixedHeader
+          // fixedHeaderScrollHeight="350px"
         />
 
-        <ReactModal isOpen={openPopUpCreate}>
-          <h1>Add new product </h1>
+        <ReactModal  isOpen={openPopUpCreate}>
+         <p className="containtextheadermodal"><h1 className="textheadermodal">Adicionar nuevo producto</h1></p> 
           <FormCreateProduct handleClosePopUp={handleClosePopUpCreate} />
         </ReactModal>
 
         <ReactModal isOpen={openPopUpEdit}>
-          <h1>Edit this product</h1>
+         <p className="containtextheadermodal"><h1 className="textheadermodal">Editando el producto</h1></p> 
+          
           <FormEditProduct
             handleClosePopUp={handleClosePopUpEdit}
             id={idToEdit}
@@ -151,6 +181,6 @@ export default function Dashboard() {
       </div>
     );
   } else {
-    return <p>LOADING...</p>;
+    return <Loader/>
   }
 }
