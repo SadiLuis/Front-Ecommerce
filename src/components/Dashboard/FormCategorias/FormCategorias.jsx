@@ -59,7 +59,7 @@ export default function FormCategorias() {
         setcategory({
             nombre:""
            })
-        history('dashboard/admin')}
+        history('/dashboard/admin')}
 
     }
     
