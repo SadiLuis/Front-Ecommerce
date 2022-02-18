@@ -52,9 +52,9 @@ const AppEcommerce = () => {
           {/* <Route path="user" element={<Dashboard />} /> */}
           <Route path="/dashboard/admin" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/contactform" element={<ContactForm/>}/>
           {/* <Route path="*" element={<div>404 - not found</div>} /> */}
           <Route path="*" element={<Navigate replace to="/home"/>} />
-          <Route path="/contactform" element={<ContactForm/>}/>
         </Routes>
       </BrowserRouter>
     </div>

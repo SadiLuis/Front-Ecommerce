@@ -251,6 +251,19 @@ export const getUserDetail = () => {
 //         type: SUM_CART,
 //     }
 // }
+export function postCategories(payload){
+    return async function (dispatch) {
+        try{
+            const config = getHeaderToken();
+            const response = await axios.post(`${BASEURL}/categories`,payload,config);
+            //console.log(response)
+            return response.data;
+        }catch (err) {
+                console.log(err)
+        }
+        
+    }
+  }
 
 export function getCategories() {
     return async function (dispatch) {
