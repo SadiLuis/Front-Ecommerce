@@ -71,7 +71,7 @@ export default function FormCategorias() {
             <form onSubmit={handleSubmit}>
               <div> 
                 <div>
-                   <label>Nombre de Actividad : </label>
+                   <label>Nombre de Categoria : </label>
                    <input type='text' 
                           name="nombre" 
                           value={category.nombre} 
