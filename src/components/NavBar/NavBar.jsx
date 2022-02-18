@@ -19,9 +19,9 @@ function NavBar({  setCurrentPage, isAuth, user, searchByName, logout }) {
     <nav className="navbar navbar-dark bg-dark">
       <div className="container-fluid">
         <span className="navbar-brand">Henry Ecommerce</span>
-        <div className="navlink">
-          <ul className="list">
-            <li className="list-item">
+        {/* <div className="navlink"> */}
+          {/* <ul className="list">
+            <li className="list-item"> */}
               <NavLink to="/home">Home </NavLink>
               {isAuth && user ? (
                 <>
@@ -40,9 +40,10 @@ function NavBar({  setCurrentPage, isAuth, user, searchByName, logout }) {
               <NavLink to="/cart">
                 <CartBtn />
               </NavLink>
-            </li>
-          </ul>
-        </div>
+              <NavLink to="/contactform">Contáctenos</NavLink>
+            {/* </li>
+          </ul> */}
+        {/* </div> */}
         <form className="d-flex">
          <SearchBar/>
         </form>
