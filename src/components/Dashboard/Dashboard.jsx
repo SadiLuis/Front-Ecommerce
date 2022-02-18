@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getAllProducts, deleteProduct } from "../../actions/index";
+import {Link} from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import "./DashBoard.css";
 import DataTable from "react-data-table-component";
@@ -8,6 +9,7 @@ import { MdDeleteForever, MdOutlineAddCircle } from "react-icons/md";
 import { AiFillEdit } from "react-icons/ai";
 import FormEditProduct from "./FormEditProduct/FormEditProduct";
 import FormCreateProduct from "./FormCreateProduct/FormCreateProduct";
+import FormCategorias from "./FormCategorias/FormCategorias";
 import { Loader } from "../Loader/Loader";
 
 
@@ -145,12 +147,16 @@ export default function Dashboard() {
   if (products.length > 0) {
     return (
       <div>
+        <Link to = '/dashboard/admin/editcat'>
+            <button>Edit Categorias</button>
+        </Link> 
         <div className="add-button-div">
           <button className="create add-button" onClick={handleOpenPopUpCreate}>
             {/* <MdOutlineAddCircle size={32} /> */}
           Adicionar Producto
           </button>
         </div>
+        
         <DataTable 
           columns={columns}
           data={products}
@@ -164,7 +170,7 @@ export default function Dashboard() {
           // fixedHeader
           // fixedHeaderScrollHeight="350px"
         />
-
+       
         <ReactModal  isOpen={openPopUpCreate}>
          <p className="containtextheadermodal"><h1 className="textheadermodal">Adicionar nuevo producto</h1></p> 
           <FormCreateProduct handleClosePopUp={handleClosePopUpCreate} />
