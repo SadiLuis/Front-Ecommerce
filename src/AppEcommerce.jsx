@@ -16,7 +16,7 @@ import { getUserDetail, updateCart } from "./actions";
 import Profile from "./pages/Profile/Profile";
 import AdminSales  from "./components/Dashboard/AdminSales/AdminSales";
 import ContactForm from "./components/ConctactForm/ContactForm";
-
+import Comment from "./pages/Screen/CommentListScreen"
 
 const AppEcommerce = () => {
   const token = useSelector((state) => state.loginReducer.token);
@@ -37,6 +37,7 @@ const AppEcommerce = () => {
       <BrowserRouter>
         <NavBar />
         <Routes>
+          
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

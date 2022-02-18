@@ -176,6 +176,7 @@ function DetailProduct({ cartProducts, addItem, deleteItem }) {
           Añadir al carrito
         </Button>
       )}
+      <Link to="/home"> Quieres dejar un comentario?</Link>
       <Card />
       <PedidoPopUp
        show={show}

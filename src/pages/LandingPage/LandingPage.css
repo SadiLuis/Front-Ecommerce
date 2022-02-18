@@ -2,7 +2,7 @@
     background-image:url('../../assets/buynow.jpeg') ;
     object-fit: cover;
     width: 100%;
-    height: 100vh;
+    height: 91.2%;
     position:absolute;
     z-index: -100;
     border: rgb(48, 47, 47) solid 3px;
