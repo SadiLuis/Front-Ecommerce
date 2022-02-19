@@ -16,6 +16,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Button , Modal} from "react-bootstrap";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SendEmail from "./ConfirmationEmail";
 
 const headers = getHeaderToken();
 const stripePromise = loadStripe(PUBLIC_KEY_STRIPE);
@@ -27,9 +28,17 @@ const CheckoutForm = () => {
   const [loading, setLoading] = useState(false);
   const [popUp , setPopUp] = useState(false)
   const [notify , setToast] = useState(false)
-  const pedidoId = useSelector(
-    (state) => state.pedidosReducer.pedidoDetail.pedidoId
+  
+  const pedido = useSelector(
+    (state) => state.pedidosReducer.pedidoDetail
   );
+
+  // const pedidoId = useSelector(
+  //   (state) => state.pedidosReducer.pedidoDetail.pedidoId
+  // );
+
+  //const pedido = useSelector((state) => state.pedidosReducer.pedidoDetail.productos)
+  const comprador = useSelector((state) => state.loginReducer.userDetail)
 
   // console.log(pedidoId);
   
@@ -79,7 +88,7 @@ const CheckoutForm = () => {
           `${BASEURL}/pagos`,
           {
             transaccionId: id,
-            pedidoId,
+            pedidoId : pedido.pedidoId
           },
           headers
         );
@@ -106,7 +115,6 @@ const CheckoutForm = () => {
   
     
   
-
   return (
     <div>
     <form className="" onSubmit={handleSubmit}>
@@ -128,6 +136,11 @@ const CheckoutForm = () => {
       show={popUp}
       onHide={() => setPopUp(false)}
       />
+      {popUp && <SendEmail
+      nombre = {comprador.nombre}
+      email = {comprador.email}
+      total = {pedido.totalPedido}
+      /> } 
       <ToastContainer
        
       />
