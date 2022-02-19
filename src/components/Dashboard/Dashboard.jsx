@@ -150,6 +150,9 @@ export default function Dashboard() {
         <Link to = '/dashboard/admin/editcat'>
             <button>Edit Categorias</button>
         </Link> 
+        <Link to = '/dashboard/admin/editsubcat'>
+            <button>Edit Subcategorias</button>
+        </Link> 
         <div className="add-button-div">
           <button className="create add-button" onClick={handleOpenPopUpCreate}>
             {/* <MdOutlineAddCircle size={32} /> */}

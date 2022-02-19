@@ -3,6 +3,7 @@ import {
     SEARCH_BY_NAME,
     FILTER_BY_CATEGORY,
     GET_CATEGORIES,
+    GET_SUBCATEGORIES,
     ORDER_BY_PRICE,
     ORDER_BY_RATE,
     ADD_ITEM,
@@ -18,6 +19,7 @@ const initialState = {
     productName: [],
     cart: getCartLocalStorage(),
     categories : [],
+    subcategories:[],
 }
 
 
@@ -113,11 +115,17 @@ export default function productsReducer(state = initialState, action) {
                 ...state,
                 categories: payload
             }
+        
         case FILTER_BY_CATEGORY:
             let categoriesProducts = payload === "all" ? state.allProducts : state.allProducts.filter((elem) => elem.category.includes(payload))
             return {
                 ...state,
                 filtered: categoriesProducts
+            }
+        case GET_SUBCATEGORIES:
+            return {
+                ...state,
+                subcategories: payload
             }
         case ORDER_BY_PRICE:
             let sortedPrice = payload === "asc" ?

@@ -5,7 +5,8 @@ import {
     GET_PRODUCTS, CREATE_PRODUCT, GET_PRODUCT_BY_ID, SEARCH_BY_NAME,
     ADD_ITEM, DELETE_ITEM, LOGIN_SUCCESS,
     LOGIN_FAILED, REGISTER_SUCCESS, REGISTER_FAILED, GET_USER_DETAIL,
-    AUTHENTICATION_ERROR, FILTER_BY_CATEGORY, GET_CATEGORIES, GET_PEDIDOS, EDIT_STATUS_PEDIDO, EDIT_PRODUCT, DELETE_PRODUCT, ORDER_BY_PRICE, ORDER_BY_RATE, LOGOUT, REST_ITEM, UPDATE_USER, UPDATE_CART, GET_PEDIDO_BY_USER, GET_PEDIDO_DETAIL
+    AUTHENTICATION_ERROR, FILTER_BY_CATEGORY, GET_CATEGORIES, GET_PEDIDOS, EDIT_STATUS_PEDIDO, EDIT_PRODUCT, DELETE_PRODUCT, ORDER_BY_PRICE, ORDER_BY_RATE, 
+    LOGOUT, REST_ITEM, UPDATE_USER, UPDATE_CART, GET_PEDIDO_BY_USER, GET_PEDIDO_DETAIL,EDIT_CATEGORIA,GET_SUBCATEGORIES
 } from "./types";
 
 
@@ -263,7 +264,7 @@ export function postCategories(payload){
         }
         
     }
-  }
+}
 
 export function getCategories() {
     return async function (dispatch) {
@@ -278,12 +279,54 @@ export function getCategories() {
         }
     }
 }
+export function editCategoria(categoria) {
+    const { id } = categoria
+    console.log("id a editar", id)
+    return async function (dispatch) {
+        try {
+            const config = getHeaderToken();
+            var response = await axios.put(`${BASEURL}/categories/update${id}`, categoria, config)
+            return {
+                type: EDIT_CATEGORIA,
+                payload: response.data
+            }
+        } catch (err) {
+            console.log('No se pudo editar la Categoria')
+        }
+    }
+}
 
 export function filterByCategory(payload) {
     return {
         type: FILTER_BY_CATEGORY,
         payload
 
+    }
+}
+export function getSubCategories() {
+    return async function (dispatch) {
+        try {
+            const responseCategories = await axios.get(`${BASEURL}/subcategories`)
+            return dispatch({
+                type: GET_SUBCATEGORIES,
+                payload: responseCategories.data
+            })
+        } catch (err) {
+            console.log(err)
+        }
+    }
+}
+export function postSubCategories(payload){
+    return async function (dispatch) {
+        try{
+            const config = getHeaderToken();
+            const response = await axios.post(`${BASEURL}/subcategories`,payload,config);
+            //console.log(response)
+            return response.data;
+        }catch (err) {
+                console.log(err)
+        }
+        
     }
 }
 export function orderByPrice(payload) {

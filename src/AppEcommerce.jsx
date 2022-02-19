@@ -17,6 +17,7 @@ import Profile from "./pages/Profile/Profile";
 import AdminSales  from "./components/Dashboard/AdminSales/AdminSales";
 import ContactForm from "./components/ConctactForm/ContactForm";
 import FormCategorias from "./components/Dashboard/FormCategorias/FormCategorias";
+import FormSubCategorias from "./components/Dashboard/FormSubcategorias/FormSubcategorias";
 
 
 const AppEcommerce = () => {
@@ -55,6 +56,7 @@ const AppEcommerce = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/contactform" element={<ContactForm/>}/>
           <Route path="/dashboard/admin/editcat" element={<FormCategorias/>}/>
+          <Route path="/dashboard/admin/editsubcat" element={<FormSubCategorias/>}/>
           {/* <Route path="*" element={<div>404 - not found</div>} /> */}
           <Route path="*" element={<Navigate replace to="/home"/>} />
         </Routes>
