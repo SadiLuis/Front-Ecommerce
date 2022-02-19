@@ -1,0 +1,28 @@
+
+.complete_btn{
+    width: 2rem;
+    height: 2rem;
+    border-radius: 1rem;
+    position: relative;
+    border: 1px solid var(--shadow_color);
+    border: none;
+}
+
+.complete_btn:hover:after{
+    width: 2rem;
+    height: 2rem;
+    content: '✓';
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: green;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    box-shadow: 1px 1px 2px #000000;
+    border-radius: 1rem;
+    border: none;
+}
+
+/* .complete_btn:hover */

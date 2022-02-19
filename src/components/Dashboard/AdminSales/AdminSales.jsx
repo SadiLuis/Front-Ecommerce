@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 //import {getAllProducts, deleteProduct} from '../../actions/index';
 import { useDispatch, useSelector } from "react-redux";
+import styles from './AdminSales.module.css'
 
 import DataTable from "react-data-table-component";
 // import ReactModal from 'react-modal';
 // import { MdDeleteForever } from 'react-icons/md';
 import { AiFillCheckCircle } from "react-icons/ai";
 import { editStatusPedido, getAllPedidos } from "../../../actions";
+import { Loader } from "../../Loader/Loader";
 //import FormEditPedidos from './FormEditPedidos'
 
 export default function AdminSales() {
@@ -29,46 +31,41 @@ export default function AdminSales() {
       window.location.reload();
     }, 3000);
     alert(
-      "Order Status was updated. You will be redirected to your sales after 3 seconds"
+      "Se actualizó el estado del pedido. Seras redirigido a tus ventas después de 3 segundos"
     );
     // recargar página
   };
 
   const columns = [
     {
-      name: "Actions",
+      name: "Completar",
+      center:true,
       cell: (row) => (
-        <div>
-          <button
+        <div className={styles.conten_btn}>
+          <button className={styles.complete_btn}
             type="button"
-            title="Mark as completed"
+            title="Marcar como completado"
             onClick={() => {
               handleMarkCompleted(row.pedidoId);
             }}
           >
-            <AiFillCheckCircle />
+            
           </button>
-
-          {/* <button type="button" 
-                    title="Delete"
-                    onClick={() => {
-                    handleDeleteProduct(row.id);
-                }}
-                >
-                <MdDeleteForever />
-                </button> */}
         </div>
       ),
     },
 
     {
-      name: "Buyer",
+      name: "Comprador",
+      center:true,
       cell: (row) => row.usuario["nombre"],
       sortable: true,
     },
 
     {
-      name: "Detail",
+      name: "Detalle",
+      grow:2,
+      center:true,
       cell: (row) =>
         row.productos.map(
           (p) => p.producto + (" ($" + p.precioUnitario + ") +")
@@ -80,36 +77,46 @@ export default function AdminSales() {
       name: "Total",
       selector: "totalPedido",
       sortable: true,
+      center:true,
     },
     {
-      name: "Status",
+      name: "Estado",
       selector: "status",
       sortable: true,
+      center:true,
     },
 
     {
-      name: "Date",
+      name: "Fecha",
       cell: (row) => row.fechaCreacion.slice(0, 10),
       sortable: true,
+      center:true,
     },
   ];
+
+  const paginacionOpciones = {
+    rowsPerPageText:'Filas por pagina',
+    rangeSeparatorText: 'de',
+  }
+
   if (pedidos.length > 0) {
     return (
       <div>
         <DataTable
           columns={columns}
           data={pedidos}
-          title="Sales"
+          title="Mis ventas"
           striped
           highlightOnHover
           paginationPerPage={5}
           paginationRowsPerPageOptions={[5, 8]}
           pagination
           responsive
+          paginationComponentOptions={paginacionOpciones}
         />
       </div>
     );
   } else {
-    return <h1>Loading...</h1>;
+    return <Loader/>;
   }
 }

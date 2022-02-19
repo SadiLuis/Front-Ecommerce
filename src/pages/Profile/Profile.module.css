@@ -1,0 +1,164 @@
+.main {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+
+}
+
+.container {
+ background-color: var(--primary_color);
+ box-shadow: -3px -3px 20px var(--shadow_color);
+ height: 100vh;
+}
+.cap{
+    min-width: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+
+
+}
+
+.headerProfile {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.edit_btn{
+    background-color: #3e588f;
+    width: 6rem;
+    height: 2.2rem;
+    font-weight: bold;
+    border-radius: 1rem;
+    color: #e3e8f8;
+    border: none;
+    cursor: pointer;
+    box-shadow: 2px 2px 4px var(--shadow_color);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+
+}
+
+.edit_btn:hover{
+    background-color: #203562;
+    color: #ffffff;
+    border: none;
+    font-weight: bold;
+}
+
+.containerImage {
+  background-color: var(--shadow_color);
+  margin-top: 15px;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.image {
+  background-image: url("https://cdn2.salud180.com/sites/default/files/users/avatar/picture-177025-1425495653.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 95%;
+  height: 95%;
+  border-radius: 50%;
+}
+
+.Profile {
+  width: 100%;
+  text-align: center;
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-shadow: 1px 2px 3px #fff;
+}
+
+.containerInfo {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  background-color: var(--secondary_color);
+  box-shadow: -3px -3px 20px;
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem ;
+
+
+}
+
+.titles {
+  width: 50%;
+}
+
+.titles h5{
+  text-align: start;
+  margin-left: 45%;
+  
+}
+
+.infoProfile {
+  position: relative;
+  width: 50%;
+}
+
+.infoProfile h5{
+  text-align: start;
+  margin-left: 15%;
+  font-weight: 300;
+}
+
+h5{
+  font-size: 1rem;
+}
+
+.separate1,
+.separate2,
+.separate3,
+.separate4,
+.separate5,
+.separate6,
+.separate7{
+  border: 2px solid #00000070;
+  position: absolute;
+  width: 250px;
+  height: 1px;
+  left: 30px;
+}
+
+@media (max-width: 730px) {
+  .cap{
+    min-width: 375px;
+  }
+
+.headerProfile {
+  flex-direction: column;
+  gap: 1rem;
+}
+.separate1,
+.separate2,
+.separate3,
+.separate4,
+.separate5,
+.separate6,
+.separate7{
+  width: 120px;
+}
+
+.mail{
+  height: 2rem;
+  font-size: .8rem;
+  text-align: left;
+  padding-top: 1rem;
+}
+
+}

@@ -59,8 +59,10 @@ export default function Dashboard() {
 
   const columns = [
     {
+      name: "Acciones",
+      center:true,
+
       cell: (row) => (
-        
         <div className="table-responsive contain_btns">
           <button className="btn_edit"
             type="button"
@@ -159,6 +161,7 @@ export default function Dashboard() {
           highlightOnHover
           paginationPerPage={5}
           paginationRowsPerPageOptions={[5, 10, 15]}
+          responsive
           pagination
           paginationComponentOptions={paginacionOpciones}
           // fixedHeader

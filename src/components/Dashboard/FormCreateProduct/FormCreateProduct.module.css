@@ -1,6 +1,6 @@
 .main {
   border-radius: 0.5rem;
-  width: 100%;
+  min-width: 600px;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -8,12 +8,9 @@
 }
 
 .submain {
+  background-color: var(--primary_color);
   width: 80%;
   height: 100%;
-  background-image: url("https://i.blogs.es/a7ce3d/7yxd9/450_1000.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   border-radius: 1rem;
   box-shadow: -5px -5px 4px #00000080, -5px -5px 4px #ff000030;
   display: flex;
@@ -79,7 +76,7 @@
   width: 90%;
   border: none;
   border-bottom: 3px solid #ff000030;
-  background-color: #3e588f99;
+  background-color: var(--secondary_color);
   outline: none;
   box-shadow: 2px 2px 4px #000000;
   font-weight: bold;
@@ -98,3 +95,4 @@
   text-shadow: 1px 4px 4px #00000099;
   color: #03045e;
 }
+
