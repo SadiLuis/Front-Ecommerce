@@ -137,7 +137,6 @@ function DetailProduct({ cartProducts, addItem, deleteItem }) {
   }
 
 
-
   return loading ? (
     <span>loading...</span>
   ) : error ? (
@@ -207,6 +206,9 @@ function DetailProduct({ cartProducts, addItem, deleteItem }) {
           <ListGroupItem>Stock: {cantidad}</ListGroupItem>
         </ListGroup>
        
+
+          <Button variant="primary" onClick={ handlebtnCompra}>Comprar</Button>
+
         
       </Card>
           <Button variant="primary" onClick={ handlebtnCompra}
@@ -287,10 +289,14 @@ function DetailProduct({ cartProducts, addItem, deleteItem }) {
        show={show}
        onHide={() => setShow(false)}
        />
+
       
       {/* <CommentListScreen /> */}
 
     </div>
+
+    </>
+
   );
 }
 
@@ -301,6 +307,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     cartProducts: state.productsReducer.cart.products,
+    
   };
 };
 

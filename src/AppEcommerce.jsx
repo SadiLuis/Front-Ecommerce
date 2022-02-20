@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter,Navigate } from "react-router-dom";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Home from "./pages/Home/Home";
 import DetailProduct from "./pages/DetailProduct/DetailProduct";
@@ -8,12 +8,17 @@ import LandingPage from "./pages/LandingPage/LandingPage";
 import NavBar from "./components/NavBar/NavBar";
 import BuyProduct from "./components/BuyProduct/BuyProduct";
 import Register from "./components/Register/Register";
-import PedidosCompra from "./components/Pedidos-de-compra/PedidosCompra";
-import PedidoDetail from "./components/Pedidos-de-compra/PedidoDetail";
+import PedidoUnaCompra from "./components/Pedidos-de-compra/PedidosCompra";
+import PedidosCompra from "./components/Pedidos-de-compra/PedidoDetail";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getUserDetail, updateCart } from "./actions";
 import Profile from "./pages/Profile/Profile";
+import AdminSales  from "./components/Dashboard/AdminSales/AdminSales";
+import ContactForm from "./components/ConctactForm/ContactForm";
+import FormCategorias from "./components/Dashboard/FormCategorias/FormCategorias";
+import FormSubCategorias from "./components/Dashboard/FormSubcategorias/FormSubcategorias";
+
 
 const AppEcommerce = () => {
   const token = useSelector((state) => state.loginReducer.token);
@@ -34,7 +39,7 @@ const AppEcommerce = () => {
       <BrowserRouter>
         <NavBar />
         <Routes>
-          <Route path="/" exact element={<LandingPage />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile/edit" element={<Register edit={true} />} />
@@ -43,13 +48,18 @@ const AppEcommerce = () => {
           <Route path="/home/:id" element={<DetailProduct />} />
           {/* <Route path="/comment" element={<Comment/>} /> */}
           <Route exact path="/dashboard/admin" element={<Dashboard />} />
-          {/* <Route exact path="/admin/sales" element={<AdminSales/>} /> */}
+          <Route exact path="/dashboard/sales" element={<AdminSales/>} /> 
           <Route path="/pedido/payment" element={<BuyProduct />} />
-          <Route path="/home/pedidos" element={<PedidosCompra />} />
-          <Route path="/pedido/detail" element={<PedidoDetail />} />
+          <Route path="/pedido/detail/:id" element={<PedidoUnaCompra />} />
+          <Route path="/pedido/detail" element={<PedidosCompra />} />
           {/* <Route path="user" element={<Dashboard />} /> */}
           <Route path="/dashboard/admin" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/contactform" element={<ContactForm/>}/>
+          <Route path="/dashboard/admin/editcat" element={<FormCategorias/>}/>
+          <Route path="/dashboard/admin/editsubcat" element={<FormSubCategorias/>}/>
+          {/* <Route path="*" element={<div>404 - not found</div>} /> */}
+          <Route path="*" element={<Navigate replace to="/home"/>} />
         </Routes>
       </BrowserRouter>
     </div>
