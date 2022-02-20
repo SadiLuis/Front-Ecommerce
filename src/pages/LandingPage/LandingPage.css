@@ -1,8 +1,8 @@
 .image-landingpage{
-    background-image:url('../../assets/buynow.jpeg') ;
+    background-image:url('../../assets/America-latina-y-el-caribe-ALC-e1512411080869.jpg') ;
     object-fit: cover;
-    width: 100%;
-    height: 100vh;
+    width: 50%;
+    height: 80vh;
     position:absolute;
     z-index: -100;
     border: rgb(48, 47, 47) solid 3px;
@@ -10,14 +10,16 @@
      background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-   margin-top: 50px;
+   margin-top: 10px;
     margin-left:150px;
     margin-right: 150px;
     padding: 150px; 
 }
 .btn btn-primary{
-    position:absolute;
+    position:relative;
+    margin-bottom: 0px;
     display: inline;
    align-items:center ;
+
     
 }

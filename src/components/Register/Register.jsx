@@ -110,7 +110,7 @@ function Createform({ updateUser, register, isAuth, user, edit = false }) {
             <div className={style.section}>
               <h4>Nombre</h4>
               <input
-                type="text"
+                type="text"id="nombre"
                 name="nombre"
                 className={style.input}
                 onChange={handleChange}

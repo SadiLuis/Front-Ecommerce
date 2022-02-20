@@ -15,6 +15,8 @@ import { useEffect } from "react";
 import { getUserDetail, updateCart } from "./actions";
 import Profile from "./pages/Profile/Profile";
 import AdminSales  from "./components/Dashboard/AdminSales/AdminSales";
+import ContactForm from "./components/ContactForm/ContactForm";
+
 
 
 const AppEcommerce = () => {
@@ -22,6 +24,11 @@ const AppEcommerce = () => {
   const isAuth = useSelector((state) => state.loginReducer.isAuth);
   const userDetail = useSelector((state) => state.loginReducer.userDetail);
   const dispatch = useDispatch();
+
+ 
+
+
+
 
   useEffect(() => {
     token && !isAuth && !userDetail && dispatch(getUserDetail());
@@ -51,6 +58,7 @@ const AppEcommerce = () => {
           {/* <Route path="user" element={<Dashboard />} /> */}
           <Route path="/dashboard/admin" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/contactform" element={<ContactForm/>}/>
         </Routes>
       </BrowserRouter>
     </div>

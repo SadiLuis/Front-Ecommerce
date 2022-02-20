@@ -12,6 +12,8 @@ import Paginado from "../../components/Paginado/Paginado";
 import "./styles.css";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import ContactForm from "../../components/ContactForm/ContactForm";
+import {Link} from "react-router-dom"
 
 const Home = ({
   allProducts,
@@ -138,6 +140,8 @@ const Home = ({
             })}
         </div>
       </Container>
+      <Link to="/contactform">Contáctenos</Link>
+      
     </>
   );
 };
