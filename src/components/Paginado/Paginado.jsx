@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Paginado.module.css";
 
-export default function Paginado({ productsPerPage, filtered, pagination }) {
+export default function Paginado({ productsPerPage, filtered, pagination ,page}) {
   const pageNumbers = [];
   for (let i = 0; i < Math.ceil(filtered / productsPerPage); i++) {
     pageNumbers.push(i + 1);
@@ -15,7 +15,7 @@ export default function Paginado({ productsPerPage, filtered, pagination }) {
               return (
                 <div key={number}>
                   <ul className={styles.number} key={number}>
-                    <span onClick={() => pagination(number)}>{number}</span>
+                  <button className={page === number ? styles.pagBoton : styles.boton} onClick={()=>pagination(number)}>{number}</button>
                   </ul>
                 </div>
               );

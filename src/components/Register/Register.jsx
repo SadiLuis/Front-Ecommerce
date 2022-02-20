@@ -87,12 +87,7 @@ function Createform({ updateUser, register, isAuth, user, edit = false }) {
 
     edit ? updateUser(userForm) : register(userForm);
   };
-  const cartDB = async() =>{
-    const localS = getCartLocalStorage()
-    const cartdb = await localS.products?.map( (el) =>  postCart(el))
-    console.log(localS)
-    return cartdb
-   }
+  
 
   useEffect(() => {
     // Si ya está logueado que lo redireccione al dashboard
@@ -104,6 +99,12 @@ function Createform({ updateUser, register, isAuth, user, edit = false }) {
         icon: "success",
         confirmButtonText: "Ok",
       });
+
+    async function cartDB(){
+   
+        await postCart()
+     
+       }
       cartDB()
       if (rol === "1") return navigate("/dashboard/login");
       if (rol === "2") return navigate("/dashboard/admin");

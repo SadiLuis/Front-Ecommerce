@@ -1,19 +1,25 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { searchByName, logout } from "../../actions";
+import { searchByName, logout,updateCart } from "../../actions";
 import CartBtn from "../ShoppingCart/CartBtn";
 import SearchBar from '../SearchBar/SearchBar';
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-function NavBar({  setCurrentPage, isAuth, user, searchByName, logout }) {
-  
+function NavBar({  setCurrentPage, isAuth, user, searchByName, logout,updateCart }) {
+  const [flag , setFlag] = useState(false)
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    setFlag(true)
     logout();
     navigate("/home");
   };
+
+ useEffect(() => {
+   if(flag) updateCart()
+   setFlag(false)
+ })
 
   return (
     <nav className="navbar navbar-dark bg-dark">
@@ -37,10 +43,11 @@ function NavBar({  setCurrentPage, isAuth, user, searchByName, logout }) {
               {user && user.rol === "2" && (
                 <NavLink to="/dashboard/sales">Sales</NavLink>
               )}
+              <NavLink to='/register' >Registrarse </NavLink>
+              <NavLink to="/contactform">Contáctenos</NavLink>
               <NavLink to="/cart">
                 <CartBtn />
               </NavLink>
-              <NavLink to="/contactform">Contáctenos</NavLink>
             {/* </li>
           </ul> */}
         {/* </div> */}
@@ -57,6 +64,7 @@ const mapDispatchToProps = (dispatch) => {
     {
       searchByName,
       logout,
+      updateCart
     },
     dispatch
   );

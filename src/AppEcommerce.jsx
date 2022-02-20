@@ -12,7 +12,7 @@ import PedidoUnaCompra from "./components/Pedidos-de-compra/PedidosCompra";
 import PedidosCompra from "./components/Pedidos-de-compra/PedidoDetail";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getUserDetail, updateCart , getCartDB} from "./actions";
+import { getUserDetail, updateCart ,getCartDB} from "./actions";
 import Profile from "./pages/Profile/Profile";
 import AdminSales  from "./components/Dashboard/AdminSales/AdminSales";
 import ContactForm from "./components/ConctactForm/ContactForm";
@@ -32,14 +32,12 @@ const AppEcommerce = () => {
   }, [token, dispatch, userDetail, isAuth]);
 
   useEffect(() => {
-    setTimeout(function(){
-      dispatch(updateCart())
-  }, 3000);
-    
+     dispatch(updateCart())
+     if(userDetail) getCartDB(userDetail.id)
   }, [isAuth, dispatch]);
 
   return (
-    <div>
+    <div style={{backgroundColor:'#edf6e5'}}>
       <BrowserRouter>
         <NavBar />
         <Routes>

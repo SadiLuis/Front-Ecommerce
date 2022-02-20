@@ -56,22 +56,20 @@ const Login = ({ login, isAuth, user , cart}) => {
     
   };
 
- const cartDB = async() =>{
-   const localS = getCartLocalStorage()
-   const cartdb = await localS.products?.map( (el) =>  postCart(el))
-   console.log(localS)
-   return cartdb
-  }
+ 
    
-  useEffect(() => {
+  useEffect(async() => {
     // Si ya está logueado que lo redireccione al dashboard
     if (isAuth && user) {
       const { rol } = user;
       setForm(initialForm);
       rol === "2" ? navigate("/dashboard/admin") : navigate("/home");
-      cartDB()
+    
+     await postCart()
+    
+   
     }
-  }, [isAuth, navigate, user,cartDB]);
+  }, [isAuth, navigate, user]);
 
   return (
     <>

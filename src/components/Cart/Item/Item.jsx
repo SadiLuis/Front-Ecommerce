@@ -1,14 +1,15 @@
 import React, { useState , useEffect } from "react";
-import { addItem, deleteItem, restItem ,updateCart } from "../../../actions/index";
+import { addItem, deleteItem, restItem ,updateCart,deleteProductCart } from "../../../actions/index";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import style from './Item.module.css'
 import { Container, Button, Row, Col } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch ,useSelector} from "react-redux";
+import Swal from "sweetalert2";
 
 function Item({ id, title, price, image, stock, quantity }) {
   const [input, setInput] = useState(parseInt(quantity));
-  
+  const cartDB = useSelector(state => state.productsReducer.carts)
   let priceTotal = price * quantity;
   const dispatch = useDispatch();
 
@@ -26,8 +27,12 @@ function Item({ id, title, price, image, stock, quantity }) {
       setInput((prev) => prev + 1);
       dispatch(addItem(id));
     } else {
-      alert("Se supero el limite de stock , el limite es: " + stock);
-      // setInput((prev) => prev - 1);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Se supero el limite de stock!',
+        footer: 'cantidad disponible '+ stock
+      })
     }
   };
 
@@ -39,35 +44,31 @@ function Item({ id, title, price, image, stock, quantity }) {
    
    };
   }  
-  const handleDelete = () => {
+  const handleDelete =async () => {
     // e.preventDefault();
     dispatch(deleteItem(id));
+   await  deleteProductCart(id,cartDB.id)
   };
 
   const fixedPrice = Math.round((priceTotal + Number.EPSILON) * 100) / 100;
-
+  const fixTitle = title.length > 50 ? title.slice(0,50) + ' ...' : title 
   return (
-    <Container className="py-4">
-      <Button
-        className="btn-close float-end"
+    <Container className={style.container}>
+      <Button 
+        className= {style.button}
         aria-label="Close"
         onClick={handleDelete}
-      ></Button>
-      <Row className="justify-content-center">
-        <Col>
-          <img
+      >X</Button>
+       <img className={style.Img}
             src={image}
-            alt={`imagen de ${title}`}
-            height="200px"
-            width="180px"
-          />
-        </Col>
-        <Col>
-          <Link to={`/home/${id}`}>
-            <h4>{title}</h4>
+            alt={`imagen de ${title}`} />
+       
+            <div className={style.name}>
+          <Link className={style.text} to={`/home/${id}`}>
+            <p >{fixTitle}</p>
           </Link>
-        </Col>
-        <Col>
+            </div>
+           <div className={style.cantidad}> 
           <h3>Cantidad</h3>
           <Button onClick={handleButtonMenos}>-</Button>
           <input
@@ -80,12 +81,12 @@ function Item({ id, title, price, image, stock, quantity }) {
             disabled
           />
           <Button onClick={handleButtonMas}>+</Button>
-        </Col>
-        <Col>
+          </div >
+          <div className={style.precio}>
           <h3>Precio</h3>
           <h4>$ {fixedPrice}</h4>
-        </Col>
-      </Row>
+          </div>
+       
     </Container>
   );
 }

@@ -5,7 +5,7 @@ import {
     GET_PRODUCTS, CREATE_PRODUCT, GET_PRODUCT_BY_ID, SEARCH_BY_NAME,
     ADD_ITEM, DELETE_ITEM, LOGIN_SUCCESS,
     LOGIN_FAILED, REGISTER_SUCCESS, REGISTER_FAILED, GET_USER_DETAIL,
-    AUTHENTICATION_ERROR, FILTER_BY_CATEGORY, GET_CATEGORIES, GET_PEDIDOS, EDIT_STATUS_PEDIDO, EDIT_PRODUCT, DELETE_PRODUCT, ORDER_BY_PRICE, ORDER_BY_RATE, LOGOUT, REST_ITEM, UPDATE_USER, UPDATE_CART, GET_PEDIDO_BY_USER, GET_PEDIDO_DETAIL
+    AUTHENTICATION_ERROR, FILTER_BY_CATEGORY, GET_CATEGORIES, GET_PEDIDOS, EDIT_STATUS_PEDIDO, EDIT_PRODUCT, DELETE_PRODUCT, ORDER_BY_PRICE, ORDER_BY_RATE, LOGOUT, REST_ITEM, UPDATE_USER, UPDATE_CART, GET_PEDIDO_BY_USER, GET_PEDIDO_DETAIL ,DELETE_CART
 } from "./types";
 
 
@@ -397,11 +397,43 @@ export const getCartDB = (userId) => async dispatch => {
     }
 }
 
-export const postCart = async (cart) => {
+export const postCart = async () => {
     await axios.post( `${BASEURL}/carritos`,
-    {
-        "productoId": cart.id,
-        "cantidad": cart.quantity
-     },
+    {},
     getHeaderToken())
+}
+export const putCart = async (cart,id) => {
+    await axios.put(`${BASEURL}/carritos/add`,
+    {
+        carritoId: id, 
+        productoId: cart.id, 
+        cantidad: cart.quantity
+    },  getHeaderToken())
+}
+
+export const deleteProductCart = async (product , id) =>{
+    await axios.put(`${BASEURL}/carritos/delete`,
+    { 
+        carritoId: id, 
+        productoId: product
+     },  getHeaderToken())
+}
+
+export const deleteAllCart = id => dispatch => {
+    return axios.delete(`${BASEURL}/carritos/${id}`,getHeaderToken())
+                .then(res => res.data)
+                .then(data => dispatch({type:DELETE_CART , payload: data}))
+                .catch(err => console.log(err))
+}
+
+export const getAllOfertas = ()=> dispatch =>{
+    return axios.get(`${BASEURL}/offers`)
+                .then(res => res.data)
+                .then(data => dispatch({type:'GET_ALL_OFERTAS' ,payload: data}))
+                .catch(e => console.log(e))
+}
+export const getOneOferta = (id) => dispatch =>{
+    return axios.get(`${BASEURL}/offers/${id}`)
+                 .then(res => res.data)
+                .then( data => dispatch({type:'GET_OFERTA_BY_ID' , payload: data}))
 }

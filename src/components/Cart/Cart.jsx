@@ -7,6 +7,8 @@ import { Container, Button, Row } from "react-bootstrap";
 import { postPedido ,updateCart,getAllProducts , getCartDB } from "../../actions";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import style from './Cart.module.css'
+import Swal from "sweetalert2";
 
 function Cart() {
   const navigate = useNavigate();
@@ -39,16 +41,28 @@ function Cart() {
   useEffect(()=> {
     
  dispatch(updateCart())
-
+ if(isAuth) dispatch(getCartDB(user.id))
     
   },[dispatch,updateCart])
 
-
+  
 
   const handlebtnCompra = () => {
     if (!isAuth) {
-      let result = window.confirm("Registrese para poder realizar una compra");
-      if (result) navigate("/register");
+      Swal.fire({
+        title: 'Necesita estar registrado para realizar la compra',
+        showDenyButton: false,
+        showCancelButton: true,
+        confirmButtonText: 'Registrarse',
+        
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          
+          navigate("/register");
+        } 
+      })
+    
     } else {
       if(items.length > 0){
       let pedido = {
@@ -69,7 +83,7 @@ function Cart() {
 
   const emptyCart = () => {
     return (
-      <Container className="py-4">
+      <Container className={style.container}>
         <Row>
           <h3>Su Carrito esta vacío</h3>
         </Row>
@@ -84,7 +98,7 @@ function Cart() {
        ( 
          <div>
        <Container>
-        <Container className="py-4 bg-light rounded-3 ">
+        <Container className={style.container}>
           {items?.length === 0 && emptyCart()}
           {items?.map((i) => (
             <Item
@@ -107,14 +121,17 @@ function Cart() {
             textAlign: "end",
           }}
         >
-          <h1>Total</h1>
+          <h1 className={style.total}>Total</h1>
           <h3>$ {total}</h3>
+          <div className={style.buttonContainer}>
+          <Button variant="danger" >Eliminar carrito</Button>
           <Button
-            className="align-self-end btn btn-lg btn-block btn-primary"
+            className={style.button}
             onClick={handlebtnCompra}
           >
             Comprar
           </Button>
+          </div>
         </div>
       </Container>
      <ToastContainer />

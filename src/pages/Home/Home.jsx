@@ -1,20 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { Container } from "react-bootstrap";
+import { Container , Button } from "react-bootstrap";
 import {
   getAllProducts,
   getCategories,
   filterByCategory,
   orderByPrice,
   orderByRate,
-  getCartDB
+  getCartDB,
+  postCart,
+  updateCart
+
   
  
 } from "../../actions/index";
 import Product from "../../components/ListProducts/Product/Product";
 import Paginado from "../../components/Paginado/Paginado";
-import "./styles.css";
+import Ofertas from '../../components/ofertas/Ofertas'
+import style from './Home.module.css';
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import {IoPlayBackSharp} from 'react-icons/io5';
+import {IoPlayForwardSharp} from 'react-icons/io5'
+import getHeaderToken from '../../helpers/getHeaderToken';
 
 const Home = ({
   allProducts,
@@ -27,13 +34,15 @@ const Home = ({
   orderByRate,
   isAuth,
   user,
-  getCartDB
+  getCartDB,
+  updateCart
   
 }) => {
   //paginado
   const [orden, setOrden] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage, setProductsPerPage] = useState(10);
+  
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = filtered.slice(
@@ -51,11 +60,19 @@ const Home = ({
   }, [setCurrentPage,filtered]);
 
   useEffect(() => {
-    if( isAuth) getCartDB(user.id)
+    if(isAuth) getCartDB(user.id)
   
     getCategories();
    if(filtered.length === 0) getAllProducts();
   }, [getCategories, getAllProducts]);
+
+  useEffect(() => {
+    async function db(){
+      await  postCart() 
+    }
+    isAuth && db()
+    updateCart()
+}, [isAuth]);
 
   function handleClick(e) {
     e.preventDefault();
@@ -81,29 +98,47 @@ const Home = ({
     setOrden(`Ordenado ${e.target.value}`);
   }
 
-
+  const nextPage = ()=>{
+    if(indexOfLastProduct < filtered.length ){
+      setCurrentPage(prev => prev + 1)
+    }
+}
+const previousPage = ()=>{
+    if(indexOfFirstProduct > 0 ){
+      setCurrentPage(prev => prev - 1)
+    }
+}
 
   return (
     <>
-      <Container>
-        <h4>Show all the products</h4>
-        <button type="button" className="btn btn-primary" onClick={handleClick}>
-          Products
-        </button>
+      <Container className={style.containerHome}>
+        <Ofertas />
+        <h4 className={style.h4}>Productos Disponibles</h4>
+        <div className={style.containerPage}>
+          <div className={style.container}>
+        <IoPlayBackSharp className={style.prev} type='button' onClick={previousPage} />
         <Paginado
           productsPerPage={productsPerPage}
           filtered={filtered.length}
           pagination={pagination}
+          page = {currentPage}
         />
-
-        <div className="filters">
-          <label>Choose products by categories:</label>
+        <IoPlayForwardSharp className={style.next} type='button' onClick={nextPage} />
+        </div>
+        </div>
+         <div className={style.containerF}>
+         <Button variant='primary'  onClick={handleClick}>
+          Productos
+        </Button>
+        <div className={style.filters}>
+          <label className={style.label}>filtrar por categoria:</label>
           <select
+          className={style.selectors}
             name="filterbycategories"
             defaultValue={"default"}
             onChange={(e) => handleFilterByCategories(e)}
           >
-            <option value="all">All Categories</option>
+            <option value="all">Todas las categorias</option>
             {categories?.map((category) => {
               return (
                 <option key={category.id} value={category.nombre}>
@@ -113,26 +148,27 @@ const Home = ({
             })}
           </select>
         </div>
-        <div className="orders">
+        <div className={style.orders}>
           <div className="orderprice">
-            <label>Order by price:</label>
-            <select onChange={handleOrderByPrice}>
-              <option value="asc">Increasing Price</option>
-              <option value="desc">Decreasing Price</option>
+            <label>Ordenar por precio:</label>
+            <select className={style.selectors} onChange={handleOrderByPrice}>
+              <option value="asc">Menor precio</option>
+              <option value="desc">Mayor precio</option>
             </select>
           </div>
           <div className="orderrate">
-            <label>Order by rate:</label>
-            <select onChange={handleOrderByRate}>
-              <option value="asc">Increasing Rate</option>
-              <option value="desc">Decreasing Rate</option>
+            <label>ordenar por clasificación:</label>
+            <select className={style.selectors} onChange={handleOrderByRate}>
+              <option value="asc">Menor </option>
+              <option value="desc">Mayor </option>
             </select>
           </div>
+        </div>
         </div>
         {/* <SearchBar
         setCurrentPage={setCurrentPage}
         /> */}
-        <div className="home">
+        <div className={style.containerDiv}>
           {currentProducts &&
             currentProducts.length &&
             currentProducts.map((p) => {
@@ -164,7 +200,8 @@ const mapDispatchToProps = (dispatch) => {
       filterByCategory,
       orderByPrice,
       orderByRate,
-      getCartDB
+      getCartDB,
+      updateCart
      
     },
     dispatch

@@ -11,15 +11,16 @@ import {
     UPDATE_CART
 } from '../actions/types';
 import { getCartLocalStorage, saveCartLocalStorage } from "../helpers/localstorage";
-import {postCart} from '../actions/index'
+import {putCart,deleteProductCart } from '../actions/index'
 
 const initialState = {
     allProducts: [],
     filtered: [],
     productName: [],
-    cart: getCartLocalStorage(),
+    cart: getCartLocalStorage() ,
     categories : [],
-    carts:{}
+    carts:{},
+    flag: false
 }
 
 
@@ -30,33 +31,32 @@ export default function productsReducer(state = initialState, action) {
     switch (type) {
         //! TODO SOBRE EL CARRITO
         case UPDATE_CART:
-            
-            if(localStorage.getItem('token_ecommerce')){
-             
-            const localS = getCartLocalStorage()
-            localS.products?.forEach( (el) =>  postCart(el))
-            
-            
-            }
-            const cartDB = state.carts.CarritoDetalles?.map(el =>{
-                return {id: el.productoId , quantity: el.cantidad}
-            })
-             if(cartDB){
-            const carrito = {
-                products: cartDB,
-                precioTotal:cartDB?.reduce((prev, e) => {
-                    let prod = state.allProducts.find(el => el.id === e.id);
+            if(localStorage.getItem('token_ecommerce') ){
+               
+                const localS = getCartLocalStorage()
+                if(state.flag){
+                const carritoDB = state.carts.CarritoDetalles?.map(el =>{
+                     return {...el , id: el.productoId , quantity: el.cantidad }
+                })
+               const cartDB= {
+                    products: carritoDB || localS.products,
+                    precioTotal:carritoDB?.reduce((prev, e) => {
+                        let prod = state.allProducts.find(el => el.id === e.id);
 
-                    return Math.round((prev + (prod.price * e.quantity)) * 100) / 100;
-                }, 0)
-            }
-            return { ...state, cart: !localStorage.getItem('token_ecommerce') ?
-                                     getCartLocalStorage() :
-                                      carrito            
-                    }
-                }else{
-                    return { ...state, cart: getCartLocalStorage() }
+                        return Math.round((prev + (prod.price * e.quantity)) * 100) / 100;
+                    }, 0) || localS.precioTotal
                 }
+                saveCartLocalStorage(cartDB);
+                localS.products?.forEach( (el) =>  putCart(el,state.carts.id))
+            }
+               
+          }
+            
+         return { ...state,
+             cart: getCartLocalStorage() ,
+            
+            }
+                
         case ADD_ITEM:
             
             itemCart = state.cart.products.find(e => e.id === payload);
@@ -82,13 +82,16 @@ export default function productsReducer(state = initialState, action) {
                     products: [...state.cart.products, { id: payload, quantity: 1 }],
                     precioTotal: Math.round((state.cart.precioTotal + state.allProducts.find(e => e.id === payload).price) * 100) / 100
                 };
-                
+
+               
             }
             saveCartLocalStorage(newCart);
             
             return {
                 ...state,
-                cart: newCart
+                cart: newCart,
+                flag: true
+               
             };
         case REST_ITEM:
             itemCart = state.cart.products.find(e => e.id === payload);
@@ -111,6 +114,7 @@ export default function productsReducer(state = initialState, action) {
             };
         case DELETE_ITEM:
             itemCart = state.cart.products.find(e => e.id === payload);
+            
             itemCart && (newCart = {
                 products: state.cart.products.filter(e => e.id !== payload),
                 precioTotal:
@@ -124,7 +128,8 @@ export default function productsReducer(state = initialState, action) {
             saveCartLocalStorage(newCart)
             return {
                 ...state,
-                cart: newCart
+                cart: newCart,
+                flag: false
             }
         //! TODO SOBRE PRODUCTOS 
         case GET_PRODUCTS: return {
@@ -174,7 +179,8 @@ export default function productsReducer(state = initialState, action) {
             }
             case 'GET_CART': return{
                 ...state,
-                carts: payload
+                carts: payload,
+               
             }
         default:
             return { ...state }
