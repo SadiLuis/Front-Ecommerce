@@ -109,10 +109,13 @@ export default function FormEditProduct(props) {
                 <button className={styles.close_btn} onClick={handleClosePopUp}>
                   ❌ Cerrar
                 </button>
+                <button className={styles.close_btnR} onClick={handleClosePopUp}>
+                  ❌
+                </button>
               </div>
 
               <div className={styles.container_inputs}>
-                {/* <label className={styles.nameText}>Titulo del producto</label> */}
+                <label className={styles.nameText}>Titulo del producto</label>
                 <input
                   className={styles.title}
                   type="text"
@@ -122,7 +125,7 @@ export default function FormEditProduct(props) {
                 />
                 {errors.title && <p>{errors.title}</p>}
 
-                {/* <label className={styles.nameText}>Precio del producto</label> */}
+                <label className={styles.nameText}>Precio del producto</label>
                 <input
                   className={styles.price}
                   type="number"
@@ -132,7 +135,7 @@ export default function FormEditProduct(props) {
                 />
                 {errors.price && <p>{input.price}</p>}
 
-                {/* <label className={styles.nameText}>Categoria del producto</label> */}
+                <label className={styles.nameText}>Categoria del producto</label>
                 <select
                   className={styles.category}
                   onChange={(e) => handleSelectCategory(e)}
@@ -157,7 +160,7 @@ export default function FormEditProduct(props) {
                 </select>
                 {errors.category && <p>{errors.category}</p>}
 
-                {/* <label className={styles.nameText}>Descripcion del producto</label> */}
+                <label className={styles.nameText}>Descripcion del producto</label>
                 <textarea
                   className={styles.description}
                   name="description"
@@ -177,7 +180,7 @@ export default function FormEditProduct(props) {
                 />
                 </div> */}
 
-                {/* <label className={styles.nameText}>Imagen del producto</label> */}
+                <label className={styles.nameText}>Imagen del producto</label>
                 <input
                   className={styles.image}
                   type="text"
@@ -188,7 +191,7 @@ export default function FormEditProduct(props) {
 
                 {errors.image && <p>{errors.image}</p>}
 
-                {/* <label className={styles.nameText}>Cantidad</label> */}
+                <label className={styles.nameText}>Cantidad</label>
                 <input
                   className={styles.cantidad}
                   type="text"

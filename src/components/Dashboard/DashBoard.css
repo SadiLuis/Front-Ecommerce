@@ -3,12 +3,11 @@
   
   .add-button-div {
     width: 100%;
+    height: 4rem;
     margin-top: 20px;
     display: flex;
     justify-content: end;
-
-    /* margin-left: 12px; */
-    /* float: right; */
+    align-items: center;
   }
 
   .add-button{
@@ -16,46 +15,55 @@
     width: 14rem;
     height: 2rem;
     border-radius: 1rem;
+    margin-right: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 1rem;
     border: none;
-    background-color: #3E588F;
-    color: #ffffff;
+    background-color: var(--primary_color_btn);
+    color: #000000;
     font-weight: bold;
-    box-shadow: -2px -2px 3px #000000;
+    box-shadow: 3px 3px 3px var(--shadow_color);
     
   }
 
   .add-button:hover {
-      background-color: #203562;
+      background-color: var(--secondary_color_btn);
       color: #ffffff;
+      font-size: 1.1rem;
   }
 
   .btn_edit,
   .btn_delete{
+    background-color: var(--primary_color);
     width: 2rem;
+    height: 2rem;
     border-radius: 1rem;
+    position: relative;
+    border: 1px solid var(--shadow_color);
     border: none;
-    background-color: #3E588F;
-    box-shadow: 1px 1px 5px #000000;
-    color: #ffffff;
   }
 
   .btn_edit:hover,
   .btn_delete:hover{
-    background-color: #203562;
-      color: #ffffff;
-      font-weight: bold;
-      transition: 0.3s;
+    background-color: var(--secondary_color);
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: green;
+    box-shadow: 1px 1px 2px #000000;
+    border-radius: 1rem;
+    border: none;
   }
 
   .contain_btns{
     width: 6rem;
-    height: 2rem;
+    height: 3rem;
     display: flex;
     justify-content: center;
+    align-items: center;
     cursor: pointer;
     gap: .5rem;
 

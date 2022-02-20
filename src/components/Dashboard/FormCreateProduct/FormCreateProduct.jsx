@@ -70,7 +70,7 @@ export default function FormCreateProduct({ handleClosePopUp }) {
       window.location.href = "/dashboard/admin";
     }, 3000);
     alert(
-      "Product was created. You will be redirected to your products after 3 seconds"
+      "El producto fue creado. Serás redirigido a tus productos después de 3 segundos"
     );
   }
 
@@ -92,37 +92,39 @@ export default function FormCreateProduct({ handleClosePopUp }) {
               <button className={styles.close_btn} onClick={handleClosePopUp}>
                 ❌ Cerrar
               </button>
+              <button className={styles.close_btnR} onClick={handleClosePopUp}>
+                ❌
+              </button>
              
             </div>
 
             <div className={styles.container_inputs}>
-              {/* <label className={styles.nameText}>Titulo del producto</label> */}
+              <label className={styles.nameText}>Titulo del producto</label>
               <input
                 className={styles.title}
                 type="text"
                 name="title"
                 onChange={(e) => handleInputChange(e)}
                 value={input.title}
-                placeholder="Titulo del producto"
+                // placeholder="Titulo del producto"
                 //required
               />
-              {errors.title && <p>{errors.title}</p>}
+              {errors.title && <p className={styles.errorTitle}>{errors.title}</p>}
 
-              {/* <label className={styles.nameText}>Precio del producto</label> */}
+              <label className={styles.nameText}>Precio del producto</label>
               <input
                 className={styles.price}
                 type="number"
                 name="price"
                 onChange={(e) => handleInputChange(e)}
                 value={input.price}
-                placeholder="Precio del producto"
+                // placeholder="Precio del producto"
                 //required
               />
-              {errors.price && <p>{errors.price}</p>}
+              {errors.price && <p className={styles.errorPrice}>{errors.price}</p>}
 
-              {/* <label className={styles.nameText}>Categoria del producto</label> */}
+              <label className={styles.nameText}>Categoria del producto</label>
               <select
-                className={styles.category}
                 className={styles.category}
                 onChange={(e) => handleSelectCategory(e)}
                 name=""
@@ -137,20 +139,20 @@ export default function FormCreateProduct({ handleClosePopUp }) {
                   </option>
                 ))}
               </select>
-              {errors.category && <p>{errors.category}</p>}
+              {errors.category && <p className={styles.errorCategory}>{errors.category}</p>}
 
-              {/* <label className={styles.nameText}>
+               <label className={styles.nameText}>
                 Descripcion del producto
-              </label> */}
+              </label> 
               <textarea
                 className={styles.description}
                 name="description"
                 onChange={(e) => handleInputChange(e)}
                 value={input.description}
-                placeholder="Descripcion del producto"
+                // placeholder="Descripcion del producto"
                 //required
               />
-              {errors.description && <p>{errors.description}</p>}
+              {errors.description && <p className={styles.errorDescription}>{errors.description}</p>}
 
               {/* //Asi deberia ser el input si queremos subir una imagen desde nuestra pc
                  <div >
@@ -163,28 +165,28 @@ export default function FormCreateProduct({ handleClosePopUp }) {
                 />
                 </div> */}
 
-              {/* <label className={styles.nameText}>Imagen del producto</label> */}
+              <label className={styles.nameText}>Imagen del producto</label>
               <input
                 className={styles.image}
                 type="text"
                 value={input.image}
                 name="image"
-                placeholder="Imagen del producto"
+                // placeholder="Imagen del producto"
                 onChange={(e) => handleInputChange(e)}
               />
 
-              {errors.image && <p>{errors.image}</p>}
-              {/* <label className={styles.nameText}>Cantidad del producto</label> */}
+              {errors.image && <p className={styles.errorImage}>{errors.image}</p>}
+              <label className={styles.nameText}>Cantidad del producto</label>
               <input
                 className={styles.cantidad}
                 type="number"
                 name="cantidad"
                 onChange={(e) => handleInputChange(e)}
                 value={input.cantidad}
-                placeholder="Cantidad del producto"
+                // placeholder="Cantidad del producto"
                 //required
               />
-              {errors.cantidad && <p>{errors.cantidad}</p>}
+              {errors.cantidad && <p className={styles.errorCantidad}>{errors.cantidad}</p>}
               <button
                 className={styles.create_btn}
                 type="submit"

@@ -73,7 +73,7 @@ export default function Dashboard() {
               //console.log(row.id)
             }}
           >
-            <AiFillEdit />
+            ✏️
           </button>
 
           <button className="btn_delete"
@@ -83,7 +83,7 @@ export default function Dashboard() {
               handleDeleteProduct(row.id);
             }}
           >
-            <MdDeleteForever />
+            🗑️
           </button>
         </div>
       ),
