@@ -62,8 +62,8 @@ const Login = ({ login, isAuth, user }) => {
   }, [isAuth, navigate, user]);
 
   return (
-    <>
-        <img src={img} alt="logo" className={style.img}/>
+    <div  >
+        <div className={style.img}/>
       <Form onSubmit={handleSubmit}  className={style.conteiner} >
         <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
           <Form.Label column sm="2" className={style.label} >
@@ -108,7 +108,7 @@ const Login = ({ login, isAuth, user }) => {
   
 
       
-    </>
+    </div>
   );
 };
 

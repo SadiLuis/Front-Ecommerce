@@ -257,7 +257,7 @@ function Createform({ updateUser, register, isAuth, user, edit = false }) {
       {!edit && (
         <div>
           <h5> Ya tienes cuenta?</h5>
-          <Link to="/login" className={style.link} > Login</Link>
+          <Link to="/login" className={style.link} > Ingresar</Link>
         </div>
       )}
           </Form>

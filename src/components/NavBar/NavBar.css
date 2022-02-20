@@ -24,3 +24,8 @@ ul {
   li a:hover {
     background-color: #111;
   }
+
+.navlink {
+    color: white;
+    text-decoration: none;
+  }

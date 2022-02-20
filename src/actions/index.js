@@ -363,3 +363,105 @@ export function editStatusPedido(pedidoId, newStatus) {
         }
     }
 }
+<<<<<<< Updated upstream
+=======
+
+export function createProduct(product) {
+    return async function (dispatch) {
+        
+        try {
+            const config = getHeaderToken();
+            var response = await axios.post(`${BASEURL}/products`, product, config)
+            return {
+                type: CREATE_PRODUCT,
+                payload: response.data
+            }
+        } catch (err) {
+            console.log('No se pudo crear el producto')
+        }
+    }
+}
+export function listComments () {
+    return async function (dispatch) {
+        try {
+            dispatch({ type: COMMENT_LIST_REQUEST });
+            const { data } = await axios.get(`${BASEURL}/comments`);
+            dispatch({ type: COMMENT_LIST_SUCCESS, payload: data });
+        }  catch (error) {
+            dispatch({
+              type: COMMENT_LIST_FAIL,
+              payload:
+                error.response && error.response.data.message
+                  ? error.response.data.message
+                  : error.message,
+            });
+        }
+    }
+}
+
+export const postComment = (comment, productId) => async (dispatch) => {
+    try {
+      const config = getHeaderToken();
+  
+      await axios.post(`${BASEURL}/comments`,productId, comment, config).then((response) => {
+        console.log(response);
+        dispatch({
+          type: COMMENT_POST,
+          payload: response.data,
+        });
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({
+        type: COMMENT_POST_FAIL,
+        payload: message,
+      });
+    }
+  };
+
+  export const putComment = (comment) => async (dispatch) => {
+    try {
+      const config = getHeaderToken();
+  
+      await axios
+        .put(`${BASEURL}/${comment._id}`, comment, config)
+        .then((response) => {
+          dispatch({ type: COMMENT_PUT, payload: response.data });
+        });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({
+        type: COMMENT_PUT_FAIL,
+        payload: message,
+      });
+    }
+  };
+  
+  export const deleteComment = (comment) => async (dispatch) => {
+    try {
+      const config = getHeaderToken();
+  
+      if (comment._id) {
+        await axios.delete(`${BASEURL}/${comment._id}`, config);
+      }
+  
+      dispatch({ type: COMMENT_DELETE, payload: comment });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({
+        type: COMMENT_DELETE_FAIL,
+        payload: message,
+      });
+    }
+  };
+  
+>>>>>>> Stashed changes
