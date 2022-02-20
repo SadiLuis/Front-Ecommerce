@@ -5,7 +5,7 @@ import Comment from "../Reviews/Comment/Comment";
 import { useEffect } from "react";
 import "./CommentListScreen.css";
 import AddComment from "../Reviews/AddComment/AddComment";
-import { Loader } from "../../components/Loader/Loader";
+//import { Loader } from "../../components/Loader/Loader";
 
 const CommentListScreen = () => {
   const dispatch = useDispatch();

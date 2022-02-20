@@ -2,10 +2,10 @@ import axios from 'axios';
 import { BASEURL } from '../assets/URLS';
 import getHeaderToken from '../helpers/getHeaderToken';
 import {
-    GET_PRODUCTS, GET_PRODUCT_BY_ID, SEARCH_BY_NAME,
+    GET_PRODUCTS, CREATE_PRODUCT, GET_PRODUCT_BY_ID, SEARCH_BY_NAME,
     ADD_ITEM, DELETE_ITEM, LOGIN_SUCCESS,
     LOGIN_FAILED, REGISTER_SUCCESS, REGISTER_FAILED, GET_USER_DETAIL,
-    AUTHENTICATION_ERROR, FILTER_BY_CATEGORY, GET_CATEGORIES, GET_PEDIDOS, EDIT_STATUS_PEDIDO, EDIT_PRODUCT, DELETE_PRODUCT, ORDER_BY_PRICE, ORDER_BY_RATE, LOGOUT, REST_ITEM, UPDATE_USER, UPDATE_CART, GET_PEDIDO_BY_USER, GET_PEDIDO_DETAIL
+    AUTHENTICATION_ERROR, FILTER_BY_CATEGORY, GET_CATEGORIES, GET_PEDIDOS, EDIT_STATUS_PEDIDO, EDIT_PRODUCT, DELETE_PRODUCT, ORDER_BY_PRICE, ORDER_BY_RATE, LOGOUT, REST_ITEM, UPDATE_USER, UPDATE_CART, GET_PEDIDO_BY_USER, GET_PEDIDO_DETAIL, COMMENT_LIST_REQUEST, COMMENT_LIST_SUCCESS, COMMENT_LIST_FAIL, COMMENT_DELETE, COMMENT_PUT, COMMENT_POST, COMMENT_DELETE_FAIL, COMMENT_PUT_FAIL, COMMENT_POST_FAIL, COMMENT_REPLY_PUT
 } from "./types";
 
 
@@ -52,22 +52,24 @@ export const restItem = (id) => {
     }
 }
 
-export function createProduct(product) {
-    return async function (dispatch) {
-        try {
-            var response = await axios.post(`${BASEURL}/products`, product)
-            return response
-        } catch (err) {
-            console.log(err)
-        }
-    }
-}
+// export function createProduct(product) {
+//     return async function (dispatch) {
+//         const headers = getHeaderToken();
+//         try {
+//             var response = await axios.post(`${BASEURL}/products`, product, headers)
+//             return response
+//         } catch (err) {
+//             console.log(err)
+//         }
+//     }
+// }
 
 export function deleteProduct(id) {
     return async function (dispatch) {
 
         try {
-            const deleteProd = await axios.delete(`${BASEURL}/products/${id}`);
+            const config = getHeaderToken()
+            const deleteProd = await axios.delete(`${BASEURL}/products/${id}`, config);
             return dispatch({
                 type: DELETE_PRODUCT,
                 payload: deleteProd.data,
@@ -83,15 +85,17 @@ export function deleteProduct(id) {
 
 export function editProduct(product) {
     const { id } = product
+    console.log("id a editar", id)
     return async function (dispatch) {
         try {
-            var response = await axios.put(`${BASEURL}/products/${id}`, product)
+            const config = getHeaderToken();
+            var response = await axios.put(`${BASEURL}/products/${id}`, product, config)
             return {
                 type: EDIT_PRODUCT,
                 payload: response.data
             }
         } catch (err) {
-            console.log(err)
+            console.log('No se pudo editar el producto')
         }
     }
 }
@@ -363,8 +367,6 @@ export function editStatusPedido(pedidoId, newStatus) {
         }
     }
 }
-<<<<<<< Updated upstream
-=======
 
 export function createProduct(product) {
     return async function (dispatch) {
@@ -399,11 +401,16 @@ export function listComments () {
     }
 }
 
-export const postComment = (comment, productId) => async (dispatch) => {
+export const postComment = (comment) => async (dispatch) => {
     try {
-      const config = getHeaderToken();
+      const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      };
   
-      await axios.post(`${BASEURL}/comments`,productId, comment, config).then((response) => {
+      await axios.post(`${BASEURL}/comment`, comment, config).then((response) => {
         console.log(response);
         dispatch({
           type: COMMENT_POST,
@@ -424,7 +431,11 @@ export const postComment = (comment, productId) => async (dispatch) => {
 
   export const putComment = (comment) => async (dispatch) => {
     try {
-      const config = getHeaderToken();
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
   
       await axios
         .put(`${BASEURL}/${comment._id}`, comment, config)
@@ -445,7 +456,11 @@ export const postComment = (comment, productId) => async (dispatch) => {
   
   export const deleteComment = (comment) => async (dispatch) => {
     try {
-      const config = getHeaderToken();
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
   
       if (comment._id) {
         await axios.delete(`${BASEURL}/${comment._id}`, config);
@@ -464,4 +479,3 @@ export const postComment = (comment, productId) => async (dispatch) => {
     }
   };
   
->>>>>>> Stashed changes

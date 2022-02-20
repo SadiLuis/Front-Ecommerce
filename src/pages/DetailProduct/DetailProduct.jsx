@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useSelector , useDispatch} from "react-redux";
+import { Link, useParams , useNavigate} from "react-router-dom";
 import { addItem, deleteItem } from "../../actions/index";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Card, ListGroup, ListGroupItem, Button } from "react-bootstrap";
+import { Card, ListGroup, ListGroupItem, Button ,Modal} from "react-bootstrap";
 import { BASEURL } from "../../assets/URLS";
+import { postPedido } from "../../actions";
 import axios from "axios";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import CommentListScreen from "../Screen/CommentListScreen";
-import style from "./Detail.css"
-import Swal from "sweetalert2";
 
 function DetailProduct({ cartProducts, addItem, deleteItem }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
   const { id } = useParams();
   const [product, setProduct] = useState({});
   const [inCart, setInCart] = useState(null);
@@ -19,6 +20,20 @@ function DetailProduct({ cartProducts, addItem, deleteItem }) {
   const [error, setError] = useState(false);
   const { image, price, description, title, category, rate, cantidad } =
     product;
+  const [show , setShow] = useState(false)
+  const isAuth = useSelector((state) => state.loginReducer.isAuth);
+  let items =
+    useSelector((state) => {
+      let completeProducts = state.productsReducer.cart.products;
+      completeProducts = completeProducts.map((e) => {
+        const finded = state.productsReducer.allProducts.find(
+          (el) => el.id === e.id
+        );
+        return finded ? { ...finded, quantity: e.quantity } : null;
+      });
+
+      return completeProducts;
+    }) || [];
 
   useEffect(() => {
     async function getProduct() {
@@ -41,18 +56,9 @@ function DetailProduct({ cartProducts, addItem, deleteItem }) {
     !error && setInCart(cartProducts.find((el) => el.id === parseInt(id)));
   }, [id, product, cartProducts, error]);
 
-<<<<<<< Updated upstream
-=======
   const handlebtnCompra = () => {
     if (!isAuth) {
-      let result = Swal.fire({
-        title: "¿ Desea iniciar sesión ?",
-        text: "Debe iniciar sesión para comprar",
-        icon: "warning",
-        showCancelButton: true,
-        
-      });
-
+      let result = window.confirm("Registrese para poder realizar una compra");
       if (result) navigate("/register");
     } else {
       
@@ -131,7 +137,7 @@ function DetailProduct({ cartProducts, addItem, deleteItem }) {
   }
 
 
->>>>>>> Stashed changes
+
   return loading ? (
     <span>loading...</span>
   ) : error ? (
@@ -200,14 +206,8 @@ function DetailProduct({ cartProducts, addItem, deleteItem }) {
           <ListGroupItem>Rate: {rate}</ListGroupItem>
           <ListGroupItem>Stock: {cantidad}</ListGroupItem>
         </ListGroup>
-<<<<<<< Updated upstream
-        <Link to={`/home/buy/${id}`}>
-          <Button variant="primary">Comprar</Button>
-        </Link>
-=======
        
         
->>>>>>> Stashed changes
       </Card>
           <Button variant="primary" onClick={ handlebtnCompra}
           style={{
@@ -281,10 +281,6 @@ function DetailProduct({ cartProducts, addItem, deleteItem }) {
           Añadir al carrito
         </Button>
       )}
-<<<<<<< Updated upstream
-      <Card />
-    </>
-=======
       {/* <Link to="/comment"> Quieres dejar un comentario?</Link> */}
       <Card />
       <PedidoPopUp
@@ -295,7 +291,6 @@ function DetailProduct({ cartProducts, addItem, deleteItem }) {
       {/* <CommentListScreen /> */}
 
     </div>
->>>>>>> Stashed changes
   );
 }
 
