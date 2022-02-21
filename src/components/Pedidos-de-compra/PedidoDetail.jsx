@@ -6,6 +6,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Button , Modal} from "react-bootstrap";
 import {FaShippingFast} from "react-icons/fa";
 import {RiShoppingBasket2Line} from "react-icons/ri"
+import {BsCheck2Circle} from "react-icons/bs"
+import Swal from 'sweetalert2'
+
 import styles from "./PedidoDetail.css"
 
 const PedidosCompra = () => {
@@ -88,49 +91,60 @@ const PedidosCompra = () => {
   
 
   return status ? (
-    <><div className="título">
+    <><div className="titulo">
       <h6><RiShoppingBasket2Line></RiShoppingBasket2Line>Su compra:</h6>
     </div>
     <div className="container-status">
         <div className="datos-container">
-          <div className="datos">
-            <div> <h6>Estado:</h6>
-              <p> {status}</p>
+          <div className="datos-estado">
+            <div className="estado"> <h6>Estado:</h6>
+            <p> {status}</p>
             </div>
-            <div> <h6>Pagado:</h6>
+            <div className="pagado"> <h6>Pagado:</h6>
               <p>{pagado ? "Si" : "No"}</p>
             </div>
           </div>
-          <div>
-            <h3>Productos disponibles:</h3>
+          <div className="detalle">
+            {/* <div ><h4>Detalle:</h4></div>  */}
             {productos.map((prod) => {
               return (
                 <div key={prod.producto}>
-                  <h5>Descripcion:</h5>
-                  <span>{prod.producto}</span>
+                  <h5>Producto:</h5>
+                  
+                  <span>{prod.producto} <BsCheck2Circle></BsCheck2Circle></span>
+                  <br />
                   <h5>Cantidad:</h5>
-                  <span>{prod.cantidad}</span>
-                  <h5>Precio unitario $</h5>
-                  <span>{prod.precioUnitario}</span>
-                  <h5>Subtotal unitario $</h5>
-                  <span>{prod.total}</span>
+                  <span>{prod.cantidad} <BsCheck2Circle></BsCheck2Circle></span>
+                  <br />
+                  <h5>Precio unitario: </h5>
+                  <span> $ {prod.precioUnitario} <BsCheck2Circle></BsCheck2Circle></span>
+                  <br />
+                  <h5>Subtotal unitario: </h5>
+                  <span> $ {prod.total} <BsCheck2Circle></BsCheck2Circle></span>
                 </div>
               );
 
             })}
-          </div>
-        </div>
+          
+        
 
-        <div>
-          <div>SubTotal compra: {totalPedido}</div>
-          <div>Descuentos: 0</div>
-          <div>Total: {totalPedido}</div>
+        
+          <div><h5>SubTotal compra:</h5><span> $ {totalPedido} <BsCheck2Circle></BsCheck2Circle></span></div>
+          <div><h5>Descuentos:</h5> <span>0% <BsCheck2Circle></BsCheck2Circle></span></div>
+          <div className="total"><h3>Total:  </h3> <span> $ {totalPedido} <BsCheck2Circle></BsCheck2Circle></span></div>
+        
         </div>
-        <Button variant="success" onClick={handleBtnCompra}>
+        </div>
+        <div className="boton-ubicacion">
+        <button className="boton" style={{background:"green"}}onClick={handleBtnCompra}>Comprar</button>
+        <button className="boton" style={{background:"red"}}onClick={handleBtnCancelar}>Cancelar compra</button>
+        </div>
+        {/* <Button variant="success" onClick={handleBtnCompra}>
           Pagar
         </Button><Button variant="danger" onClick={handleBtnCancelar}>
           Cancelar compra
-        </Button><PopUp
+        </Button> */}
+        <PopUp
           show={show}
           onHide={() => setShow(false)} />
 
@@ -138,7 +152,12 @@ const PedidosCompra = () => {
       </>
       
   ) : (
-    <span>Loading...</span>
+    <div class="d-flex justify-content-center">
+      <br />
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
   
   );
 }

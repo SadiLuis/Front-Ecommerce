@@ -59,7 +59,7 @@ function ContactForm() {
     <><div class='container mt-5'>
           <h3>Contáctenos!</h3>
       </div>
-      <div className='container mt-5'>
+      <div class='container mt-5'>
 
               {/* <div className="mb-3">  */}
 
