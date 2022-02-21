@@ -5,12 +5,10 @@ import {
     GET_PRODUCTS, CREATE_PRODUCT, GET_PRODUCT_BY_ID, SEARCH_BY_NAME,
     ADD_ITEM, DELETE_ITEM, LOGIN_SUCCESS,
     LOGIN_FAILED, REGISTER_SUCCESS, REGISTER_FAILED, GET_USER_DETAIL,
-
-    AUTHENTICATION_ERROR, FILTER_BY_CATEGORY, GET_CATEGORIES, GET_PEDIDOS, EDIT_STATUS_PEDIDO, 
-  EDIT_PRODUCT, DELETE_PRODUCT, ORDER_BY_PRICE, ORDER_BY_RATE, LOGOUT, REST_ITEM, UPDATE_USER, 
-  UPDATE_CART, GET_PEDIDO_BY_USER, GET_PEDIDO_DETAIL, COMMENT_LIST_REQUEST, COMMENT_LIST_SUCCESS, 
-  COMMENT_LIST_FAIL, COMMENT_DELETE, COMMENT_PUT, COMMENT_POST, COMMENT_DELETE_FAIL, COMMENT_PUT_FAIL, COMMENT_POST_FAIL, COMMENT_REPLY_PUT
-
+    AUTHENTICATION_ERROR, FILTER_BY_CATEGORY, GET_CATEGORIES, GET_PEDIDOS, EDIT_STATUS_PEDIDO,
+    EDIT_PRODUCT, DELETE_PRODUCT, ORDER_BY_PRICE, ORDER_BY_RATE, LOGOUT, REST_ITEM, UPDATE_USER,
+    UPDATE_CART, GET_PEDIDO_BY_USER, GET_PEDIDO_DETAIL, COMMENT_LIST_REQUEST, COMMENT_LIST_SUCCESS,
+    COMMENT_LIST_FAIL, COMMENT_DELETE, COMMENT_PUT, COMMENT_POST, COMMENT_DELETE_FAIL, COMMENT_PUT_FAIL, COMMENT_POST_FAIL, COMMENT_REPLY_PUT, GET_SUBCATEGORIES, EDIT_CATEGORIA
 } from "./types";
 
 
@@ -56,18 +54,6 @@ export const restItem = (id) => {
         payload: id
     }
 }
-
-// export function createProduct(product) {
-//     return async function (dispatch) {
-//         const headers = getHeaderToken();
-//         try {
-//             var response = await axios.post(`${BASEURL}/products`, product, headers)
-//             return response
-//         } catch (err) {
-//             console.log(err)
-//         }
-//     }
-// }
 
 export function deleteProduct(id) {
     return async function (dispatch) {
@@ -256,17 +242,17 @@ export const getUserDetail = () => {
 //         type: SUM_CART,
 //     }
 // }
-export function postCategories(payload){
+export function postCategories(payload) {
     return async function (dispatch) {
-        try{
+        try {
             const config = getHeaderToken();
-            const response = await axios.post(`${BASEURL}/categories`,payload,config);
+            const response = await axios.post(`${BASEURL}/categories`, payload, config);
             //console.log(response)
             return response.data;
-        }catch (err) {
-                console.log(err)
+        } catch (err) {
+            console.log(err)
         }
-        
+
     }
 }
 
@@ -320,17 +306,17 @@ export function getSubCategories() {
         }
     }
 }
-export function postSubCategories(payload){
+export function postSubCategories(payload) {
     return async function (dispatch) {
-        try{
+        try {
             const config = getHeaderToken();
-            const response = await axios.post(`${BASEURL}/subcategories`,payload,config);
+            const response = await axios.post(`${BASEURL}/subcategories`, payload, config);
             //console.log(response)
             return response.data;
-        }catch (err) {
-                console.log(err)
+        } catch (err) {
+            console.log(err)
         }
-        
+
     }
 }
 export function orderByPrice(payload) {
@@ -430,7 +416,7 @@ export function editStatusPedido(pedidoId, newStatus) {
 
 export function createProduct(product) {
     return async function (dispatch) {
-        
+
         try {
             const config = getHeaderToken();
             var response = await axios.post(`${BASEURL}/products`, product, config)
@@ -444,19 +430,19 @@ export function createProduct(product) {
     }
 
 }
-export function listComments () {
+export function listComments() {
     return async function (dispatch) {
         try {
             dispatch({ type: COMMENT_LIST_REQUEST });
             const { data } = await axios.get(`${BASEURL}/comments`);
             dispatch({ type: COMMENT_LIST_SUCCESS, payload: data });
-        }  catch (error) {
+        } catch (error) {
             dispatch({
-              type: COMMENT_LIST_FAIL,
-              payload:
-                error.response && error.response.data.message
-                  ? error.response.data.message
-                  : error.message,
+                type: COMMENT_LIST_FAIL,
+                payload:
+                    error.response && error.response.data.message
+                        ? error.response.data.message
+                        : error.message,
             });
         }
     }
@@ -464,82 +450,79 @@ export function listComments () {
 
 export const postComment = (comment) => async (dispatch) => {
     try {
-      const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      };
-  
-      await axios.post(`${BASEURL}/comment`, comment, config).then((response) => {
-        console.log(response);
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        };
+
+        await axios.post(`${BASEURL}/comment`, comment, config).then((response) => {
+            console.log(response);
+            dispatch({
+                type: COMMENT_POST,
+                payload: response.data,
+            });
+        });
+    } catch (error) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message;
         dispatch({
-          type: COMMENT_POST,
-          payload: response.data,
+            type: COMMENT_POST_FAIL,
+            payload: message,
         });
-      });
-    } catch (error) {
-      const message =
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message;
-      dispatch({
-        type: COMMENT_POST_FAIL,
-        payload: message,
-      });
     }
-  };
+};
 
-  export const putComment = (comment) => async (dispatch) => {
+export const putComment = (comment) => async (dispatch) => {
     try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-  
-      await axios
-        .put(`${BASEURL}/${comment._id}`, comment, config)
-        .then((response) => {
-          dispatch({ type: COMMENT_PUT, payload: response.data });
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        };
+
+        await axios
+            .put(`${BASEURL}/${comment._id}`, comment, config)
+            .then((response) => {
+                dispatch({ type: COMMENT_PUT, payload: response.data });
+            });
+    } catch (error) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message;
+        dispatch({
+            type: COMMENT_PUT_FAIL,
+            payload: message,
         });
-    } catch (error) {
-      const message =
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message;
-      dispatch({
-        type: COMMENT_PUT_FAIL,
-        payload: message,
-      });
     }
-  };
-  
-  export const deleteComment = (comment) => async (dispatch) => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-  
-      if (comment._id) {
-        await axios.delete(`${BASEURL}/${comment._id}`, config);
-      }
-  
-      dispatch({ type: COMMENT_DELETE, payload: comment });
-    } catch (error) {
-      const message =
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message;
-      dispatch({
-        type: COMMENT_DELETE_FAIL,
-        payload: message,
-      });
-    }
-  };
-  
+};
 
-}
+export const deleteComment = (comment) => async (dispatch) => {
+    try {
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        };
+
+        if (comment._id) {
+            await axios.delete(`${BASEURL}/${comment._id}`, config);
+        }
+
+        dispatch({ type: COMMENT_DELETE, payload: comment });
+    } catch (error) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message;
+        dispatch({
+            type: COMMENT_DELETE_FAIL,
+            payload: message,
+        });
+    }
+};
 
