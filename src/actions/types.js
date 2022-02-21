@@ -15,6 +15,8 @@ export const DELETE_ITEM = 'DELETE_ITEM'
 // export const SUM_CART = "SUM_CART"
 export const UPDATE_CART = "UPDATE_CART"
 export const DELETE_CART='DELETE_CART'
+export const GET_CART = "GET_CART"
+export const DELETE_CART_DB = "DELETE_CART_DB"
 // AUTENTICACION Y USUARIO
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILED = "LOGIN_FAILED";

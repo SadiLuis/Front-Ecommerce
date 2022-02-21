@@ -8,7 +8,10 @@ import {
     ADD_ITEM,
     DELETE_ITEM,
     REST_ITEM,
-    UPDATE_CART
+    UPDATE_CART,
+    GET_CART,
+    DELETE_CART,
+    DELETE_CART_DB
 } from '../actions/types';
 import { getCartLocalStorage, saveCartLocalStorage } from "../helpers/localstorage";
 import {putCart,deleteProductCart } from '../actions/index'
@@ -34,19 +37,8 @@ export default function productsReducer(state = initialState, action) {
             if(localStorage.getItem('token_ecommerce') ){
                
                 const localS = getCartLocalStorage()
-                if(state.flag){
-                const carritoDB = state.carts.CarritoDetalles?.map(el =>{
-                     return {...el , id: el.productoId , quantity: el.cantidad }
-                })
-               const cartDB= {
-                    products: carritoDB || localS.products,
-                    precioTotal:carritoDB?.reduce((prev, e) => {
-                        let prod = state.allProducts.find(el => el.id === e.id);
-
-                        return Math.round((prev + (prod.price * e.quantity)) * 100) / 100;
-                    }, 0) || localS.precioTotal
-                }
-                saveCartLocalStorage(cartDB);
+                if(state.flag && state.carts.id){
+               
                 localS.products?.forEach( (el) =>  putCart(el,state.carts.id))
             }
                
@@ -177,10 +169,47 @@ export default function productsReducer(state = initialState, action) {
                 ...state,
                 filtered: sortedRate
             }
-            case 'GET_CART': return{
+            case GET_CART: 
+            
+            const localS = getCartLocalStorage()
+            if(state.flag && state.carts.id){
+            const carritoDB = state.carts.CarritoDetalles?.map(el =>{
+                 return {...el , id: el.productoId , quantity: el.cantidad }
+            })
+           const cartDB= {
+                products: carritoDB || localS.products,
+                precioTotal:carritoDB?.reduce((prev, e) => {
+                    let prod = state.allProducts.find(el => el.id === e.id);
+
+                    return Math.round((prev + (prod.price * e.quantity)) * 100) / 100;
+                }, 0) || localS.precioTotal
+            }
+            saveCartLocalStorage(cartDB);
+           
+        }
+           
+          return{
                 ...state,
                 carts: payload,
-               
+                flag: true
+            }
+            case DELETE_CART: 
+               newCart = {
+                   products: [],
+                   precioTotal:0
+               }
+               saveCartLocalStorage(newCart)
+            return {
+                ...state,
+                cart: newCart,
+                
+            }
+            case DELETE_CART_DB: 
+              
+            return {
+                ...state,
+                carts: payload,
+                
             }
         default:
             return { ...state }

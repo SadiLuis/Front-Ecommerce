@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { addItem, deleteItem } from "../../../actions";
+import { addItem, deleteItem ,deleteProductCart, putCart } from "../../../actions";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -8,6 +8,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import style from './Products.module.css'
 import Swal from "sweetalert2";
+import './styleProduct.css'
+
 function Product({
   id,
   title,
@@ -20,6 +22,7 @@ function Product({
   cart,
   addItem,
   deleteItem,
+  cartDB
  
 }) {
   const [inCart, setInCart] = useState(false);
@@ -28,7 +31,8 @@ function Product({
     setInCart(cart?.find((el) => el.id === id));
   }, [cart, id]);
    
-  const handleAdd = () =>{
+  const handleAdd =async () =>{
+    
     addItem(id)
     Swal.fire({
       position: 'top-end',
@@ -39,7 +43,8 @@ function Product({
     })
   }
 
-  const handleDelete = () =>{
+  const handleDelete = async() =>{
+    await  deleteProductCart(id,cartDB.id)
     deleteItem(id)
     Swal.fire({
       position: 'top-end',
@@ -51,8 +56,26 @@ function Product({
 
   }
 
-  
+  // Máxima cantidad de estrellas
+const maxStars = 5;
 
+// Obtenemos el valor completo
+const starPercentage = (rate / maxStars) * 100;
+
+// Redondeamos el resultado si es decimal
+const starPercentageRounded = Math.round(starPercentage);
+
+// Creamos el estilo para que las estrellas amarillas
+// se vean según el número que recibimos.
+const StarStyles = () => {
+    return {
+        width: starPercentageRounded + "%"
+    };
+};
+
+
+  const fixTitle = title.length > 27 ? title.slice(0,27) + ' ...' : title 
+  
   return (
     <div className={style.cardContainer}>
       <Link style={{textDecoration:'none'}}to={"/home/" + id}>
@@ -60,12 +83,15 @@ function Product({
         <img className={style.img} src={image} />
         </div>
            
-          <h3 className={style.containerName}>{title}</h3>
+          <h3 className={style.containerName}>{fixTitle}</h3>
           <Card.Text>{description}</Card.Text>
           <div className={style.containerRating}>
+            <p className={style.precio}> $ {price}</p>
             <p> {category}</p>
-            <p>Calificación  {rate}</p>
-            <p> $ {price}</p>
+            <div className="stars-gray">
+        <div className="stars-yellow" style={StarStyles()}></div>
+           
+          </div>
           </div>
         
       </Link>
@@ -99,7 +125,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     cart: state.productsReducer.cart.products,
-    isAuth: state.loginReducer.isAuth
+    isAuth: state.loginReducer.isAuth,
+    cartDB: state.productsReducer.carts
   };
 };
 

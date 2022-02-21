@@ -1,5 +1,5 @@
 import React, { useState , useEffect } from "react";
-import { addItem, deleteItem, restItem ,updateCart,deleteProductCart } from "../../../actions/index";
+import { addItem, deleteItem, restItem ,deleteProductCart } from "../../../actions/index";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import style from './Item.module.css'
@@ -49,6 +49,7 @@ function Item({ id, title, price, image, stock, quantity }) {
     dispatch(deleteItem(id));
    await  deleteProductCart(id,cartDB.id)
   };
+  
 
   const fixedPrice = Math.round((priceTotal + Number.EPSILON) * 100) / 100;
   const fixTitle = title.length > 50 ? title.slice(0,50) + ' ...' : title 

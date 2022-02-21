@@ -5,7 +5,7 @@ import {
     GET_PRODUCTS, CREATE_PRODUCT, GET_PRODUCT_BY_ID, SEARCH_BY_NAME,
     ADD_ITEM, DELETE_ITEM, LOGIN_SUCCESS,
     LOGIN_FAILED, REGISTER_SUCCESS, REGISTER_FAILED, GET_USER_DETAIL,
-    AUTHENTICATION_ERROR, FILTER_BY_CATEGORY, GET_CATEGORIES, GET_PEDIDOS, EDIT_STATUS_PEDIDO, EDIT_PRODUCT, DELETE_PRODUCT, ORDER_BY_PRICE, ORDER_BY_RATE, LOGOUT, REST_ITEM, UPDATE_USER, UPDATE_CART, GET_PEDIDO_BY_USER, GET_PEDIDO_DETAIL ,DELETE_CART
+    AUTHENTICATION_ERROR, FILTER_BY_CATEGORY, GET_CATEGORIES, GET_PEDIDOS, EDIT_STATUS_PEDIDO, EDIT_PRODUCT, DELETE_PRODUCT, ORDER_BY_PRICE, ORDER_BY_RATE, LOGOUT, REST_ITEM, UPDATE_USER, UPDATE_CART, GET_PEDIDO_BY_USER, GET_PEDIDO_DETAIL ,DELETE_CART , GET_CART ,DELETE_CART_DB
 } from "./types";
 
 
@@ -391,7 +391,7 @@ export const getCartDB = (userId) => async dispatch => {
             `${BASEURL}/carritos/${userId}`,
             config
         );
-        return dispatch({ type: 'GET_CART', payload: data });
+        return dispatch({ type:GET_CART, payload: data });
     } catch (err) {
         return console.log(err.response.data);
     }
@@ -419,11 +419,17 @@ export const deleteProductCart = async (product , id) =>{
      },  getHeaderToken())
 }
 
-export const deleteAllCart = id => dispatch => {
+export const deleteAllCartDB = id => dispatch => {
     return axios.delete(`${BASEURL}/carritos/${id}`,getHeaderToken())
                 .then(res => res.data)
-                .then(data => dispatch({type:DELETE_CART , payload: data}))
+                .then(data => dispatch({type:DELETE_CART_DB , payload: data}))
                 .catch(err => console.log(err))
+}
+
+export const deleteAllCart = () => {
+    return {
+        type: DELETE_CART
+    }
 }
 
 export const getAllOfertas = ()=> dispatch =>{

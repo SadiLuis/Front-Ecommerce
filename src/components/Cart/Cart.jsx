@@ -4,7 +4,7 @@ import Item from "./Item/Item";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Button, Row } from "react-bootstrap";
-import { postPedido ,updateCart,getAllProducts , getCartDB } from "../../actions";
+import { postPedido ,updateCart,getAllProducts , getCartDB ,deleteAllCart , deleteAllCartDB} from "../../actions";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import style from './Cart.module.css'
@@ -32,6 +32,7 @@ function Cart() {
   items = items?.filter((e) => e);
   const products = useSelector((state) => state.productsReducer.allProducts)
   const user = useSelector((state) => state.loginReducer.userDetail);
+  const cartDB = useSelector(state => state.productsReducer.carts)
 
   useEffect(() => {
    if(products.length === 0)dispatch(getAllProducts())
@@ -81,6 +82,30 @@ function Cart() {
     }
   };
 
+  const handleDeleteAll = ()=>{
+     
+    Swal.fire({
+      title: '¿ Esta seguro que quiere eliminar el carrito?',
+     
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteAllCart())
+    if(cartDB.usuarioId){  dispatch(deleteAllCartDB(cartDB.usuarioId))}
+        Swal.fire(
+          'ELiminado!',
+          'El carrito se eliminó correctamente.',
+          'success'
+        )
+      }
+    })
+    
+  }
+
   const emptyCart = () => {
     return (
       <Container className={style.container}>
@@ -124,7 +149,7 @@ function Cart() {
           <h1 className={style.total}>Total</h1>
           <h3>$ {total}</h3>
           <div className={style.buttonContainer}>
-          <Button variant="danger" >Eliminar carrito</Button>
+          <Button variant="danger" onClick={handleDeleteAll}>Eliminar carrito</Button>
           <Button
             className={style.button}
             onClick={handlebtnCompra}

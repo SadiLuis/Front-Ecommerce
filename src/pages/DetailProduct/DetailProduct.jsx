@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector , useDispatch} from "react-redux";
 import { Link, useParams , useNavigate} from "react-router-dom";
-import { addItem, deleteItem } from "../../actions/index";
+import { addItem, deleteItem ,deleteProductCart, putCart } from "../../actions/index";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Card, ListGroup, ListGroupItem, Button ,Modal} from "react-bootstrap";
 import { BASEURL } from "../../assets/URLS";
@@ -9,8 +9,9 @@ import { postPedido } from "../../actions";
 import axios from "axios";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import Swal from "sweetalert2";
 
-function DetailProduct({ cartProducts, addItem, deleteItem }) {
+function DetailProduct({ cartProducts, addItem, deleteItem , cartDB }) {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const { id } = useParams();
@@ -103,6 +104,31 @@ function DetailProduct({ cartProducts, addItem, deleteItem }) {
     navigate("/pedido/detail");
   }
   //console.log(items)
+
+  const handleAdd =async () =>{
+     if(cartDB.id) await putCart(id,cartDB.id)
+    addItem(parseInt(id))
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Producto agregado al carrito',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+
+  const handleDelete = async() =>{
+    await  deleteProductCart(id,cartDB.id)
+    deleteItem(parseInt(id))
+    Swal.fire({
+      position: 'top-end',
+      icon: 'error',
+      title: 'Producto eliminado del carrito',
+      showConfirmButton: false,
+      timer: 1500
+    })
+
+  }
   
   const PedidoPopUp =(props)=> {
     return (
@@ -169,11 +195,11 @@ function DetailProduct({ cartProducts, addItem, deleteItem }) {
           <Button variant="danger">Product out of stock</Button>
         </div>
       ) : inCart ? (
-        <Button variant="primary" onClick={() => deleteItem(parseInt(id))}>
+        <Button variant="primary" onClick={handleDelete }>
           Quitar del carrito
         </Button>
       ) : (
-        <Button variant="primary" onClick={() => addItem(parseInt(id))}>
+        <Button variant="primary" onClick={handleAdd}>
           Añadir al carrito
         </Button>
       )}
@@ -193,7 +219,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     cartProducts: state.productsReducer.cart.products,
-    
+    cartDB: state.productsReducer.carts
   };
 };
 
