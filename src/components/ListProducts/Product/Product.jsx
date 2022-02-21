@@ -44,7 +44,7 @@ function Product({
   }
 
   const handleDelete = async() =>{
-    await  deleteProductCart(id,cartDB.id)
+    if(cartDB.id)  await  deleteProductCart(id,cartDB.id)
     deleteItem(id)
     Swal.fire({
       position: 'top-end',

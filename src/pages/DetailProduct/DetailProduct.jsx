@@ -118,7 +118,7 @@ function DetailProduct({ cartProducts, addItem, deleteItem , cartDB }) {
   }
 
   const handleDelete = async() =>{
-    await  deleteProductCart(id,cartDB.id)
+     if(cartDB.id) await  deleteProductCart(id,cartDB.id)
     deleteItem(parseInt(id))
     Swal.fire({
       position: 'top-end',
